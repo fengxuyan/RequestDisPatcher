@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Add Product</title>
+	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#delete_product").click(function(){
+		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+		var info = JSON.parse(userInfo[2]);
+		var Info=info['userInfo'];
+		var token = info.token;
+
+		$.ajax({
+			type:"post",
+			dataType:"json",
+			url:"/RequestDisPatcher/request/dispatcher.do",
+			data: {
+				url:"101.37.100.209:9000/device/delete",
+				params:"token="+token+"&sn="+$('#SN').val()
+			},
+			success: function (data) {
+				console.log(data);
+			},
+			error: function (data) {
+				console.log(data);
+			}
+		});
+
+
+	});
+});
+</script>
+</head>
+<body>
+<div class="holder">
+	<div class="left_nav">
+		<div class="header_text">
+			<div class="header_text_right">
+				<span class="header_pic"><a href="modify.html" ><img src="Heads/header_woman.png" id="head"></a></span>
+			</div>
+		</div>
+		<ul>
+			<a href="#"><li>退出登录</li></a>
+			<a href="real.html"><li>实时数据</li></a>
+			<a href="healthy.html"><li>健康档案</li></a>
+			<a href="addProduct.html"><li>添加或更改设备</li></a>
+			<a href="deleteProduct.html"><li class="on">删除设备</li></a>
+		</ul>
+	</div>
+
+	<div class="right_show">
+		<h3>isleep</h3>
+		<a href="homepage.html"><span class="glyphicon glyphicon-home"></span></a>
+		<div class="show_detail">
+			<div class="show_detail_data">
+				<div class="addpro">
+					<h4>删除设备</h4>
+				</div>
+				<h4 class="addpro number">现有智能床垫序列号</h4>
+				<!--<h4 class="addpro number dis">显示当前用户信息中该类设备SN</h4>-->
+				<div class="panel_input reg_input mod_input">
+					<input type="text" placeholder="显示当前用户信息中该类设备SN" id="SN" value="" />
+				</div>
+			</div>
+		</div>
+		<div class="foot_btn fo fo1">
+			<input type="button" class="submit_back" name="Submit" onclick="javascript:history.back(-1);" value="Back" id="back">
+			<input type="button" value="Submit" class="submit_submit" id="delete_product">
+		</div>
+	</div>
+	</div>
+	<script src="/RequestDisPatcher/JS/mine.js"></script>
+<script>
+	$('.right_show').css("padding-bottom",60);
+</script>
+</body>
+<!--<body id="delete">-->
+	<!--<div id="info">-->
+	<!--<h3 style="margin-top: -10px;">Delete Product</h3>-->
+	<!--<h4 style="float:left;margin-top: -10px;">Please Input Your SN:</h4>-->
+	<!--<input type="text" id="SN" placeholder="SN">-->
+	<!--<input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" id="back">-->
+	<!--<input type="button" value="Submit" id="delete_product">-->
+	<!--</div>-->
+<!--</body>-->
+</html>

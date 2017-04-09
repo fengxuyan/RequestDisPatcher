@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Real Data</title>
+	<link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
+	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+	<script src="/RequestDisPatcher/JS/jquery-ui.js"></script>
+	<script src="/RequestDisPatcher/JS/number-pb.js"></script>
+	<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
+
+</head>
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($.cookie('the_cookie') == '') {
+			location.href = "login.html";//location.href实现客户端页面的跳转
+		}
+	})
+</script>
+<body>
+
+<!--<div id="wrapper">-->
+<!--<div class="loader-container">-->
+<!--<div class="meter">0</div>-->
+<!--<span class="runner"></span>-->
+<!--</div>-->
+<!--</div>-->
+<div class="holder">
+	<div class="left_nav">
+		<div class="header_text">
+			<div class="header_text_right">
+				<span class="header_pic"><a href="modify.html" ><img src="Heads/header_woman.png" id="head"></a></span>
+			</div>
+		</div>
+		<ul>
+			<a href="#"><li>退出登录</li></a>
+			<a ><li class="on">实时数据</li></a>
+			<a href="healthy.html"><li>健康档案</li></a>
+			<a href="addProduct.html"><li>添加或更改设备</li></a>
+			<a href="deleteProduct.html"><li>删除设备</li></a>
+		</ul>
+	</div>
+	<div class="right_show">
+		<h3>isleep</h3>
+		<a href="homepage.html"><span class="glyphicon glyphicon-home"></span></a>
+		<div class="show_detail">
+			<div class="show_detail_data">
+				<div class="data_table">
+					<div id="xl" class="left_heart_rate">
+						<div class="xl_pic">
+							<h4>心率</h4>
+						</div>
+						<div class="xl_line">
+							<h2>72</h2><h4>次/分</h4>
+						</div>
+					</div>
+					<div class="centerdiv"></div>
+					<div id="hxl" class="right_breath_rate">
+						<div class="hxl_pic">
+							<h4>呼吸率</h4>
+						</div>
+						<div class="hxl_line">
+							<h2>72</h2><h4>次/分</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div id="zt" class="show_detail_status">
+				<ul class="status">
+					<li class="itmes"><span>状态</span></li>
+					<li>
+						<label for="ztai" id="noperson1">
+							<input type="checkbox" name="ztai" value="ztai" /><span>无人</span>
+						</label>
+					</li>
+					<li>
+						<label for="ztai" id="nomove">
+							<input type="checkbox" name="ztai" value="ztai" /><span>体动</span>
+						</label>
+					</li>
+
+					<li>
+						<label for="ztai" id="onbed">
+							<input type="checkbox" name="ztai" value="ztai" />
+						</label><span>在床</span>
+					</li>
+				</ul>
+				<div class="block_pic"></div>
+				<div id="sj">
+				</div>
+				<div class="time">
+					<span></span>
+					<!--<span>22:00</span>-->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="/RequestDisPatcher/amcharts/amcharts.js"></script>
+<script src="/RequestDisPatcher/amcharts/serial.js"></script>
+<script src="/RequestDisPatcher/amcharts/themes/light.js"></script>
+<!--<script src="/SleepMonitor/JS/birthday.js"></script>-->
+<!--<script src="/SleepMonitor/JS/radialIndicator.js"></script>-->
+<!--<script src="/SleepMonitor/JS/mine.js"></script>-->
+<!--<script src="/SleepMonitor/JS/jquery.velocity.min.js"></script>-->
+<!--<script src="/SleepMonitor/JS/number-pb.js"></script>-->
+<script src="/RequestDisPatcher/JS/birthday.js"></script>
+<script src="/RequestDisPatcher/JS/radialIndicator.js"></script>
+<script src="/RequestDisPatcher/JS/jquery.velocity.min.js"></script>
+
+<script src="/RequestDisPatcher/JS/mine.js"></script>
+<script src="/RequestDisPatcher/JS/real.js"></script>
+<script>
+	/**
+	 *
+	 * 获取当前时间
+	 *
+	 用js请求当前时间的状态
+	 然后绘制图片
+	 append
+	 *
+	 *
+	 */
+	function p(s) {
+		return s < 10 ? '0' + s: s;
+	}
+
+	var myDate = new Date();
+	//获取当前年
+	var year=myDate.getFullYear();
+	//获取当前月
+	var month=myDate.getMonth()+1;
+	//获取当前日
+	var date=myDate.getDate();
+	var h=myDate.getHours();       //获取当前小时数(0-23)
+	var m=myDate.getMinutes();     //获取当前分钟数(0-59)
+	var s=myDate.getSeconds();
+
+	var now=p(h)+':'+p(m)+":"+p(s);
+
+	$('.time span').text(now);
+	$('.right_show').css("padding-bottom",60);
+
+</script>
+</body>
+<!--<body id="real">-->
+<!--<div id="real_info">-->
+<!--<h3 id="real_title">Real-time Data</h3>-->
+<!--<div id="xl"><h4>心率:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4><h4>/min</h4></div>-->
+<!--<div id="hxl"><h4>呼吸率:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4><h4>/min</h4></div>-->
+<!--<div id="zt">-->
+<!--<h4>状态:&nbsp;&nbsp;</h4>-->
+<!--<div><input type="checkbox" name="ztai" value="ztai" />在床</div>-->
+<!--<div><input type="checkbox" name="ztai" value="ztai" />体动</div>-->
+<!--<div><input type="checkbox" name="ztai" value="ztai" />无人</div>-->
+<!--</div>-->
+<!--<div id="sj"><h4>时间:</h4></div>-->
+<!--<button type="button" onclick="javascript:location.reload()" style="padding:10px;" >Refresh</button>-->
+<!--</div>-->
+<!--</body>-->
+</html>

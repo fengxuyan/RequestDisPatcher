@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Add Product</title>
+	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
+	<script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
+	<script src="/RequestDisPatcher/amcharts/amcharts.js"></script>
+	<script src="/RequestDisPatcher/amcharts/serial.js"></script>
+	<script src="/RequestDisPatcher/amcharts/themes/light.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+	var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+	var info = JSON.parse(userInfo[2]);
+	var Email = info.Email;
+	console.log(info);
+
+	var Info=info['userInfo'];
+	var token = info.token;
+
+	$.ajax({
+		type:"post",
+		url:"/RequestDisPatcher/request/dispatcher.do",
+		data:{
+			url:"http://127.0.0.1:9001/login/getInfo",
+			params:"token="+token
+		},
+		dataType:"json",
+		success:function(data){
+			console.log(data);
+		},
+		error:function(data){
+			console.log(data);
+			alert("Unkonw Error.Please Try Again!");
+		}
+	});
+
+	$("#add_product").click(function(){
+		$.ajax({
+		type:"post",
+			url:"/RequestDisPatcher/request/dispatcher.do",
+		data:{
+			url:"http://101.37.100.209:9002/device/add",
+			params:"token="+token+"&sn_all="+$("#SN").val()
+		},
+		dataType:"json",
+		success:function(data){
+				var txt=data.Message;
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+//			window.location.href="homepage.html";
+				},
+		error:function(data){
+			var txt="Unkonw Error.Please Try Again!";
+			window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+				}
+		});
+	});
+});
+
+
+</script>
+
+</head>
+<body>
+<div class="holder">
+	<div class="left_nav">
+		<div class="header_text">
+			<div class="header_text_right">
+				<span class="header_pic"><a href="modify.html" ><img src="Heads/header_woman.png" id="head"></a></span>
+			</div>
+		</div>
+		<ul>
+			<a href="login.html"><li onclick="quit()"  >退出登录</li></a>
+			<a href="real.html"><li>实时数据</li></a>
+			<a href="healthy.html"><li>健康档案</li></a>
+			<a href="addProduct.html"><li class="on">添加或更改设备</li></a>
+			<a href="deleteProduct.html"><li>删除设备</li></a>
+		</ul>
+	</div>
+	<div class="right_show">
+		<h3>isleep</h3>
+		<a href="homepage.html"><span class="glyphicon glyphicon-home"></span></a>
+		<div class="show_detail">
+			<div class="show_detail_data">
+				<div class="addpro">
+					<h4>添加或更改设备</h4>
+				</div>
+				<div class="foPwdTxt">
+					<div class="panel_input">
+						<input type="text" placeholder="手工输入SN" id="SN" value="" />
+					</div>
+				</div>
+				<div class="sao">
+					<a><img src="images/sao.png" /><span>扫一扫</span></a>
+				</div>
+				<div class="foot_btn fo fo1">
+					<input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back" id="back">
+					<input type="button" value="Submit" class="submit_submit" id="add_product">
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<script src="/RequestDisPatcher/JS/mine.js"></script>
+<script>
+	function quit() {
+//		$.ajax({
+//			type:"post",
+//			url:"/RequestDisPatcher/request/dispatcher.do",
+//			data: {
+//				url:"http://127.0.0.1:9001/login/logout",
+//				params:"token="+token
+//			},
+//			success: function (data) {
+//				alert(data.Message);
+////
+//			},
+//			error: function (data) {
+//				alert('fail');
+//			}
+//		});
+	}
+	$('.right_show').css("padding-bottom",60);
+</script>
+</body>
+<!--<body id="add">-->
+	<!--<div id="info">-->
+	<!--<h3 style="margin-top: -10px;">Add Product</h3>-->
+	<!--<h4 style="float:left;margin-top: -10px;">Please Input Your SN:</h4>-->
+	<!--<input type="text" id="SN" placeholder="SN">-->
+	<!--<input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" id="back">-->
+	<!--<input type="button" value="Submit" id="add_product">-->
+	<!--</div>-->
+<!--</body>-->
+</html>

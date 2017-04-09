@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Modify Information</title>
+	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+	<script src="/RequestDisPatcher/JS/jquery-ui.js"></script>
+	<link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
+	<script src="/RequestDisPatcher/JS/ajaxfileupload.js"></script>
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			$("#yearOfBirth").datepicker();
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#submit_submit").click(function(){
+				var flog = checkForm();
+				if(flog!=false){
+					$.ajaxFileUpload({
+						url: "/RequestDisPatcher/login/modify",
+						type: "POST",
+						data : {
+							firstName:document.getElementById("firstName").value,
+							middleName:document.getElementById("middleName").value,
+							lastName:document.getElementById("lastName").value,
+							yearOfBirth:document.getElementById("yearOfBirth").value,
+							gender:document.getElementById("gender").value,
+							phoneNumber:document.getElementById("phone").value,
+							address:document.getElementById("address").value,
+							email:document.getElementById("email").value,
+							password:document.getElementById("password").value,
+						},
+						secureuri: false, //一般设置为false
+						fileElementId: "head", // 上传文件的id、name属性名
+						dataType: "json",
+						success: function(data){
+							if(data.Code==1006){
+								re_request();
+							}else{
+								alert(data.Message);
+							}
+						},
+						error: function(){
+							alert("Unknow Error.Please Try Again");
+						}
+					});
+				}
+			});
+		});
+	</script>
+	<script type="text/javascript">
+		function re_request(){
+			$.ajax({
+				type:"POST",
+				url:"/SleepMonitor/login/login",
+				data:{
+					Email:document.getElementById("email").value,
+					password:document.getElementById("password").value,
+				},
+				dataType:"json",
+				success:function(data){
+					if(data.Code!=1){
+						alert(data.Message);
+					}else{
+						document.cookie="userData="+JSON.stringify(data.data);
+						alert("Successfully Modify!");
+						window.location.href="homepage.html";
+					}
+				},
+				error:function(){
+					alert("Unkonw Error.Please Try Again!");
+				}
+			});
+		}
+	</script>
+	<script type="text/javascript">
+		function checkForm(){
+			var x1 = document.forms["re_form"]["firstName"].value;
+			var x2 = document.forms["re_form"]["lastName"].value;
+			var x3 = document.forms["re_form"]["yearOfBirth"].value;
+			var select = document.getElementById("gender");
+			if(select[0].selected==true){
+				alert("The Gender is not Filled");
+				return false;
+			}
+			var x5 = document.forms["re_form"]["phone"].value;
+			var x6 = document.forms["re_form"]["Email"].value;
+			var x7 = document.forms["re_form"]["password"].value;
+			if(x1==null||x1==""||x2==null||x2==""||x3==null||x3==""){
+				alert("Some Option is not Filled");
+				return false;
+			}
+			if(x5==null||x5==""||x6==null||x6==""||x7==null||x7==""){
+				alert("Some Option is not Filled");
+				return false;
+			}
+
+			var x9 = document.forms["re_form"]["repassword"].value;
+			if(x7!=x9){
+				alert("Please Check Your Password!Keep the Same");
+				return false;
+			}
+		}
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+
+//			console.log(userInfo);
+//
+			var info = JSON.parse(userInfo[2]);
+			var Info=info['userInfo'];
+
+			document.getElementById("firstName").value = Info.firstName;
+			document.getElementById("middleName").value = Info.middleName;
+			document.getElementById("lastName").value = Info.lastName;
+
+
+
+//			console.log(info);
+
+
+
+			var year = Info.yearOfBirth;
+			if(year!==null&&!(year=="")&&!(year==undefined))
+				document.getElementById("yearOfBirth").value = year;
+
+			var gender = Info.gender;
+			$("#gender").val(gender);
+
+
+			$("#year").val(Info['birthDay'].year);
+			$("#month").val(Info['birthDay'].month);
+			$("#day").val(Info['birthDay'].day);
+
+			document.getElementById("phone").value = Info.mphone;
+			var address = Info.address;
+			if(address!==null&&!(address=="")&&!(address==undefined))
+				document.getElementById("address").value = address;
+			document.getElementById("email").value = Info.email;
+			document.getElementById("email").readOnly="readOnly";
+			document.getElementById("password").value = Info.password;
+			document.getElementById("re_password").value = Info.password;
+		});
+	</script>
+
+</head>
+<body>
+
+<div class="holder reg_container">
+	<div class="left_nav reg_nav" >
+		<div class="header_text">
+			<div class="header_text_right">
+				<span class="header_pic"><a href="modify.html" ><img src="Heads/head_test.jpg" id="head"></a></span>
+			</div>
+		</div>
+		<ul>
+			<a href="javascript:scroll(0,0)"><li>First Name</li></a>
+			<a href="#middleName"><li>Middle Name</li></a>
+			<a href="#lastName"><li>Last Name</li></a>
+			<a href="#birthday_container"><li>Birthday</li></a>
+			<a href="#gender"><li>Gender</li></a>
+
+
+			<a href="#phone"><li>Phone Number</li></a>
+			<a href="#address"><li>Address</li></a>
+			<a href="#email"><li>E-mail</li></a>
+			<a href="#password"><li>Password</li></a>
+
+			<a href="#repassword"><li>Confirm Password</li></a>
+
+		</ul>
+	</div>
+	<div class="right_show">
+		<h3>Modify</h3>
+		<span onclick="javascript:history.back(-1);" class="glyphicon icon-caret-right"></span>
+		<div class="show_detail register">
+			<form name="re_form" onsubmit="return checkForm()">
+				<div class="form_txt">
+
+				</div>
+				<div class="panel_input reg_input mod_input">
+					<input type="text" placeholder="First Name *" id="firstName" value="" />
+				</div>
+				<div class="panel_input reg_input mod_input">
+					<input type="text" placeholder="Middle Name" id="middleName" value="" />
+				</div>
+				<div class="panel_input reg_input mod_input">
+					<input type="text" placeholder="Last Name *" id="lastName" value="" />
+				</div>
+				<span class="bir_txt">Birthday *</span>
+				<div class="reg_input reg_select ymd mod_input mod_ymd"  id="birthday_container">
+
+					<select id="year" name="year"></select>
+					<select id='month' name="month"></select>
+					<select id="day" name="day"></select>
+					<!--<input type="text" placeholder="Birthday *" id="yearOfBirth" value="01/01/1975" />-->
+				</div>
+				<div class="reg_input reg_select sex mod_input mod_sex">
+					<select  id="gender" name ="gender">
+						<option value ="" selected>Gender *</option>
+						<option value="1" >Male</option>
+						<option value="0" >Female</option>
+					</select>
+				</div>
+
+				<div class="panel_input reg_input mod_input">
+					<input type="text" placeholder="Phone Number *" id="phone" value="" />
+				</div>
+
+				<div class="panel_input reg_input mod_input">
+					<input type="text" placeholder="Address" id="address" value="" />
+				</div>
+
+				<div class="panel_input reg_input mod_input">
+					<input type="text" placeholder="E-mail *" id="email" value="" />
+				</div>
+
+				<div class="panel_input reg_input mod_input">
+					<input type="password" placeholder="Password *" id="password" value="" />
+				</div>
+
+				<div class="panel_input reg_input mod_input">
+					<input type="password" placeholder="Confirm Password" id="repassword" value="" />
+				</div>
+				<div class="foot_btn">
+					<input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back">
+					<input type="button" value="Submit" id="submit_submit" class="submit_submit">
+				</div>
+			</form>
+
+		</div>
+	</div>
+
+	<script src="/RequestDisPatcher/JS/mine.js"></script>
+	<script src="/RequestDisPatcher/JS/birthday.js"></script>
+	<script>
+		$("#birthday_container").birthday();
+	</script>
+</div>
+</body>
+<!--<body class="modify_page">-->
+	<!--<div class="modify_info" style="height:480px" id="modify_info">-->
+		<!--<form name="re_form" onsubmit="return checkForm()" >-->
+			<!--<h3 class="title">Modify</h3>-->
+			<!--<h6 class="notice" id="notice">Attention:The message with * must be filled out!</h6>-->
+			<!--<table width="340" class="table">-->
+				<!--<tr>-->
+					<!--<td class="message">First Name: *</td>-->
+					<!--<td><input type="text" name="firstName" id="firstName" class="input" ></td>-->
+				<!--</tr>-->
+				<!--<tr>-->
+					<!--<td class="message">Middle Name:</td>-->
+					<!--<td><input type="text" name="middleName" id="middleName" class="input" ></td>-->
+				<!--</tr>-->
+				<!--<tr>-->
+					<!--<td class="message">Last Name: *</td>-->
+					<!--<td><input type="text" name="lastName" id="lastName" class="input" ></td>-->
+				<!--</tr>-->
+				<!--<tr>-->
+					<!--<td class="message" >Year Of Birth: *</td>-->
+					<!--<td><input type="text" class="input" name="yearOfBirth" id="yearOfBirth"></td>-->
+				<!--</tr>-->
+				<!--<tr>-->
+					<!--<td class="message">Gender: *</td>-->
+					<!--<td class="gender_input" id="Gender" ><select class="gender_style" id="gender" name ="gender">-->
+							<!--<option value ="0"></option>-->
+							<!--<option value="Male" >Male</option>-->
+							<!--<option value="Female" >Female</option>-->
+						<!--</select>-->
+					<!--</td>-->
+				<!--</tr>-->
+				<!--<tr>-->
+					<!--<td class="message">Phone Number: *</td>-->
+					<!--<td><input type="text" name="phone" id="phone" class="input" ></td>-->
+				<!--</tr>-->
+				<!--<tr>-->
+					<!--<td class="message">Address:</td>-->
+					<!--<td><input type="text" name="address" id="address" class="input" ></td>-->
+				<!--</tr>-->
+				<!--<tr>-->
+					<!--<td class="message">Email: *</td>-->
+					<!--<td><input type="text" name="Email" id="email" class="input" readOnly="false"></td>-->
+				<!--</tr>-->
+				<!--<tr>-->
+					<!--<td class="message">Password: *</td>-->
+					<!--<td><input type="password" placeholder="Password" name="password" id="password" class="input"></td>-->
+				<!--</tr>-->
+				<!--<tr>-->
+					<!--<td class="message">Confirm Password:*</td>-->
+					<!--<td><input type="password" placeholder="Re-type Your Password" name="repassword" id="re_password" class="input"></td>-->
+				<!--</tr>-->
+				<!--<tr>-->
+					<!--<td class="message">Image:</td>-->
+					<!--<td><input type="file" name="head" class="input" id="head" ></td>-->
+				<!--</tr>-->
+			<!--</table>-->
+			<!--<input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back">-->
+			<!--<input type="button" value="Submit" id="submit_submit" class="submit_submit">-->
+		<!--</form>-->
+	<!--</div>-->
+
+<!--</body>-->
+</html>

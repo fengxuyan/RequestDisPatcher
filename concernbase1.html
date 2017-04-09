@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Family Concern</title>
+    <!-- <script src="../js/jquery-1.11.2.min.js"></script> -->
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+    <!--<script src="/SleepMonitor/JS/amcharts.js"></script>-->
+    <!--<script src="/SleepMonitor/JS/mine.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="/SleepMonitor/CSS/layout.css">
+    <link rel="stylesheet" type="text/css" href="/SleepMonitor/CSS/global.css">
+    <link rel="stylesheet" type="text/css" href="/SleepMonitor/CSS/font-awesome.min.css">
+    <script src="/SleepMonitor/JS/checkbrowser.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+            var info = JSON.parse(userInfo[2]);
+            var Email = info.Email;
+            var myConcern;
+            var concernMe;
+            var applyConcern;
+            var gender = info.gender;
+            if(gender=="Male"){
+                $('#head').attr('src','Heads/header_man.png');
+            }else if(gender=="Male"){
+                $('#head').attr('src','Heads/header_woman.png');
+            }
+
+
+            $(".concern_list li").eq(0).addClass("clickC");
+            $(".concern_list li").each(function(index,item){
+                $(item).bind("click",function(){
+                    $(item).addClass("clickC");
+                    $(item).siblings().removeClass("clickC");
+                    if(index==0){
+                        $('.concern0').show();
+                        $('.concern1').hide();
+                        $('.concern2').hide();
+                        //$('.oneDayLists').hide();
+                        $.ajax({
+                            type:"POST",
+                            url:"/SleepMonitor/concern/getConcern",
+                            data:{
+                                Email:Email
+                            },
+                            dataType:"json",
+                            timeout:5000,
+                            success:function(data){
+                                myConcern = data.data.myConcern;
+                                concernMe = data.data.concernMe;
+                                applyConcern = data.data.applyConcern;
+                                $.each(applyConcern,function(index,content){
+                                    $("#no_info").remove();
+                                    $(".item0_input").append('<div class="concern_someone_detail"><div class="detail_pic"><span class="header_pic"> <a href="modify.html"><img src="Heads/head_test.jpg" ></a><p>'+content.Name+'</p> <p>'+content.Email+'</p> </span> <div class="detail_btn"> <input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back"><input type="button" value="Submit" id="submit_submit" class="submit_submit"></div></div></div>');
+                                    document.cookie="applyUser"+index+"="+content.Name;
+                                    document.cookie="applyEmail"+index+"="+content.Email;
+                                });
+                            },
+                            error:function(){
+                                alert("Unkonw Error.Please Try Again!");
+                            }
+                        });
+                    }
+                    if(index==1){
+                        $('.concern1').show();
+                        $('.concern0').hide();
+                        $('.concern2').hide();
+                        //$('.oneDayLists').hide();
+                        var content=[];
+                        content.image='Heads/header_woman.png';
+                        content.Email='Heads/header_woman.png';
+                        content.Name='Heads/header_woman.png';
+
+                        $(".concern1").append('<ul class="concern_item1"> <div class="detail_pic"> <div class="header_pic"> <i class="itme1_arrow"></i> <a href="modify.html"> <img src='+content.image+ 'id="head"> </a> <span class="name">'+content.Name+'</span> <span class="email">'+content.Email+'</span> </div> <i class="itme1_rabish" onclick="myConcernCancel('+index+')"></i> <div class="item1_product_list"> <ul> <li><span>智能床垫</span> <a href="real.html">查看实时数据</a> <a href="healthy.html">查看健康档案</a> </li> <li><span>智能枕</span> <a href="real.html?id=123">查看实时数据</a> <a href="healthy.html">查看健康档案</a> </li> <li><span>智能手环</span> <a href="real.html">查看实时数据</a> <a href="healthy.html">查看健康档案</a> </li> </ul> </div> </div> </ul>');
+                        $('.concern_item1  .clickLi ').siblings().hide();
+                        $(".concern_item1  .clickLi").each(function(index,item){
+                            $(item).bind("click",function(event){
+                                //alert($target.index());
+                                //alert($target.parent().index());
+                                //$('.item1_product_list').toggle();
+                                alert($(item).text());
+                                //alert($target.index());
+                                $('i',this).toggleClass('itme1_arrow').toggleClass('itme2_arrow');
+                                $(this).siblings().toggle('item1_product_list');
+                                //$('.concern_item1 .detail_pic .header_pic').toggleClass('changestatus');
+                                //$(".concern_item0").hide();
+                            });
+                        });
+
+                        $.ajax({
+                            type:"POST",
+                            url:"/SleepMonitor/concern/getConcern",
+                            data:{
+                                Email:Email
+                            },
+                            dataType:"json",
+                            timeout:5000,
+                            success:function(data){
+                                myConcern = data.data.myConcern;
+                                concernMe = data.data.concernMe;
+                                applyConcern = data.data.applyConcern;
+                                $.each(myConcern,function(index,content){
+                                    $("#no_myConcern").remove();
+                                        $(".concern1").append('<ul class="concern_item1"> <div class="detail_pic"> <div class="header_pic"> <i class="itme1_arrow"></i> <a href="modify.html"> <img src='+content.image+ 'id="head"> </a> <span class="name">zhang san</span> <span class="email">'+content.email+'</span> </div> <i class="itme1_rabish" onclick="myConcernCancel("'+index+'")"></i> <div class="item1_product_list"> <ul> <li><span>智能床垫</span> <a href="real.html">查看实时数据</a> <a href="healthy.html">查看健康档案</a> </li> <li><span>智能枕</span> <a href="real.html?id=123">查看实时数据</a> <a href="healthy.html">查看健康档案</a> </li> <li><span>智能手环</span> <a href="real.html">查看实时数据</a> <a href="healthy.html">查看健康档案</a> </li> </ul> </div> </div> </ul>');
+                                    document.cookie="myconcernEmail"+index+"="+content.Email;
+                                });
+                            },
+                            error:function(){
+                                alert("Unkonw Error.Please Try Again!");
+                            }
+                        });
+                    }
+                    if(index==2){
+                        $('.concern2').show();
+                        $('.concern0').hide();
+                        $('.concern1').hide();
+                        //$('.daysLists').hide();
+                        var content=[];
+                        content.image='Heads/header_woman.png';
+                        content.Email='Heads/header_woman.png';
+                        content.Name='Heads/header_woman.png';
+
+                        $.ajax({
+                            type:"POST",
+                            url:"/SleepMonitor/concern/getConcern",
+                            data:{
+                                Email:Email
+                            },
+                            dataType:"json",
+                            timeout:5000,
+                            success:function(data){
+                                myConcern = data.data.myConcern;
+                                concernMe = data.data.concernMe;
+                                applyConcern = data.data.applyConcern;
+                                $.each(concernMe,function(index,content){
+                                    $("#no_concernMe").remove();
+                                    if(index==0){
+                                        $(".concern2").append('<ul class="concern_item2"> <div class="detail_pic"> <div class="header_pic"> <i class="itme1_arrow"></i> <a href="modify.html"> <img src='+content.image+' id="head"> </a> <span class="name">'+content.Name+'</span> <span class="email">'+content.Email+'</span> </div> <i id="concernMe_apply" class="itme1_rabish"  onclick="concernMeConcel('+index+')"></i> </div> </ul>');
+                                    }
+                                    document.cookie="concernMeEmail"+index+"="+content.Email;
+                                });
+                            },
+                            error:function(){
+                                alert("Unkonw Error.Please Try Again!");
+                            }
+                        });
+                    }
+                    //$(".concern_item0").hide();
+                });
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        function cancel_apply(){
+            $("#search_result").remove();
+            search_gb();
+        }
+        function apply_apply(){
+            var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+            var info = JSON.parse(userInfo[2]);
+            var myEmail = info.Email;
+            var firstName = info.firstName;
+            var middleName = info.middleName;
+            var lastName = info.lastName;
+            var otherEmails = document.cookie.match(new RegExp("(^| )applyPeopleEmail=([^;]*)(;|$)"));
+            var otherEmail = otherEmails[2];
+            $.ajax({
+                type:"post",
+                url:"/SleepMonitor/concern/apply",
+                data:{
+                    myEmail:myEmail,
+                    otherEmail:otherEmail,
+                    firstName:firstName,
+                    middleName:middleName,
+                    lastName:lastName
+                },
+                dataType:"json",
+                success:function(data){
+                    if(data.Code==1013){
+                        alert(data.Message);
+                        javascript:location.reload();
+                    }else{
+                        alert(data.Message);
+                    }
+                },
+                error:function(){
+                    alert("Unkonw Error.Please Try Again!");
+                }
+            });
+        }
+        function agree(index){
+            var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+            var info = JSON.parse(userInfo[2]);
+            var myEmail = info.Email;
+            var firstName = info.firstName;
+            var middleName = info.middleName;
+            var lastName = info.lastName;
+            var applyInfo1 = document.cookie.match(new RegExp("(^| )applyUser"+index+"=([^;]*)(;|$)"));
+            var otherName = applyInfo1[2];
+            var applyInfo2 = document.cookie.match(new RegExp("(^| )applyEmail"+index+"=([^;]*)(;|$)"));
+            var otherEmail = applyInfo2[2];
+            $.ajax({
+                type:"post",
+                url:"/SleepMonitor/concern/agree",
+                data:{
+                    myEmail:myEmail,
+                    otherEmail:otherEmail,
+                    firstName:firstName,
+                    middleName:middleName,
+                    lastName:lastName,
+                    otherName:otherName
+                },
+                dataType:"json",
+                success:function(data){
+                    if(data.Code==1015){
+                        alert(data.Message);
+                        javascript:location.reload();
+                    }else{
+                        alert(data.Message);
+                    }
+                },
+                error:function(){
+                    alert("Unkonw Error.Please Try Again!");
+                }
+            });
+        }
+        function disagree(index){
+            var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+            var info = JSON.parse(userInfo[2]);
+            var myEmail = info.Email;
+            var applyInfo2 = document.cookie.match(new RegExp("(^| )applyEmail"+index+"=([^;]*)(;|$)"));
+            var otherEmail = applyInfo2[2];
+            $.ajax({
+                type:"post",
+                url:"/SleepMonitor/concern/disagree",
+                data:{
+                    myEmail:myEmail,
+                    otherEmail:otherEmail
+                },
+                dataType:"json",
+                success:function(data){
+                    if(data.Code==1015){
+                        alert(data.Message);
+                        javascript:location.reload();
+                    }else{
+                        alert(data.Message);
+                    }
+                },
+                error:function(){
+                    alert("Unkonw Error.Please Try Again!");
+                }
+            });
+        }
+        function myConcernCancel(index){
+            var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+            var info = JSON.parse(userInfo[2]);
+            var myEmail = info.Email;
+            var applyInfo2 = document.cookie.match(new RegExp("(^| )myconcernEmail"+index+"=([^;]*)(;|$)"));
+            var otherEmail = applyInfo2[2];
+            $.ajax({
+                type:"post",
+                url:"/SleepMonitor/concern/cancel",
+                data:{
+                    myEmail:myEmail,
+                    otherEmail:otherEmail,
+                    flog:"true"
+                },
+                dataType:"json",
+                success:function(data){
+                    if(data.Code==1017){
+                        alert(data.Message);
+                        javascript:location.reload();
+                    }else{
+                        alert(data.Message);
+                    }
+                },
+                error:function(){
+                    alert("Unkonw Error.Please Try Again!");
+                }
+            });
+        }
+        function concernMeConcel(index){
+            var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+            var info = JSON.parse(userInfo[2]);
+            var myEmail = info.Email;
+            var applyInfo2 = document.cookie.match(new RegExp("(^| )concernMeEmail"+index+"=([^;]*)(;|$)"));
+            var otherEmail = applyInfo2[2];
+            $.ajax({
+                type:"post",
+                url:"/SleepMonitor/concern/cancel",
+                data:{
+                    myEmail:myEmail,
+                    otherEmail:otherEmail,
+                    flog:"false"
+                },
+                dataType:"json",
+                success:function(data){
+                    if(data.Code==1017){
+                        alert(data.Message);
+                        javascript:location.reload();
+                    }else{
+                        alert(data.Message);
+                    }
+                },
+                error:function(){
+                    alert("Unkonw Error.Please Try Again!");
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div class="holder">
+    <div class="left_nav">
+        <div class="header_text">
+            <div class="header_text_right">
+                <span class="header_pic"><a href="modify.html" ><img  id="head"></a></span>
+            </div>
+        </div>
+        <ul>
+            <a href="#"><li>退出登录</li></a>
+            <a href="concern.html"><li class="on">亲请关注</li></a>
+            <a href="productupgrade.html"><li>增值服务</li></a>
+            <a href="" ><span title="Yet open, please wait patiently"><li>名医坐堂</li></span></a>
+        </ul>
+    </div>
+    <div class="right_show">
+        <h2>isleep</h2>
+        <span class="glyphicon glyphicon-home"></span>
+        <div class="show_detail guanzhu">
+            <div class="show_detail_data">
+                <ul class="concern_list">
+                    <li><span>关注申请</span></li>
+                    <li><span>我的关注</span></li>
+                    <li><span>关注我的</span></li>
+                </ul>
+                <div class="concern0">
+                    <ul class="concern_item0">
+                        <div class="left">
+                            <div class="panel_input item0_input">
+                                <input type="email" class="" id="apply_txt"/>
+                                <input type="button" class="search_btn" id="search_btn" >
+                                <!--<img src="images/search.png" class="search_pic"/>-->
+                            </div>
+
+                        </div>
+                    </ul>
+                </div>
+                <div class="concern1">
+
+                </div>
+
+
+                <div class="concern2">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script src="JS/mine.js"></script>-->
+</body>
+</html>

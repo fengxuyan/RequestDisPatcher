@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Healthy Consultation</title>
+	<link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/number-pb.css">
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+	<!--<link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>-->
+	<script src="/RequestDisPatcher/amcharts/amcharts.js"></script>
+	<script src="/RequestDisPatcher/amcharts/serial.js"></script>
+	<script src="/RequestDisPatcher/amcharts/themes/light.js"></script>
+	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+	<script src="/RequestDisPatcher/JS/birthday.js"></script>
+	<script src="/RequestDisPatcher/JS/radialIndicator.js"></script>
+	<script src="/RequestDisPatcher/JS/jquery.velocity.min.js"></script>
+	<script src="/RequestDisPatcher/JS/number-pb.js"></script>
+	<style>
+		#chartdiv ,#chartdiv1,#chartdiv2,#chartdiv3{
+			width: 590px;
+			height	:300px;
+		}
+	</style>
+
+</head>
+<body>
+<div class="holder rep bag ">
+	<div class="left_nav">
+		<div class="header_text">
+			<div class="header_text_right">
+				<span class="header_pic"><a href="modify.html" ><img src="Heads/header_woman.png" id="head"></a></span>
+			</div>
+		</div>
+		<ul>
+			<a href="login.html"><li onclick="quit()"  >退出登录</li></a>
+			<a href="real.html"><li>实时数据</li></a>
+			<a href="healthy.html"><li class="on">健康档案</li></a>
+			<a href="addProduct.html"><li>添加或更改设备</li></a>
+			<a href="deleteProduct.html"><li>删除设备</li></a>
+		</ul>
+	</div>
+	<div class="right_show">
+		<h3>isleep</h3>
+		<a href="homepage.html"><span class="glyphicon glyphicon-home"></span></a>
+		<div class="show_detail">
+			<div class="show_detail_data">
+				<div class="data_table search">
+					<ul class="search_list">
+						<li>查询单次睡眠</li>
+						<li>查询多次睡眠</li>
+					</ul>
+					<div class="one" >
+						<div class="reg_input reg_select1  search_time"  id="search_time">
+							<select id="year" name="year"></select>
+							<select id="month" name="month"></select>
+							<select id="day" name="day"></select>
+							<!--<input type="text" placeholder="Birthday *" id="yearOfBirth" value="01/01/1975" />-->
+						</div>
+						<input type="button" id='confirm' class=" time_confirm" value="确认">
+
+						<div>
+							<ul class="search_list1 table">
+								<li>测试日期</li>
+								<li>睡眠时长</li>
+								<li>睡眠评分</li>
+							</ul>
+						</div>
+						<div class="bottomLine"></div>
+						<div class="oneDayLists">
+							<ul>
+								<li> <span>2016/07/08</span><span>8 小时</span><span>85</span></li>
+								<li> <span>2016/07/08</span><span>8 小时</span><span>85</span></li>
+								<li> <span>2016/07/08</span><span>8 小时</span><span>85</span></li>
+								<li> <span>2016/07/08</span><span>8 小时</span><span>85</span></li>
+								<li> <span>2016/07/08</span><span>8 小时</span><span>85</span></li>
+							</ul>
+						</div>
+						<input type="button" id='onesearch' class="submit_submit subSearch" value="单次查询">
+					</div>
+					<div class="two">
+						<div class="reg_input  reg_select1  ymd1"  id="search_times">
+							<select id="year1" name="year"></select>
+							<select id="month1" name="month"></select>
+							<select id="day1" name="day"></select>
+							<!--<input type="text" placeholder="Birthday *" id="yearOfBirth" value="01/01/1975" />-->
+						</div>
+						<input type="button" id='confirms' class=" time_confirms" value="确认">
+						<i></i>
+						<div class="reg_input  reg_select1  ymd1 times2"  id="search_times2">
+							<select id="year2" name="year"></select>
+							<select id="month2" name="month"></select>
+							<select id="day2" name="day"></select>
+							<!--<input type="text" placeholder="Birthday *" id="yearOfBirth" value="01/01/1975" />-->
+						</div>
+						<div>
+							<ul class="search_list1 table">
+								<li>测试日期</li>
+								<li>睡眠时长</li>
+								<li>睡眠评分</li>
+							</ul>
+						</div>
+						<div class="bottomLine"></div>
+						<div class="daysLists">
+							<ul>
+								<li> <span>2016/07/09</span><span>9 小时</span><span>85</span></li>
+								<li> <span>2016/07/09</span><span>9 小时</span><span>85</span></li>
+								<li> <span>2016/07/09</span><span>9 小时</span><span>85</span></li>
+								<li> <span>2016/07/09</span><span>9 小时</span><span>85</span></li>
+								<li> <span>2016/07/09</span><span>9 小时</span><span>85</span></li>
+								<li> <span>2016/07/09</span><span>9 小时</span><span>85</span></li>
+								<li> <span>2016/07/09</span><span>9 小时</span><span>85</span></li>
+								<li> <span>2016/07/09</span><span>9 小时</span><span>85</span></li>
+								<li> <span>2016/07/09</span><span>9 小时</span><span>85</span></li>
+								<li> <span>2016/07/09</span><span>9 小时</span><span>85</span></li>
+								<li> <span>2016/07/09</span><span>9 小时</span><span>85</span></li>
+								<li> <span>2016/07/09</span><span>9 小时</span><span>85</span></li>
+								<li> <span>2016/07/09</span><span>9 小时</span><span>85</span></li>
+								<li> <span>2016/07/09</span><span>9 小时</span><span>85</span></li>
+							</ul>
+						</div>
+						<input type="button" id='twosearch' class="submit_submit subSearch" value="多次查询">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+
+		$("#search_time").birthday();
+		$("#search_times").birthday();
+		$("#search_times2").birthday();
+		var myDate = new Date();
+		//获取当前年
+		var year = myDate.getFullYear();
+		//获取当前月
+		var month = myDate.getMonth() + 1;
+		//获取当前日
+		var day = myDate.getDate();
+		$("#year").val(year);
+		$("#month").val(month);
+		$("#day").val(day);
+
+		$("#year2").val(year);
+		$("#month2").val(month);
+		$("#day2").val(day);
+
+
+		function quit() {
+			$.ajax({
+				type:"post",
+				url:"/RequestDisPatcher/request/dispatcher.do",
+				data: {
+					url:"http://127.0.0.1:9001/login/logout",
+					params:"token="+token
+				},
+				success: function (data) {
+					alert(data.Message);
+//
+				},
+				error: function (data) {
+					alert('fail');
+				}
+			});
+		}
+
+
+$('#confirm').click(function () {
+
+})
+
+
+
+
+
+	});
+</script>
+<script>
+	$(function() {
+		var num = 50;
+		var num1 = 60;
+		var num2 = 70;
+		var num3 = 80;
+		var controlBar = $('#sample-pb .number-pb').NumberProgressBar({
+			duration: 3000,
+			percentage: num
+		});
+
+		var controlBar1 = $('#sample-pb1 .number-pb').NumberProgressBar({
+			duration: 3000,
+			percentage: num1
+		});
+
+		var controlBar2 = $('#sample-pb2 .number-pb').NumberProgressBar({
+			duration: 3000,
+			percentage: num2
+		});
+
+		var controlBar3 = $('#sample-pb3 .number-pb').NumberProgressBar({
+			duration: 3000,
+			percentage: num3
+		});
+
+
+		function animate(val) {
+			if (val < 0) {
+				num = 0;
+			} else if (val > 100) {
+				num = 100;
+			} else {
+				num = val
+			}
+			controlBar.reach(num);
+			controlBar1.reach(num1);
+			controlBar2.reach(num2);
+			controlBar3.reach(num3);
+		}
+	});
+	var radialObj4 = $('#indicatorContainer4').radialIndicator({
+		barColor: {
+			0: '#FF0000',
+			33: '#FFFF00',
+			66: '#0066FF',
+			100: '#33CC33'
+		},
+		percentage: true
+	}).data('radialIndicator');
+	//Using Instance
+	radialObj4.animate(79);
+
+</script>
+<script src="/RequestDisPatcher/JS/mine.js"></script>
+<script>
+	$('.right_show').css("padding-bottom",-60);
+</script>
+</body>
+
+</html>
