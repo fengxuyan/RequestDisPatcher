@@ -5,30 +5,46 @@
 <title>Add Product</title>
 	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
 	<link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
 <script type="text/javascript">
 $(document).ready(function(){
+	var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+	var info = JSON.parse(userInfo[2]);
+	var Info=info['userInfo'];
+	console.log(Info);
+	var token = info.token;
+	var device=Info.device;
+	console.log(device);
+
+	$.each(device, function(i, item) {
+
+		$(".numberlists").append('<li class="">'+item+'</li> ');
+	});
+
+
 	$("#delete_product").click(function(){
-		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
-		var info = JSON.parse(userInfo[2]);
-		var Info=info['userInfo'];
-		var token = info.token;
 
 		$.ajax({
 			type:"post",
 			dataType:"json",
 			url:"/RequestDisPatcher/request/dispatcher.do",
 			data: {
-				url:"101.37.100.209:9000/device/delete",
+				url:"http://101.37.100.209:9002/device/delete",
 				params:"token="+token+"&sn="+$('#SN').val()
 			},
 			success: function (data) {
 				console.log(data);
+				var txt=data.Message;
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
 			},
 			error: function (data) {
 				console.log(data);
+				var txt=data.Message;
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
 			}
 		});
 
@@ -62,7 +78,12 @@ $(document).ready(function(){
 				<div class="addpro">
 					<h4>删除设备</h4>
 				</div>
-				<h4 class="addpro number">现有智能床垫序列号</h4>
+				<!--<h4 class="addpro number">现有智能床垫序列号</h4>-->
+
+				<ul class="numberlists"></ul>
+
+
+
 				<!--<h4 class="addpro number dis">显示当前用户信息中该类设备SN</h4>-->
 				<div class="panel_input reg_input mod_input">
 					<input type="text" placeholder="显示当前用户信息中该类设备SN" id="SN" value="" />

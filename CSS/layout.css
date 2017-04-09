@@ -1098,7 +1098,7 @@ input[type=checkbox]:checked::after {
     height: 450px;
 }
 .oneDayLists li,.daysLists li{
-    width:100%;
+    width:110%;
     height:50px;
     font-family:华文细黑,STHeiti,MingLiu;
     font-size: 17px;
@@ -1598,3 +1598,40 @@ article .title {
     border-bottom:3px solid #ddd;
     color:#4f5452;
 }
+
+.num{
+    background: url(../images/concern2_messageNum.png) no-repeat !important;
+    display: inline-block;
+    height: 23px;
+    width: 23px;
+    vertical-align: middle;
+    margin-left: 8px;
+    background: url(../images/concern2_messageNum.png) no-repeat !important;
+}
+
+.num span{
+    position: relative;
+    top: -14px;
+    left: -2px;
+    color:#fff;
+}
+.numberlists{
+
+    min-height: 200px;
+    width:100%;
+    overflow-y: scroll;
+    overfloo-x:hidden;
+
+
+}
+
+.numberlists li{
+
+    padding-left: 63px;
+    font-size: 18px;
+    list-style: none;
+    font-weight: normal;
+
+}
+
+

@@ -78,18 +78,6 @@
                     });
                 });
 
-//                $(".clickLi .header_pic i .itme1_arrow").unbind().each(function(index,item){
-//                    $(item).on("click",function(event){
-//                        alert('remove');
-//                        $target=$(event.target);
-////                        $('i',this).toggleClass('itme1_arrow').toggleClass('itme2_arrow');
-////                        $(this).siblings().toggle('item1_product_list');
-//
-//
-//
-//                    });
-//                });
-
             }
             $.ajax({
                 type:"post",
@@ -100,8 +88,18 @@
 
                 },
                 success: function (data) {
-//                    console.log(data);
+//                    console.log(data.Data.length);
+                    var num=data.Data.length;
 //                    $('.concern_item2').empty();
+
+if(num>0){
+
+    $('.concern_list li:last-child  i').addClass("num");
+
+    $('.concern_list li:last-child  i span').text(num);
+
+};
+
                     $.each(data.Data, function(i, item) {
                         $(".concern2 .concern201").append('<ul class="concern_item2"><div class="detail_pic"> <div class="header_pic"> <i class="itme1_arrow"></i> <img src="'+item.image+'" id="head">  <span class="name">'+item.firstName+'</span> <span class="email">'+item.email+'</span> </div> <i class="itme1_rabish"></i> </div> </ul>');
                     });
@@ -350,7 +348,7 @@
                 <ul class="concern_list">
                     <li><span>关注申请</span></li>
                     <li><span>我的关注</span></li>
-                    <li><span>关注我的</span></li>
+                    <li><span>关注我的</span><i><span></span></i></li>
                 </ul>
                 <div class="concern0">
                     <div class="left" >
@@ -364,7 +362,7 @@
                 <div class="concern1"></div>
                 <div class="concern2">
                     <div class="concern201"><h4>批准申请</h4> </div>
-                    <div class="concern202"><h4>我的关注</h4> </div>
+                    <div class="concern202"><h4>关注我的</h4> </div>
                 </div>
             </div>
         </div>

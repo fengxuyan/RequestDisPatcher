@@ -1,21 +1,41 @@
-// ¶ÔDateµÄÀ©Õ¹£¬½« Date ×ª»¯ÎªÖ¸¶¨¸ñÊ½µÄString
-// ÔÂ(M)¡¢ÈÕ(d)¡¢Ð¡Ê±(h)¡¢·Ö(m)¡¢Ãë(s)¡¢¼¾¶È(q) ¿ÉÒÔÓÃ 1-2 ¸öÕ¼Î»·û£¬ 
-// Äê(y)¿ÉÒÔÓÃ 1-4 ¸öÕ¼Î»·û£¬ºÁÃë(S)Ö»ÄÜÓÃ 1 ¸öÕ¼Î»·û(ÊÇ 1-3 Î»µÄÊý×Ö) 
-// Àý×Ó£º 
-// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423 
-// (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18 
-Date.prototype.Format = function (fmt) { //author: meizz 
+Date.prototype.format =function(format)
+{
     var o = {
-        "M+": this.getMonth() + 1, //ÔÂ·Ý 
-        "d+": this.getDate(), //ÈÕ 
-        "h+": this.getHours(), //Ð¡Ê± 
-        "m+": this.getMinutes(), //·Ö 
-        "s+": this.getSeconds(), //Ãë 
-        "q+": Math.floor((this.getMonth() + 3) / 3), //¼¾¶È 
-        "S": this.getMilliseconds() //ºÁÃë 
-    };
-    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
-};
+        "M+" : this.getMonth()+1, //month
+        "d+" : this.getDate(), //day
+        "h+" : this.getHours(), //hour
+        "m+" : this.getMinutes(), //minute
+        "s+" : this.getSeconds(), //second
+        "q+" : Math.floor((this.getMonth()+3)/3), //quarter
+        "S" : this.getMilliseconds() //millisecond
+    }
+    if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
+        (this.getFullYear()+"").substr(4- RegExp.$1.length));
+    for(var k in o)if(new RegExp("("+ k +")").test(format))
+        format = format.replace(RegExp.$1,
+            RegExp.$1.length==1? o[k] :
+                ("00"+ o[k]).substr((""+ o[k]).length));
+    return format;
+}
+
+
+function MillisecondToDate(msd) {
+    var time = parseFloat(msd) /1000;
+    if (null!= time &&""!= time) {
+        if (time >60&& time <60*60) {
+            time = parseInt(time /60.0) +"åˆ†é’Ÿ"+ parseInt((parseFloat(time /60.0) -
+                    parseInt(time /60.0)) *60) +"ç§’";
+        }else if (time >=60*60&& time <60*60*24) {
+            time = parseInt(time /3600.0) +"å°æ—¶"+ parseInt((parseFloat(time /3600.0) -
+                    parseInt(time /3600.0)) *60) +"åˆ†é’Ÿ"+
+                parseInt((parseFloat((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60) -
+                    parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60)) *60) +"ç§’";
+        }else {
+            time = parseInt(time) +"ç§’";
+        }
+    }else{
+        time = "0 æ—¶ 0 åˆ†0 ç§’";
+    }
+    return time;
+
+}

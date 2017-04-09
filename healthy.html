@@ -18,12 +18,25 @@
 	<script src="/RequestDisPatcher/JS/radialIndicator.js"></script>
 	<script src="/RequestDisPatcher/JS/jquery.velocity.min.js"></script>
 	<script src="/RequestDisPatcher/JS/number-pb.js"></script>
+	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
+	<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
 	<style>
 		#chartdiv ,#chartdiv1,#chartdiv2,#chartdiv3{
 			width: 590px;
 			height	:300px;
 		}
 	</style>
+
+	<script>
+
+
+		$(document).ready(function() {
+
+
+		}
+		)
+
+	</script>
 
 </head>
 <body>
@@ -70,16 +83,11 @@
 						</div>
 						<div class="bottomLine"></div>
 						<div class="oneDayLists">
-							<ul>
-								<li> <span>2016/07/08</span><span>8 小时</span><span>85</span></li>
-								<li> <span>2016/07/08</span><span>8 小时</span><span>85</span></li>
-								<li> <span>2016/07/08</span><span>8 小时</span><span>85</span></li>
-								<li> <span>2016/07/08</span><span>8 小时</span><span>85</span></li>
-								<li> <span>2016/07/08</span><span>8 小时</span><span>85</span></li>
-							</ul>
+							<ul></ul>
 						</div>
 						<input type="button" id='onesearch' class="submit_submit subSearch" value="单次查询">
 					</div>
+
 					<div class="two">
 						<div class="reg_input  reg_select1  ymd1"  id="search_times">
 							<select id="year1" name="year"></select>
@@ -130,6 +138,21 @@
 </div>
 <script>
 	$(document).ready(function() {
+		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+		//            console.log(userInfo);
+		var info = JSON.parse(userInfo[2]);
+		console.log(info);
+		var Info = info['userInfo'];
+		var token = info.token;
+
+
+
+		if(userInfo==''){
+			location.href = "login.html";//location.href实现客户端页面的跳转
+		};
+
+
+
 
 		$("#search_time").birthday();
 		$("#search_times").birthday();
@@ -139,7 +162,7 @@
 		var year = myDate.getFullYear();
 		//获取当前月
 		var month = myDate.getMonth() + 1;
-		//获取当前日
+		//获取当前日S
 		var day = myDate.getDate();
 		$("#year").val(year);
 		$("#month").val(month);
@@ -148,6 +171,51 @@
 		$("#year2").val(year);
 		$("#month2").val(month);
 		$("#day2").val(day);
+
+		if($("#month").val()<10){
+
+			var month='0'+$("#month").val();
+
+		}else{
+			var month=$("#month").val();
+
+		};
+		if($("#day").val()<10){
+
+			var day='0'+$("#day").val();
+		}else{
+			var day=$("#day").val();
+
+		};
+
+		var time=month+'/'+day+'/'+$("#year").val();
+		console.log(time);
+		$.ajax({
+			type: "post",
+			url: "/RequestDisPatcher/request/dispatcher.do",
+			data: {
+				url: "http://101.37.100.209:9002/device/getInfo",
+				params: "token=" + token+"&time="+time
+			},
+			success: function (data) {
+				console.log(data);
+				$.each(data.Data, function(i, item) {
+					var sleeptime=MillisecondToDate(item.sleepEnd-item.sleepStart);
+					var date = new Date(parseInt(item.date));
+					var date_fmt=date.format("yyyy-MM-dd");
+
+					$(".oneDayLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+'</span><span>'+item.score+'</span></li>');
+
+				});
+
+			},
+			error: function (data) {
+				var txt=data.Message;
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+			}
+
+		});
+
 
 
 		function quit() {
@@ -169,68 +237,145 @@
 		}
 
 
-$('#confirm').click(function () {
+		$('#confirm').click(function () {
+
+var selectmonth=$("#month").val();
+	var selectday=$("#day").val();
+	var selectyear=$("#year").val();
+
+
+	if($("#month").val()<10){
+
+		var selectmonth='0'+$("#month").val();
+
+	}else{
+		var selectmonth=$("#month").val();
+
+	};
+	if($("#day").val()<10){
+
+		var selectday='0'+$("#day").val();
+	}else{
+		var selectday=$("#day").val();
+
+	};
+
+	var selecttime=selectmonth+'/'+selectday+'/'+selectyear;
+
+	window.location.href='sleepreport.html?time='+selecttime;
+
 
 })
 
 
+		$('#confirms').click(function () {
+			var selectmonth1=$("#month1").val();
+			var selectday1=$("#day1").val();
+			var selectyear1=$("#year1").val();
 
+			var selectmonth2=$("#month2").val();
+			var selectday2=$("#day2").val();
+			var selectyear2=$("#year2").val();
+
+			if(selectmonth1<10){
+
+				var selectmonth1='0'+$("#month1").val();
+
+			}else{
+				var selectmonth1=$("#month1").val();
+			};
+			if(selectday1<10){
+
+				var selectday1='0'+$("#day1").val();
+			}else{
+				var selectday1=$("#day1").val();
+
+			};
+
+
+			if(selectmonth2<10){
+
+				var selectmonth2='0'+$("#month2").val();
+
+			}else{
+				var selectmonth2=$("#month2").val();
+
+			};
+			if(selectday2<10){
+
+				var selectday2='0'+$("#day2").val();
+			}else{
+
+				var selectday2=$("#day2").val();
+			};
+
+			var startTime=selectmonth1+'/'+selectday1+'/'+selectyear1;
+			var endTime=selectmonth2+'/'+selectday2+'/'+selectyear2;
+
+
+			$.cookie('startTime', startTime, {expires: 1000*60*30, path: '/'});
+			$.cookie('endTime', endTime, {expires: 1000*60*30, path: '/'});
+
+			console.log(document.cookie);
+
+			window.location.href='SleepAnalysis.html';
+		})
 
 
 	});
 </script>
 <script>
-	$(function() {
-		var num = 50;
-		var num1 = 60;
-		var num2 = 70;
-		var num3 = 80;
-		var controlBar = $('#sample-pb .number-pb').NumberProgressBar({
-			duration: 3000,
-			percentage: num
-		});
-
-		var controlBar1 = $('#sample-pb1 .number-pb').NumberProgressBar({
-			duration: 3000,
-			percentage: num1
-		});
-
-		var controlBar2 = $('#sample-pb2 .number-pb').NumberProgressBar({
-			duration: 3000,
-			percentage: num2
-		});
-
-		var controlBar3 = $('#sample-pb3 .number-pb').NumberProgressBar({
-			duration: 3000,
-			percentage: num3
-		});
-
-
-		function animate(val) {
-			if (val < 0) {
-				num = 0;
-			} else if (val > 100) {
-				num = 100;
-			} else {
-				num = val
-			}
-			controlBar.reach(num);
-			controlBar1.reach(num1);
-			controlBar2.reach(num2);
-			controlBar3.reach(num3);
-		}
-	});
-	var radialObj4 = $('#indicatorContainer4').radialIndicator({
-		barColor: {
-			0: '#FF0000',
-			33: '#FFFF00',
-			66: '#0066FF',
-			100: '#33CC33'
-		},
-		percentage: true
-	}).data('radialIndicator');
+//	$(function() {
+//		var num = 50;
+//		var num1 = 60;
+//		var num2 = 70;
+//		var num3 = 80;
+//		var controlBar = $('#sample-pb .number-pb').NumberProgressBar({
+//			duration: 3000,
+//			percentage: num
+//		});
+//
+//		var controlBar1 = $('#sample-pb1 .number-pb').NumberProgressBar({
+//			duration: 3000,
+//			percentage: num1
+//		});
+//
+//		var controlBar2 = $('#sample-pb2 .number-pb').NumberProgressBar({
+//			duration: 3000,
+//			percentage: num2
+//		});
+//
+//		var controlBar3 = $('#sample-pb3 .number-pb').NumberProgressBar({
+//			duration: 3000,
+//			percentage: num3
+//		});
+//
+//
+//		function animate(val) {
+//			if (val < 0) {
+//				num = 0;
+//			} else if (val > 100) {
+//				num = 100;
+//			} else {
+//				num = val
+//			}
+//			controlBar.reach(num);
+//			controlBar1.reach(num1);
+//			controlBar2.reach(num2);
+//			controlBar3.reach(num3);
+//		}
+//	});
+//	var radialObj4 = $('#indicatorContainer4').radialIndicator({
+//		barColor: {
+//			0: '#FF0000',
+//			33: '#FFFF00',
+//			66: '#0066FF',
+//			100: '#33CC33'
+//		},
+//		percentage: true
+//	}).data('radialIndicator');
 	//Using Instance
-	radialObj4.animate(79);
+//	radialObj4.animate(79);
 
 </script>
 <script src="/RequestDisPatcher/JS/mine.js"></script>

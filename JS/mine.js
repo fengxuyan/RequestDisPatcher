@@ -95,14 +95,15 @@ $(function () {
     $("#onesearch").bind("click",function() {
             $('.one').hide();
             $('.report').show();
-            window.location.href='sleepreport.html';
         }
+
     );
     $("#twosearch").bind("click",function() {
             $('.two').hide();
             $('.reports').show();
             $('.right_show').css("height", "1800px");
-            window.location.href='SleepAnalysis.html';
+
+            // window.location.href='SleepAnalysis.html';
         }
     );
     //$("#twosearch").click($('.report').show());

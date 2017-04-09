@@ -130,24 +130,24 @@
 					}
 				}
 			});
-			$.ajax({
-				type: "POST",
-				url: "/RequestDisPatcher/request/dispatcher.do",
-				data: {
-					url: "http://127.0.0.1:9001/login/cancel",
-					params: "email=" + email + "&type=" + 'myConcer' + "&token=" + token
-				},
-				dataType: "json",
-				success: function (data) {
-					console.log(data);
-					$(item).parents('.concern_item1').remove();
-				},
-				error: function (jqXHR, textStatus, errorThrown, Code) {
-					console.log(data);
-					alert("Unkonw Error.Please Try Again!");
-
-				}
-			});
+			// $.ajax({
+			// 	type: "POST",
+			// 	url: "/RequestDisPatcher/request/dispatcher.do",
+			// 	data: {
+			// 		url: "http://127.0.0.1:9001/login/cancel",
+			// 		params: "email=" + email + "&type=" + 'myConcer' + "&token=" + token
+			// 	},
+			// 	dataType: "json",
+			// 	success: function (data) {
+			// 		console.log(data);
+			// 		$(item).parents('.concern_item1').remove();
+			// 	},
+			// 	error: function (jqXHR, textStatus, errorThrown, Code) {
+			// 		console.log(data);
+			// 		alert("Unkonw Error.Please Try Again!");
+            //
+			// 	}
+			// });
 			//点击取消按钮
 			$cancel.click(doCancel);
 			
