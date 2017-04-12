@@ -20,11 +20,47 @@
 	<script src="/RequestDisPatcher/JS/radialIndicator.js"></script>
 	<script src="/RequestDisPatcher/JS/jquery.velocity.min.js"></script>
 	<script src="/RequestDisPatcher/JS/number-pb.js"></script>
+	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
+
 	<style>
 		#chartdiv ,#chartdiv1,#chartdiv2,#chartdiv3{
 			width: 590px;
 			height	:300px;
 		}
+
+		.number-pb .number-pb-num {
+			position: absolute;
+			/* background-color: #fff; */
+			/* left: 4px; */
+			top: 30px;
+			/* padding: 16px 12px; */
+			width: 54px;
+			left: 19%;
+			background: none !important;
+			font-family:华文细黑,STHeiti,MingLiu;
+		}
+
+		.showgotoBed{
+			font-weight: normal !important;
+
+			line-height: 123px!important;
+			font-family:华文细黑,STHeiti,MingLiu;
+
+		}
+
+		.showgotoBed.outOfBed{
+			margin-right: 20px;
+			display: inline-block;
+			float: right;
+		}
+		.qc{
+			position: absolute;
+			z-index: 4;
+
+			left:-21px !important;
+		}
+
+
 	</style>
 
 </head>
@@ -57,33 +93,34 @@
 					<div class="report">
 						<div class="report_detail">
 							<h4 class="">监测报告</h4>
-							<h5>监测日期：<span>7月14日</span></h5>
+							<h5>监测日期：</h5>
 							<div class="circle">
 								<ul>
-									<li><span>72</span><span>次/分</span><span>平均心率</span></li>
-									<li><span>12</span><span>次/分</span><span>平均呼吸率</span></li>
+									<li><span class="showxl"></span><span>次/分</span><span>平均心率</span></li>
+									<li><span class="showhxl"></span><span>次/分</span><span>平均呼吸率</span></li>
 									<li>
 										<div id="indicatorContainer4">
 										</div>
 										<span class="pf">睡眠评分</span>
 									</li>
-									<li><span>15</span><span>次/分</span><span>翻身次数</span></li>
-									<li><span>8</span><span>次/分</span><span>起夜次数</span></li>
+									<li><span class="showfscs"></span><span>次/分</span><span>翻身次数</span></li>
+									<li><span class="showqycs"></span><span>次/分</span><span>起夜次数</span></li>
 								</ul>
 							</div>
 							<div class="line">
 								<ul>
 									<li>
 										<i class="sc"><span>上床</span></i>
+
 										<section id="sample-pb">
 											<article>
-												<div class="number-pb">
+												<div class="number-pb rumian">
 													<div class="number-pb-shown "><i class="icon_sleepright">入眠</i></div>
-													<!--<div class="number-pb-num">入眠</div>-->
+
 												</div>
 											</article>
 										</section>
-										<i><span>起床</span></i>
+										<i class="qc"><span>起床</span></i>
 									</li>
 									<li>
 										<section id="sample-pb1">
@@ -94,7 +131,7 @@
 												</div>
 											</article>
 										</section>
-										<p>深度睡眠时长:5小时20分</p>
+
 									</li>
 									<li>
 										<section id="sample-pb2">
@@ -105,18 +142,18 @@
 												</div>
 											</article>
 										</section>
-										<p>浅度睡眠时长:3小时20分</p>
+
 									</li>
 									<li>
 										<section id="sample-pb3">
 											<article>
 												<div class="number-pb">
-													<div class="number-pb-shown"><i class="icon_sleepright">深睡</i></div>
+													<div class="number-pb-shown"><i class="icon_sleepright">总长</i></div>
 													<!--<div class="number-pb-num">总长</div>-->
 												</div>
 											</article>
 										</section>
-										<p>深度睡眠时长:5小时20分</p>
+
 									</li>
 								</ul>
 							</div>
@@ -178,10 +215,78 @@
 			url: "/RequestDisPatcher/request/dispatcher.do",
 			data: {
 				url: "http://101.37.100.209:9002/device/getRealData",
-				params: "token=" + token + "&time=" + $('#SN').time
+				params: "token=" + token + "&time=" + time
 			},
 			success: function (data) {
 				console.log(data);
+				$('.report_detail h5').append('<span>'+time+'</span>');
+				var radialObj4 = $('#indicatorContainer4').radialIndicator({
+					barColor: {
+						0: '#FF0000',
+						33: '#FFFF00',
+						66: '#0066FF',
+						100: '#33CC33'
+					},
+					percentage: true
+				}).data('radialIndicator');
+				radialObj4.animate(data.Data[0].score);
+
+				$('.showxl').text(data.Data[0].avgHeart);
+				$('.showhxl').text(data.Data[0].avgBreath);
+				$('.showfscs').text(data.Data[0].turnNum);
+				$('.showqycs').text(data.Data[0].outNum);
+
+
+				var allSleepTime=MillisecondToDate(data.Data[0].sleepEnd-data.Data[0].sleepStart);
+
+				var deepSleepTime=MillisecondToDate((data.Data[0].deepSleepTime)*1000);
+
+				var lightSleepTime=MillisecondToDate((data.Data[0].lightSleepTime)*1000);
+
+
+				$('#sample-pb1').append('<p>深度睡眠时长:'+ deepSleepTime +'</p>');
+				$('#sample-pb2').append('<p>浅度睡眠时长:'+ lightSleepTime +'</p>');
+				$('#sample-pb3').append('<p>总睡眠时长:'+ allSleepTime +'</p>');
+
+				//上床到开始睡眠比例
+
+//				var num=((data.Data[0].goToBed)*1000/(data.Data[0].sleepEnd-data.Data[0].sleepStart))*100;
+
+				var num=((data.Data[0].sleepStart-data.Data[0].goToBed)/(data.Data[0].outOfBed-data.Data[0].goToBed))*100;
+
+				console.log(num);
+				//深度睡眠比例
+				var num1=((data.Data[0].deepSleepTime)*1000/(data.Data[0].sleepEnd-data.Data[0].sleepStart))*100;
+
+
+				//浅度睡眠比例
+				var num2=((data.Data[0].lightSleepTime)*1000/(data.Data[0].sleepEnd-data.Data[0].sleepStart))*100;
+
+				var date_sleepStart = new Date(parseInt(data.Data[0].sleepStart));
+				var date_fmt_sleepStart=date_sleepStart.format(" hh:mm");
+				$('.number-pb.rumian').append('<div class="number-pb-num">'+date_fmt_sleepStart+'</div>');
+
+				var date_goToBed = new Date(parseInt(data.Data[0].goToBed));
+				var date_fmt_goToBed=date_goToBed.format(" hh:mm");
+				$('.sc').append('<span class="showgotoBed">'+date_fmt_goToBed+'</span>');
+
+
+				var date_outOfBed = new Date(parseInt(data.Data[0].outOfBed));
+				var date_fmt_outOfBed=date_outOfBed.format(" hh:mm");
+				$('.qc').append('<span class="showgotoBed outOfBed">'+date_fmt_outOfBed+'</span>');
+
+
+				var controlBar1 = $('#sample-pb1 .number-pb').NumberProgressBar({
+					duration: 3000,
+					percentage: num1
+				});
+
+				var controlBar2 = $('#sample-pb2 .number-pb').NumberProgressBar({
+					duration: 3000,
+					percentage: num2
+				});
+
+
 			},
 			error: function (data) {
 				console.log(data);
@@ -197,23 +302,13 @@
 </script>
 <script>
 	$(function() {
-		var num = 50;
-		var num1 = 60;
-		var num2 = 70;
-		var num3 = 80;
+		var num = 30;
+//		var num1 = 60;
+//		var num2 = 70;
+		var num3 = 100;
 		var controlBar = $('#sample-pb .number-pb').NumberProgressBar({
 			duration: 3000,
 			percentage: num
-		});
-
-		var controlBar1 = $('#sample-pb1 .number-pb').NumberProgressBar({
-			duration: 3000,
-			percentage: num1
-		});
-
-		var controlBar2 = $('#sample-pb2 .number-pb').NumberProgressBar({
-			duration: 3000,
-			percentage: num2
 		});
 
 		var controlBar3 = $('#sample-pb3 .number-pb').NumberProgressBar({
@@ -236,17 +331,9 @@
 			controlBar3.reach(num3);
 		}
 	});
-	var radialObj4 = $('#indicatorContainer4').radialIndicator({
-		barColor: {
-			0: '#FF0000',
-			33: '#FFFF00',
-			66: '#0066FF',
-			100: '#33CC33'
-		},
-		percentage: true
-	}).data('radialIndicator');
+
 	//Using Instance
-	radialObj4.animate(79);
+
 
 </script>
 <script src="/RequestDisPatcher/JS/mine.js"></script>

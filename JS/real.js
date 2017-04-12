@@ -6,7 +6,23 @@
  */
 $(function () {
 
-    $('.xl_line').css('background-image','url(./images/70.gif)');
+    var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+    var info = JSON.parse(userInfo[2]);
+    var Info = info['userInfo'];
+    var first = Info.firstName;
+    var middle = Info.middleName;
+    var last = Info.lastName;
+    var gender = Info.gender;
+
+    var  image=Info.image;
+    console.log(info);
+
+    var device=Info.device;
+    console.log(device[0]);
+
+        console.log('123');
+
+
 
     var ajaxurl="http://101.37.100.209:9001/login/getConcernMe";
 

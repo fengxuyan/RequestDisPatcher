@@ -3,43 +3,34 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Highcharts Example</title>
-
-		<script type="text/javascript" src="https://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
-		<style type="text/css">
-${demo.css}
-		</style>
+		<script type="text/javascript" src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+		<script src="/RequestDisPatcher/JS/highcharts.js"></script>
+		<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/highslide.css" />
+		<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
+		<style type="text/css">${demo.css}</style>
 	</head>
 	<body>
-
-<script src="https://cdn.hcharts.cn/highcharts/5.0.10/highcharts.js"></script>
-<script src="https://cdn.hcharts.cn/highcharts/5.0.10/modules/data.js"></script>
-<script src="https://cdn.hcharts.cn/highcharts/5.0.10/modules/exporting.js"></script>
-
-<!-- Additional files for the Highslide popup effect -->
-<script src="https://www.highcharts.com/samples/static/highslide-full.min.js"></script>
-<script src="https://www.highcharts.com/samples/static/highslide.config.js" charset="utf-8"></script>
-<link rel="stylesheet" type="text/css" href="https://www.highcharts.com/samples/static/highslide.css" />
-<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
-
 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 		<script type="text/javascript">
 // Get the CSV and create the chart
-
-
 var startTime=$.cookie('startTime')
 var endTime=$.cookie('endTime')
-
-
 console.log(startTime);
 console.log(endTime);
-
 var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 //console.log(userInfo);
 var info = JSON.parse(userInfo[2]);
 console.log(info);
 var Info = info['userInfo'];
 var token = info.token;
-var series1 = new Array();
+
+var tes1=new Array();
+
+function arrAverageNum2(arr){
+	var sum = eval(arr.join("+"));
+	return ~~(sum/arr.length*100)/100;
+}
+
 $.ajax({
 	type:"post",
 	dataType:"json",
@@ -50,127 +41,112 @@ $.ajax({
 	},
 	success: function (data) {
 		console.log(data.Data);
+		var map2 = new Array();//一维数组
+		for (var i = 0; i < data.Data.length; i++) {
+
+			map2.push(data.Data[i].avgHeart);//一维数组
+		}
+		console.log(JSON.stringify(map2));
 
 
-		$.each(data.Data, function(i, item) {
+		var hightest=Math.max.apply(null, map2);//最大值
+		var minest=Math.min.apply(null, map2);//最小值
+        var avg=arrAverageNum2(map2);
+		var fields1 = {data:map2,color:'#000',name:'心率',width:2};
 
-			series1.push(item.avgHeart);
+		var chart = new Highcharts.Chart('container', {
+			chart:{
+				type:'spline'
+			},
+			title: {
+				text: '心率',
+				x: -60,
+				y: 90
+			},
+			subtitle: {
+			},
+			xAxis: {
+				labels: {
+					enabled: false
+				}
+			},
+			yAxis: {
+				gridLineWidth:'0px',
+				title: {
+					text: ''
+				},
+				plotLines:[
 
 
 
+						{
+
+
+							label:{
+								text:'最高值',    //标签的内容
+								align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+								x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+							},
+
+
+							zIndex:26,
+							color:'#000',           //线的颜色，定义为红色
+					dashStyle:'Dot',     //默认值，这里定义为实线
+					value:hightest,         //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
+					width:2                //标示线的宽度，2px
+				},
+					{
+
+						label:{
+							text:'最低值',   //标签的内容
+							align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+							x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+						},
+
+						color:'#000',
+						dashStyle:'Dot',
+						value:minest,
+						width:2,
+						zIndex:23
+					},
+					{
+
+						label:{
+							text:'平均值',  //标签的内容
+							align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+							x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+						},
+
+						color:'#000',
+						dashStyle:'Dot',
+						value:avg,
+						width:2
+					}
+				]
+			},
+			tooltip: {
+				valueSuffix: '次/分'
+			},
+			legend: {
+				layout: 'vertical',
+				backgroundColor: '#fff',
+				floating: true,
+				align: 'left',
+				verticalAlign: 'top',
+				x: 190,
+				y: 45,
+				labelFormat: '<span style="color:#fff">"心率"</span>'
+			},
+			series:
+					[
+						fields1
+					]
 		});
-
-
 	},
 	error: function (data) {
 		console.log(data);
-
 	}
 });
-
-console.log(series1);
-
-    Highcharts.chart('container', {
-
-        data: {
-            csv: series1
-        },
-
-        title: {
-            text: 'Daily visits at www.highcharts.com'
-        },
-
-        subtitle: {
-            text: 'Source: Google Analytics'
-        },
-
-        xAxis: {
-            tickInterval: 7 * 24 * 3600 * 1000, // one week
-            tickWidth: 0,
-            gridLineWidth: 1,
-            labels: {
-                align: 'left',
-                x: 3,
-                y: -3
-            }
-        },
-
-        yAxis: [{ // left y axis
-            title: {
-                text: null
-            },
-            labels: {
-                align: 'left',
-                x: 3,
-                y: 16,
-                format: '{value:.,0f}'
-            },
-            showFirstLabel: false
-        }, { // right y axis
-            linkedTo: 0,
-            gridLineWidth: 0,
-            opposite: true,
-            title: {
-                text: null
-            },
-            labels: {
-                align: 'right',
-                x: -3,
-                y: 16,
-                format: '{value:.,0f}'
-            },
-            showFirstLabel: false
-        }],
-
-        legend: {
-            align: 'left',
-            verticalAlign: 'top',
-            y: 20,
-            floating: true,
-            borderWidth: 0
-        },
-
-        tooltip: {
-            shared: true,
-            crosshairs: true
-        },
-
-        plotOptions: {
-            series: {
-                cursor: 'pointer',
-                point: {
-                    events: {
-                        click: function (e) {
-                            hs.htmlExpand(null, {
-                                pageOrigin: {
-                                    x: e.pageX || e.clientX,
-                                    y: e.pageY || e.clientY
-                                },
-                                headingText: this.series.name,
-                                maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
-                                    this.y + ' visits',
-                                width: 200
-                            });
-                        }
-                    }
-                },
-                marker: {
-                    lineWidth: 1
-                }
-            }
-        },
-
-        series: [{
-            name: 'All visits',
-            lineWidth: 4,
-            marker: {
-                radius: 4
-            }
-        }, {
-            name: 'New visitors'
-        }]
-    });
-
 		</script>
 	</body>
 </html>

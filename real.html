@@ -11,13 +11,259 @@
 	<script src="/RequestDisPatcher/JS/jquery-ui.js"></script>
 	<script src="/RequestDisPatcher/JS/number-pb.js"></script>
 	<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
+	<script src="/RequestDisPatcher/JS/real.js"></script>
+<style>
+.block_pic{
+	overflow:hidden;
+}
+	.lixian{
+		background: url("images/onmove_block.png")!important; ;
+		background-size: 10px 116px;
+		display: inline-block;
+		height:116px;
+		width:10px;
+	}
 
+	.wuren{
+		background: url("images/noperson_block.png")!important; ;
+		background-size: 10px 116px;
+		display: inline-block;
+		height:116px;
+		width:10px;
+	}
+	.fanshen{
+		background: url("images/onbed_block.png")!important; ;
+		background-size: 10px 116px;
+		display: inline-block;
+		height:116px;
+		width:10px;
+
+	}
+	.tidong{
+
+		background: url("images/onmove_block.png")!important; ;
+		background-size: 10px 116px;
+		display: inline-block;
+		height:116px;
+		width:10px;
+	}
+
+	.time.time1 span{
+		float:right;
+		padding-top: 7px;
+		font-weight: normal;
+		margin-left: 12px;
+		margin-right: -68px;
+
+	}
+	#sj span{
+		float:left;
+		padding-top: 31px;
+		font-weight: normal;
+		/*margin-left: 12px;*/
+		margin-left: -68px;
+
+	}
+
+
+
+</style>
 </head>
 <script type="text/javascript">
+	setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+//		window.location.reload();//页面刷新
+
+//		document.a.location.reload();
+
+//		window.frames['a'].document.location.reload();
+	},3000);
+
+
+
+	function quit() {
+		$.ajax({
+			type:"post",
+			url:"/RequestDisPatcher/request/dispatcher.do",
+			data: {
+				url:"http://127.0.0.1:9001/login/logout",
+				params:"token="+token
+			},
+			success: function (data) {
+				alert(data.Message);
+//
+			},
+			error: function (data) {
+				alert('fail');
+			}
+		});
+	}
 	$(document).ready(function() {
 		if ($.cookie('the_cookie') == '') {
 			location.href = "login.html";//location.href实现客户端页面的跳转
 		}
+		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+		var info = JSON.parse(userInfo[2]);
+		var Info = info['userInfo'];
+		var first = Info.firstName;
+		var middle = Info.middleName;
+		var last = Info.lastName;
+		var gender = Info.gender;
+		var  image=Info.image;
+
+		var device=Info.device;
+
+
+		if(image==null){
+			if(gender==1){
+				$('#head').attr('src','Heads/header_man.png');
+
+			}else if(gender==0){
+				$('#head').attr('src','Heads/header_woman.png');
+			}
+		}else{
+			$('#head').attr('src',image);
+		}
+
+		var  showpic=new Array();
+		$.ajax({
+			type:"post",
+			url:"/RequestDisPatcher/request/dispatcher.do",
+
+
+			data: {
+				url:"http://101.37.100.209:9000/api/realdata",
+				params:"sn="+device[0]
+			},
+			success: function (data) {
+				console.log(data.Data.event);
+				var showpic_event1=$.cookie('showpic_event')
+				$.cookie('showpic_event', showpic_event1+data.Data.event, {expires: 1000*60*30, path: '/'});
+//				if(showpic_event1!=''){
+
+//				};
+				console.log($.cookie('showpic_event'));
+
+				if(data.Data.heart=0){
+					$('.xl_line').css('background-image','none !important');
+				}
+
+				if(data.Data.heart<60){
+					$('.xl_line').css('background-image','url(./images/60.gif)');
+				}
+				if(60<data.Data.heart<70){
+					$('.xl_line').css('background-image','url(./images/70.gif)');
+				}
+				$('.xl_line').append('<h2>'+data.Data.heart+'</h2><h4>次/分</h4>');
+				$('.hxl_line').append('<h2>'+data.Data.breath+'</h2><h4>次/分</h4>');
+
+
+
+
+				var time = new Date();
+				//获取当前年
+				var year = myDate.getFullYear();
+				//获取当前月
+				var month = myDate.getMonth() + 1;
+				//获取当前日S
+
+				var tnow = time.getHours() + ":"
+						+ time.getMinutes() + ":" + time.getSeconds();
+
+				var d1=new Date();
+				var d2=new Date(d1.getTime()+1*60*30*1000);
+
+				d2.getMinutes() < 10 ? '0' + d2.getMinutes() : '' + d2.getMinutes();
+
+				d2.getHours() < 10 ? '0' + d2.getHours() : '' + d2.getHours();
+
+				d2.getSeconds() < 10 ? '0' + d2.getSeconds() : '' + d2.getSeconds();
+
+				var tnext=d2.getHours()+":"+d2.getMinutes()+":"+d2.getSeconds();
+
+
+				$('.time.time1').append('<span>'+tnext+'</span>');
+
+
+				$('#sj').append('<span>'+tnow+'</span>');
+
+
+
+			/*
+
+			 根据实时数据不同 根据状态绘制拼接block_pic 的背景图
+			 ajax请求返回状态 根据状态append div div对应着背景图  刷新当前页面 超出最外面的框就隐藏
+			 同时更改心率呼吸率
+
+			   */
+
+				var show=$.cookie('showpic_event');
+
+				var div1=$('.block_pic');
+
+				console.log(show.length);
+
+				if(show.length>80){
+
+					show.length=75;
+
+				}
+
+
+
+				for(var i=0;i<show.length;i++){
+
+					console.log(show[i]);
+					switch(show[i])
+					{
+							//设备离线
+						case '0':
+							console.log(show[i]);
+							var htm2='<div class="lixian"></div>';
+//							div1.empty();
+							div1.append(htm2);
+							break;
+							//设备体动
+
+						case '1':
+							console.log(show[i]);
+							var htm2='<div class="tidong"></div>';
+//							div1.empty();
+							div1.append(htm2);
+							break;
+							//有人
+						case '2':
+							console.log(show[i]);
+							var htm2='<div class="fanshen"></div>';
+//							div1.empty();
+							div1.append(htm2);
+							break;
+
+							//翻身
+						case '3':
+							console.log(show[i]);
+							var htm2='<div class="tidong"></div>';
+//							div1.empty();
+							div1.append(htm2);
+							break;
+							//无人
+						case '4':
+							console.log(show[i]);
+							var htm2='<div class="wuren"></div>';
+//							div1.empty();
+							div1.append(htm2);
+							break;
+						default:
+							break;
+					}
+				};
+
+
+
+			},
+			error: function (data) {
+				console.log(data);
+			}
+		});
 	})
 </script>
 <body>
@@ -32,11 +278,11 @@
 	<div class="left_nav">
 		<div class="header_text">
 			<div class="header_text_right">
-				<span class="header_pic"><a href="modify.html" ><img src="Heads/header_woman.png" id="head"></a></span>
+				<span class="header_pic"><a href="modify.html" ><img src="" id="head"></a></span>
 			</div>
 		</div>
 		<ul>
-			<a href="#"><li>退出登录</li></a>
+			<a href="login.html"><li onclick="quit()"  >退出登录</li></a>
 			<a ><li class="on">实时数据</li></a>
 			<a href="healthy.html"><li>健康档案</li></a>
 			<a href="addProduct.html"><li>添加或更改设备</li></a>
@@ -53,33 +299,28 @@
 						<div class="xl_pic">
 							<h4>心率</h4>
 						</div>
-						<div class="xl_line">
-							<h2>72</h2><h4>次/分</h4>
-						</div>
+						<div class="xl_line"></div>
 					</div>
 					<div class="centerdiv"></div>
 					<div id="hxl" class="right_breath_rate">
 						<div class="hxl_pic">
 							<h4>呼吸率</h4>
 						</div>
-						<div class="hxl_line">
-							<h2>72</h2><h4>次/分</h4>
-						</div>
+						<div class="hxl_line"></div>
 					</div>
 				</div>
 			</div>
 			<div class="clear"></div>
+
+
+<!--<iframe  src='show_detail_status.html' name="a" id="a">-->
+
 			<div id="zt" class="show_detail_status">
 				<ul class="status">
 					<li class="itmes"><span>状态</span></li>
 					<li>
-						<label for="ztai" id="noperson1">
-							<input type="checkbox" name="ztai" value="ztai" /><span>无人</span>
-						</label>
-					</li>
-					<li>
-						<label for="ztai" id="nomove">
-							<input type="checkbox" name="ztai" value="ztai" /><span>体动</span>
+						<label for="ztai" id="status">
+							<input type="checkbox" name="ztai" value="ztai" /><span>status</span>
 						</label>
 					</li>
 
@@ -88,15 +329,23 @@
 							<input type="checkbox" name="ztai" value="ztai" />
 						</label><span>在床</span>
 					</li>
+					<li>
+						<label for="ztai" id="nomove">
+							<input type="checkbox" name="ztai" value="ztai" /><span>体动</span>
+						</label>
+					</li>
+					<li>
+						<label for="ztai" id="noperson1">
+							<input type="checkbox" name="ztai" value="ztai" /><span>无人</span>
+						</label>
+					</li>
+
 				</ul>
 				<div class="block_pic"></div>
-				<div id="sj">
-				</div>
-				<div class="time">
-					<span></span>
-					<!--<span>22:00</span>-->
-				</div>
+				<div class="time" id="sj"></div>
+				<div id='next' class="time time1"></div>
 			</div>
+<!--</iframe>-->
 		</div>
 	</div>
 </div>

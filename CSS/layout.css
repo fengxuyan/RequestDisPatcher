@@ -921,7 +921,7 @@ input::-webkit-input-placeholder{
 }
 .block_pic{
     height:116px;
-    background-image: url("../images/onmove_block.png");
+    /*background-image: url("../images/onmove_block.png");*/
 }
 .itmes{
     margin-left: 40px;
@@ -940,25 +940,31 @@ input::-webkit-input-placeholder{
 
 .status li:nth-child(4),.status li:nth-child(3),.status li:nth-child(2){
     /*padding-left: 58px;*/
-    width:20%;
-    float:right;
+    /*width:12%;*/
+    /*float:right;*/
 }
 
 
-.status li:nth-child(2) {
+.status li:nth-child(5) {
     background-image: url("../images/noperson.png") !important;
 
     background-repeat: no-repeat;
     background-position: left;
 }
-.status li:nth-child(3) {
+.status li:nth-child(4) {
     background-image: url("../images/onmove.png") !important;
     background-repeat: no-repeat;
     background-position: left;
 }
 
 
-.status li:nth-child(4) {
+.status li:nth-child(3) {
+    background-image: url("../images/onbed.png") !important;
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+.status li:nth-child(2) {
     background-image: url("../images/onbed.png") !important;
     background-repeat: no-repeat;
     background-position: left;
@@ -1257,12 +1263,18 @@ input[type=checkbox]:checked::after {
     width:50px;
 }
 .line ul li i:first-child{
-    float:left;
+    /*float:left;*/
+    /*background: url(../images/healthy_line1_shang.png) no-repeat;*/
+    position: relative;
+    left: 14px;
+    top: 6px;
+    float: left;
     background: url(../images/healthy_line1_shang.png) no-repeat;
+    z-index: 3;
 }
 .line ul li i:last-child{
     position:relative;
-    left: 7px;
+    left: 10px;
     top: 6px;
     float:right;
     background: url(../images/healthy_lin2_sleepdeep.png) no-repeat;
@@ -1308,9 +1320,13 @@ article .title {
 
 
 #sample-pb{
-    width: 490px;
+    width: 522px;
     height: 50px;
     float: left;
+    padding: 0;
+    margin-left: -33px;
+    z-index: 2;
+    position: relative;
 }
 
 

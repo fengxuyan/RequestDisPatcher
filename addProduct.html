@@ -15,16 +15,50 @@
 	<script src="/RequestDisPatcher/amcharts/themes/light.js"></script>
 
 <script type="text/javascript">
+	function quit() {
+		$.ajax({
+			type:"post",
+			url:"/RequestDisPatcher/request/dispatcher.do",
+			data: {
+				url:"http://127.0.0.1:9001/login/logout",
+				params:"token="+token
+			},
+			success: function (data) {
+				alert(data.Message);
+//
+			},
+			error: function (data) {
+				alert('fail');
+			}
+		});
+	}
 
 $(document).ready(function(){
 
 	var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 	var info = JSON.parse(userInfo[2]);
-	var Email = info.Email;
-	console.log(info);
+	var Info = info['userInfo'];
+	var first = Info.firstName;
+	var middle = Info.middleName;
+	var last = Info.lastName;
+	var gender = Info.gender;
+	var token = Info.token;
+	var  image=Info.image;
 
-	var Info=info['userInfo'];
-	var token = info.token;
+	if(image==null){
+		if(gender==1){
+
+			$('#head').attr('src','Heads/header_man.png');
+
+		}else if(gender==0){
+
+			$('#head').attr('src','Heads/header_woman.png');
+
+		}
+
+	}else{
+		$('#head').attr('src',image);
+	}
 
 	$.ajax({
 		type:"post",
@@ -98,9 +132,9 @@ $(document).ready(function(){
 						<input type="text" placeholder="手工输入SN" id="SN" value="" />
 					</div>
 				</div>
-				<div class="sao">
-					<a><img src="images/sao.png" /><span>扫一扫</span></a>
-				</div>
+				<!--<div class="sao">-->
+					<!--<a><img src="images/sao.png" /><span>扫一扫</span></a>-->
+				<!--</div>-->
 				<div class="foot_btn fo fo1">
 					<input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back" id="back">
 					<input type="button" value="Submit" class="submit_submit" id="add_product">

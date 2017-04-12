@@ -44,7 +44,6 @@
 							document.getElementById("img").src = "/RequestDisPatcher/Verification.jsp?date=" + new Date();
 							alert(data.Message);
 						}else{
-
 							document.cookie="userData="+JSON.stringify(data.Data);
 							document.cookie="dluEmail="+$('#Email').val();
 							document.cookie="dlumima="+$('#password').val();
@@ -61,8 +60,10 @@
 				});
 			}
 		});
-			var myEmail = document.cookie.match(new RegExp("(^| )register_Email=([^;]*)(;|$)"));
-			var myPassword = document.cookie.match(new RegExp("(^| )register_password=([^;]*)(;|$)"));
+			var myEmail = document.cookie.match(new RegExp("(^| )dluEmail=([^;]*)(;|$)"));
+			var myPassword = document.cookie.match(new RegExp("(^| )dlumima=([^;]*)(;|$)"));
+
+		console.log(myEmail);
 			$('#Email').val(myEmail[2]);
 			$('#password').val(myPassword[2]);
 	});

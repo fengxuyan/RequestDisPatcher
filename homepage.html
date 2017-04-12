@@ -13,23 +13,52 @@
 	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
 	<script src="/RequestDisPatcher/JS/mine.js"></script>
 <script type="text/javascript">
+
+
+	function quit() {
+		$.ajax({
+			type:"post",
+			url:"/RequestDisPatcher/request/dispatcher.do",
+			data: {
+				url:"http://127.0.0.1:9001/login/logout",
+				params:"token="+token
+			},
+			success: function (data) {
+				alert(data.Message);
+//
+			},
+			error: function (data) {
+				alert('fail');
+			}
+		});
+	}
+
 $(document).ready(function(){
 	var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 	var info = JSON.parse(userInfo[2]);
-	var first = info.firstName;
-	var middle = info.middleName;
-	var last = info.lastName;
-	var gender = info.gender;
+	var Info = info['userInfo'];
+	var first = Info.firstName;
+	var middle = Info.middleName;
+	var last = Info.lastName;
+	var gender = Info.gender;
+	var token = Info.token;
+	var  image=Info.image;
 
-	if(gender=="Male"){
+if(image==null){
+	if(gender==1){
 
 		$('#head').attr('src','Heads/header_man.png');
 
-	}else if(gender=="Male"){
+	}else if(gender==0){
 
 		$('#head').attr('src','Heads/header_woman.png');
 
 	}
+
+}else{
+	$('#head').attr('src',image);
+}
+
 	var name;
 	if(middle==null||middle==""){
 		name = first+" "+last;
@@ -57,8 +86,8 @@ $(document).ready(function(){
 		</div>
 		<div class="header_text">
 			<div class="header_text_right">
-				<span class="header_pic"><a href="modify.html" ><img src="Heads/header_woman.png" id="head"></a></span>
-				<a href="modify.html"><span>个人资料</span></a><a href=""><span>退出登录</span></a>
+				<span class="header_pic"><a href="modify.html" ><img src="" id="head"></a></span>
+				<a href="modify.html"><span>个人资料</span></a><a href="login.html"><span onclick="quit()" >退出登录</span></a>
 			</div>
 		</div>
 	</div>

@@ -14,7 +14,30 @@
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
 	<script type="text/javascript">
 		$(document).ready(function() {
+			var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+			var info = JSON.parse(userInfo[2]);
+			var Info = info['userInfo'];
+			var first = Info.firstName;
+			var middle = Info.middleName;
+			var last = Info.lastName;
+			var gender = Info.gender;
+			var token = Info.token;
+			var  image=Info.image;
 
+			if(image==null){
+				if(gender==1){
+
+					$('#head').attr('src','Heads/header_man.png');
+
+				}else if(gender==0){
+
+					$('#head').attr('src','Heads/header_woman.png');
+
+				}
+
+			}else{
+				$('#head').attr('src',image);
+			}
 			$("#yearOfBirth").datepicker();
 		});
 	</script>

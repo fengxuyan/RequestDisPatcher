@@ -10,15 +10,16 @@
     <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/number-pb.css">
     <script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
     <!--<link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>-->
-    <script src="/RequestDisPatcher/amcharts/amcharts.js"></script>
-    <script src="/RequestDisPatcher/amcharts/serial.js"></script>
-    <script src="/RequestDisPatcher/amcharts/themes/light.js"></script>
+    <script src="/RequestDisPatcher/JS/highcharts.js"></script>
+    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/highslide.css" />
+
     <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="/RequestDisPatcher/JS/birthday.js"></script>
     <script src="/RequestDisPatcher/JS/radialIndicator.js"></script>
     <script src="/RequestDisPatcher/JS/jquery.velocity.min.js"></script>
     <script src="/RequestDisPatcher/JS/number-pb.js"></script>
     <script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
+    <script src="/RequestDisPatcher/JS/DateFormat.js"></script>
     <style>
         #chartdiv ,#chartdiv1,#chartdiv2,#chartdiv3{
             width: 590px;
@@ -55,8 +56,7 @@
                     <div class="reports">
                         <div class="reports_detail">
                             <h4 class="">分析统计</h4>
-                            <p>监测日期：7月14日-8月31日</p>
-                            <p>共计次数：8次<span><i>最高值</i><i>平均值</i><i>最低值</i></span></p>
+
                         </div>
                         <div class="statistics_table">
                             <p>心率</p>
@@ -83,6 +83,7 @@
         </div>
     </div>
 
+
 </div>
 <script>
     $("#search_time").birthday();
@@ -90,95 +91,477 @@
     $(".right_show").css("border-bottom",'1px solid #ddd');
     $(".right_show").css("padding-top",60);
 </script>
-<script>
-    $(function() {
 
-        var startTime=$.cookie('startTime')
-        var endTime=$.cookie('endTime')
+<script type="text/javascript">
+    // Get the CSV and create the chart
+    var startTime=$.cookie('startTime')
+    var endTime=$.cookie('endTime')
+    console.log(startTime);
+    console.log(endTime);
+    var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+    //console.log(userInfo);
+    var info = JSON.parse(userInfo[2]);
+    console.log(info);
+    var Info = info['userInfo'];
+    var token = info.token;
 
+    var tes1=new Array();
 
-        console.log(startTime);
-        console.log(endTime);
+    function arrAverageNum2(arr){
+        var sum = eval(arr.join("+"));
+        return ~~(sum/arr.length*100)/100;
+    }
 
-        var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
-        //console.log(userInfo);
-        var info = JSON.parse(userInfo[2]);
-        console.log(info);
-        var Info = info['userInfo'];
-        var token = info.token;
+    $.ajax({
+        type:"post",
+        dataType:"json",
+        url:"/RequestDisPatcher/request/dispatcher.do",
+        data: {
+            url:"http://101.37.100.209:9002/device/getOtherData",
+            params:"token="+token+"&startTime="+startTime+"&endTime="+endTime+"&email="+Info.email
+        },
+        success: function (data) {
+            console.log(data.Data);
+            $('.reports_detail').append('<p>监测日期：'+startTime+'-'+endTime+'</p> <p>共计次数：'+data.Data.length+'次<span><i>最高值</i><i>平均值</i><i>最低值</i></span></p>');
 
-        $.ajax({
-		type:"post",
-		dataType:"json",
-		url:"/RequestDisPatcher/request/dispatcher.do",
-		data: {
-			url:"http://101.37.100.209:9002/device/getOtherData",
-			params:"token="+token+"&startTime="+startTime+"&endTime="+endTime+"&email="+Info.email
-		},
-		success: function (data) {
-			console.log(data);
-
-		},
-		error: function (data) {
-			console.log(data);
-
-		}
-	});
-
-
-
-
-
-        var num = 50;
-        var num1 = 60;
-        var num2 = 70;
-        var num3 = 80;
-        var controlBar = $('#sample-pb .number-pb').NumberProgressBar({
-            duration: 3000,
-            percentage: num
-        });
-
-        var controlBar1 = $('#sample-pb1 .number-pb').NumberProgressBar({
-            duration: 3000,
-            percentage: num1
-        });
-
-        var controlBar2 = $('#sample-pb2 .number-pb').NumberProgressBar({
-            duration: 3000,
-            percentage: num2
-        });
-
-        var controlBar3 = $('#sample-pb3 .number-pb').NumberProgressBar({
-            duration: 3000,
-            percentage: num3
-        });
-
-
-        function animate(val) {
-            if (val < 0) {
-                num = 0;
-            } else if (val > 100) {
-                num = 100;
-            } else {
-                num = val
+            var map = new Array();//一维数组
+            for (var i = 0; i < data.Data.length; i++) {
+                map.push(data.Data[i].avgHeart);//一维数组
             }
-            controlBar.reach(num);
-            controlBar1.reach(num1);
-            controlBar2.reach(num2);
-            controlBar3.reach(num3);
+
+            var hightest=Math.max.apply(null, map);//最大值
+            var minest=Math.min.apply(null, map);//最小值
+            var avg=arrAverageNum2(map);
+            var fields = {data:map,color:'#a37c59',name:'心率',width:2};
+
+
+            var map1 = new Array();//一维数组
+            for (var i = 0; i < data.Data.length; i++) {
+                map1.push(data.Data[i].avgBreath);//一维数组
+            }
+            var hightest1=Math.max.apply(null, map1);//最大值
+            var minest1=Math.min.apply(null, map1);//最小值
+            var avg1=arrAverageNum2(map1);
+            var fields1 = {data:map1,color:'#a37c59',name:'呼吸率',width:2};
+
+
+            var map2 = new Array();//一维数组
+            for (var i = 0; i < data.Data.length; i++) {
+                map2.push((data.Data[i].deepSleepTime)/(60*60));//一维数组
+            }
+            var hightest2=Math.max.apply(null, map2);//最大值
+            var minest2=Math.min.apply(null, map2);//最小值
+            var avg2=arrAverageNum2(map2);
+            var fields2 = {data:map2,color:'#a37c59',name:'深度睡眠时长',width:2};
+
+
+            var map3 = new Array();//一维数组
+            for (var i = 0; i < data.Data.length; i++) {
+                map3.push(data.Data[i].score);//一维数组
+            }
+            var hightest3=Math.max.apply(null, map3);//最大值
+            var minest3=Math.min.apply(null, map3);//最小值
+            var avg3=arrAverageNum2(map3);
+            var fields3 = {data:map3,color:'#a37c59',name:'睡眠质量曲线',width:2};
+
+
+            var map4 = new Array();//一维数组
+            for (var i = 0; i < data.Data.length; i++) {
+
+
+
+                map4.push((data.Data[i].sleepEnd-data.Data[i].sleepStart)/(1000*60*60));//一维数组
+            }
+            var hightest4=Math.max.apply(null, map4);//最大值
+            var minest4=Math.min.apply(null, map4);//最小值
+            var avg4=arrAverageNum2(map4);
+
+            var fields4 = {data:map4,color:'#6d4e31',name:'睡眠总时长',width:2};
+
+
+            var chart = new Highcharts.Chart('chartdiv', {
+                chart:{
+                    type:'spline'
+                },
+                title: {
+                    text: '心率',
+//                    text: '呼吸率',
+                    x: -30,
+                    y: 40
+
+        },
+                subtitle: {
+                },
+                xAxis: {
+                    gridLineWidth:'0px',
+                    labels: {
+                        enabled: false
+                    }
+                },
+                yAxis: {
+                    gridLineWidth:'0px',
+                    title: {
+                        text: ''
+                    },
+                    plotLines:[
+
+
+
+                        {
+
+
+                            label:{
+                                text:hightest+'(最高值)',    //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+
+
+                            zIndex:26,
+                            color:'#ddd',           //线的颜色，定义为红色
+                            dashStyle:'Dot',     //默认值，这里定义为实线
+                            value:hightest,         //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
+                            width:2                //标示线的宽度，2px
+                        },
+                        {
+
+                            label:{
+
+                                text:minest+'(最低值)',   //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+
+                            color:'#ddd',
+                            dashStyle:'Dot',
+                            value:minest,
+                            width:2,
+                            zIndex:23
+                        },
+                        {
+
+                            label:{
+                                text:avg+'(平均值)',
+//                                text:'平均值',  //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+
+                            color:'#ddd',
+                            dashStyle:'Dot',
+                            value:avg,
+                            width:2
+                        }
+                    ]
+                },
+                tooltip: {
+                    valueSuffix: '次/分'
+                },
+                legend: {
+                    layout: 'vertical',
+                    backgroundColor: '#fff',
+                    floating: true,
+                    align: 'left',
+                    verticalAlign: 'top',
+                    x: 30,
+                    y: 45,
+                    labelFormat: '<span style="color:#a37c59">{name}</span>'
+                },
+                series:
+                        [
+                            fields
+                        ]
+                ,
+                credits:{
+                    enabled:false // 禁用版权信息
+                }
+            });
+
+
+            var chart = new Highcharts.Chart('chartdiv1', {
+                chart:{
+                    type:'spline'
+                },
+                title: {
+                    text: '呼吸率',
+                    x: -30,
+                    y: 40
+                },
+                subtitle: {
+                },
+                xAxis: {
+                    labels: {
+                        enabled: false
+                    }
+                },
+                yAxis: {
+                    gridLineWidth:'0px',
+                    title: {
+                        text: ''
+                    },
+                    plotLines:[
+
+
+
+                        {
+
+
+                            label:{
+                                text:hightest1+'(最高值)',    //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+
+
+                            zIndex:26,
+                            color:'#ddd',           //线的颜色，定义为红色
+                            dashStyle:'Dot',     //默认值，这里定义为实线
+                            value:hightest1,         //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
+                            width:2                //标示线的宽度，2px
+                        },
+                        {
+
+                            label:{
+                                text:minest1+'(最低值)',   //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+
+                            color:'#ddd',
+                            dashStyle:'Dot',
+                            value:minest1,
+                            width:2,
+                            zIndex:23
+                        },
+                        {
+
+                            label:{
+                                text:avg1+'(平均值)',  //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+
+                            color:'#ddd',
+                            dashStyle:'Dot',
+                            value:avg1,
+                            width:2
+                        }
+                    ]
+                },
+                tooltip: {
+                    valueSuffix: '次/分'
+                },
+                legend: {
+                    layout: 'vertical',
+                    backgroundColor: '#fff',
+                    floating: true,
+                    align: 'left',
+                    verticalAlign: 'top',
+                    x: 30,
+                    y: 45,
+                    labelFormat: '<span style="color:#a37c59">{name}</span>'
+                },
+                series:
+                        [
+                            fields1
+                        ]
+                ,
+                credits:{
+                    enabled:false // 禁用版权信息
+                }
+            });
+
+
+            var chart = new Highcharts.Chart('chartdiv2', {
+                chart:{
+                    type:'spline'
+                },
+                title: {
+                    text: '深度睡眠时长',
+                    x: -30,
+                    y: 40
+                },
+                subtitle: {
+                },
+                xAxis: {
+                    labels: {
+                        enabled: false
+                    }
+                },
+
+                yAxis: {
+                    gridLineWidth:'0px',
+                    title: {
+                        text: ''
+                    },
+
+                    plotLines:[
+                        {
+                            label:{
+                                text:hightest2+'(最高值)',    //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+                            zIndex:26,
+                            color:'#ddd',           //线的颜色，定义为红色
+                            dashStyle:'Dot',     //默认值，这里定义为实线
+                            value:hightest2,         //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
+                            width:2                //标示线的宽度，2px
+                        },
+                        {
+                            label:{
+                                text:minest2+'(最低值)',   //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+                            color:'#ddd',
+                            dashStyle:'Dot',
+                            value:minest2,
+                            width:2,
+                            zIndex:23
+                        },
+                        {
+                            label:{
+                                text:avg2+'(平均值)',  //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+                            color:'#ddd',
+                            dashStyle:'Dot',
+                            value:avg2,
+                            width:2
+                        }
+                    ]
+                },
+                tooltip: {
+                    valueSuffix: '时'
+                },
+                legend: {
+                    layout: 'vertical',
+                    backgroundColor: '#fff',
+                    floating: true,
+                    align: 'left',
+                    verticalAlign: 'top',
+                    x: 30,
+                    y: 45,
+                    labelFormat: '<span style="color:#a37c59">{name}</span>'
+                },
+                series:
+                        [
+                            fields2,fields4
+                        ]
+                ,
+                credits:{
+                    enabled:false // 禁用版权信息
+                }
+            });
+
+
+
+            var chart = new Highcharts.Chart('chartdiv3', {
+                chart:{
+                    type:'spline'
+                },
+                title: {
+                    text: '睡眠质量曲线',
+                    x: -30,
+                    y: 40
+                },
+                subtitle: {
+                },
+                xAxis: {
+                    labels: {
+                        enabled: false
+                    }
+                },
+                yAxis: {
+                    gridLineWidth:'0px',
+                    title: {
+                        text: ''
+                    },
+                    plotLines:[
+
+
+
+                        {
+
+
+                            label:{
+                                text:hightest3+'(最高值)',    //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+
+
+                            zIndex:26,
+                            color:'#ddd',           //线的颜色，定义为红色
+                            dashStyle:'Dot',     //默认值，这里定义为实线
+                            value:hightest3,         //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
+                            width:2                //标示线的宽度，2px
+                        },
+                        {
+
+                            label:{
+                                text:minest3+'(最低值)',   //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+
+                            color:'#ddd',
+                            dashStyle:'Dot',
+                            value:minest3,
+                            width:2,
+                            zIndex:23
+                        },
+                        {
+
+                            label:{
+                                text:avg3+'(平均值)',  //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+
+                            color:'#ddd',
+                            dashStyle:'Dot',
+                            value:avg3,
+                            width:2
+                        }
+                    ]
+                },
+                tooltip: {
+                    valueSuffix: '分'
+                },
+                legend: {
+                    layout: 'vertical',
+                    backgroundColor: '#fff',
+                    floating: true,
+                    align: 'left',
+                    verticalAlign: 'top',
+                    x: 30,
+                    y: 45,
+                    labelFormat: '<span style="color:#a37c59">{name}</span>'
+                },
+                series:
+                        [
+                            fields3
+                        ]
+                ,
+                credits:{
+                    enabled:false // 禁用版权信息
+                }
+            });
+
+
+
+
+
+
+
+        },
+        error: function (data) {
+            console.log(data);
         }
     });
-    var radialObj4 = $('#indicatorContainer4').radialIndicator({
-        barColor: {
-            0: '#FF0000',
-            33: '#FFFF00',
-            66: '#0066FF',
-            100: '#33CC33'
-        },
-        percentage: true
-    }).data('radialIndicator');
-    //Using Instance
-    radialObj4.animate(79);
 </script>
 <script src="/RequestDisPatcher/JS/mine.js"></script>
 </body>

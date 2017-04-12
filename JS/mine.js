@@ -103,6 +103,26 @@ $(function () {
             $('.reports').show();
             $('.right_show').css("height", "1800px");
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             // window.location.href='SleepAnalysis.html';
         }
     );
