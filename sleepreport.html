@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Healthy Consultation</title>
-	<link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
@@ -49,10 +49,24 @@
 		}
 
 		.showgotoBed.outOfBed{
+			font-weight: normal !important;
+
+			line-height: 123px!important;
+			font-family:华文细黑,STHeiti,MingLiu;
 			margin-right: 20px;
 			display: inline-block;
 			float: right;
 		}
+		.showgotoBed.tosleep{
+			font-weight: normal !important;
+
+			line-height: 123px!important;
+			font-family:华文细黑,STHeiti,MingLiu;
+			margin-left: 50px;
+			display: inline-block;
+			float: left;
+		}
+
 		.qc{
 			position: absolute;
 			z-index: 4;
@@ -69,7 +83,7 @@
 	<div class="left_nav">
 		<div class="header_text">
 			<div class="header_text_right">
-				<span class="header_pic"><a href="modify.html" ><img src="Heads/header_woman.png" id="head"></a></span>
+				<span class="header_pic"><a href="modify.html" ><img src="Heads/default.jpg" id="head"></a></span>
 			</div>
 		</div>
 		<ul>
@@ -81,7 +95,7 @@
 		</ul>
 	</div>
 	<div class="right_show">
-		<h2>isleep</h2>
+		<h3>isleep</h3>
 		<a href="homepage.html"><span class="glyphicon glyphicon-home"></span></a>
 		<div class="show_detail">
 			<div class="show_detail_data">
@@ -160,7 +174,6 @@
 							<input type="button" onclick="javascript:history.back(-1);" value="Back" class="submit_submit back">
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -195,20 +208,43 @@
 	$("#search_times").birthday();
 	$("#search_times2").birthday();
 	$(".right_show").css("border-bottom", '1px solid #ddd');
-	$(".right_show").css("padding-top", 60);
+	$(".right_show").css("padding-bottom", 30);
 
+
+	var otheremail=getQueryString('otheremail');
+	console.log(otheremail);
 
 	$(document).ready(function() {
 		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 //            console.log(userInfo);
 		var info = JSON.parse(userInfo[2]);
-		console.log(info);
 		var Info = info['userInfo'];
 		var token = info.token;
+		var gender = info.gender;
 
+		var gender = Info.gender;
+
+		var  image=Info.image;
+
+		if(image==null){
+			if(gender==1){
+
+				$('#head').attr('src','Heads/header_man.png');
+
+			}else if(gender==0){
+
+				$('#head').attr('src','Heads/header_woman.png');
+
+			}
+
+		}else{
+			$('#head').attr('src',image);
+		}
 
 		var time = getQueryString('time');
 
+if(otheremail==null){
+	var timetoshow=time.split('/');
 		$.ajax({
 			type: "post",
 			dataType: "json",
@@ -219,7 +255,7 @@
 			},
 			success: function (data) {
 				console.log(data);
-				$('.report_detail h5').append('<span>'+time+'</span>');
+				$('.report_detail h5').append('<span>'+timetoshow[0]+'月'+timetoshow[1]+'日'+'</span>');
 				var radialObj4 = $('#indicatorContainer4').radialIndicator({
 					barColor: {
 						0: '#FF0000',
@@ -236,8 +272,8 @@
 				$('.showfscs').text(data.Data[0].turnNum);
 				$('.showqycs').text(data.Data[0].outNum);
 
+				var allSleepTime=MillisecondToDate((data.Data[0].lightSleepTime+data.Data[0].deepSleepTime)*1000);
 
-				var allSleepTime=MillisecondToDate(data.Data[0].sleepEnd-data.Data[0].sleepStart);
 
 				var deepSleepTime=MillisecondToDate((data.Data[0].deepSleepTime)*1000);
 
@@ -256,15 +292,16 @@
 
 				console.log(num);
 				//深度睡眠比例
-				var num1=((data.Data[0].deepSleepTime)*1000/(data.Data[0].sleepEnd-data.Data[0].sleepStart))*100;
+				var num1=((data.Data[0].deepSleepTime)/(data.Data[0].lightSleepTime+data.Data[0].deepSleepTime))*100;
 
 
 				//浅度睡眠比例
-				var num2=((data.Data[0].lightSleepTime)*1000/(data.Data[0].sleepEnd-data.Data[0].sleepStart))*100;
+				var num2=((data.Data[0].lightSleepTime)/(data.Data[0].lightSleepTime+data.Data[0].deepSleepTime))*100;
 
 				var date_sleepStart = new Date(parseInt(data.Data[0].sleepStart));
 				var date_fmt_sleepStart=date_sleepStart.format(" hh:mm");
-				$('.number-pb.rumian').append('<div class="number-pb-num">'+date_fmt_sleepStart+'</div>');
+
+				$('.number-pb.rumian').append('<span class="showgotoBed tosleep">'+date_fmt_sleepStart+'</span>');
 
 				var date_goToBed = new Date(parseInt(data.Data[0].goToBed));
 				var date_fmt_goToBed=date_goToBed.format(" hh:mm");
@@ -274,6 +311,38 @@
 				var date_outOfBed = new Date(parseInt(data.Data[0].outOfBed));
 				var date_fmt_outOfBed=date_outOfBed.format(" hh:mm");
 				$('.qc').append('<span class="showgotoBed outOfBed">'+date_fmt_outOfBed+'</span>');
+
+if(data.Data[0].score!=0){
+	var num=20;
+	var num3 = 100;
+	var controlBar = $('#sample-pb .number-pb').NumberProgressBar({
+		duration: 3000,
+		percentage: num
+	});
+
+	var controlBar3 = $('#sample-pb3 .number-pb').NumberProgressBar({
+		duration: 3000,
+		percentage: num3
+	});
+
+}else{
+
+
+	var num = 0;
+
+	var num3 = 0;
+	var controlBar = $('#sample-pb .number-pb').NumberProgressBar({
+		duration: 3000,
+		percentage: num
+	});
+
+	var controlBar3 = $('#sample-pb3 .number-pb').NumberProgressBar({
+		duration: 3000,
+		percentage: num3
+	});
+
+}
+
 
 
 				var controlBar1 = $('#sample-pb1 .number-pb').NumberProgressBar({
@@ -294,7 +363,129 @@
 				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
 			}
 		});
+}else{
+	var timetoshow=time.split('/');
+	$.ajax({
+		type: "post",
+		dataType: "json",
+		url: "/RequestDisPatcher/request/dispatcher.do",
+		data: {
+			url: "http://101.37.100.209:9002/device/getOtherRealData",
+			params: "token=" + token + "&time=" + time+"&email=" + otheremail
+		},
+		success: function (data) {
+			console.log(data);
+			$('.report_detail h5').append('<span>'+timetoshow[0]+'月'+timetoshow[1]+'日'+'</span>');
+			var radialObj4 = $('#indicatorContainer4').radialIndicator({
+				barColor: {
+					0: '#FF0000',
+					33: '#FFFF00',
+					66: '#0066FF',
+					100: '#33CC33'
+				},
+				percentage: true
+			}).data('radialIndicator');
+			radialObj4.animate(data.Data[0].score);
 
+			$('.showxl').text(data.Data[0].avgHeart);
+			$('.showhxl').text(data.Data[0].avgBreath);
+			$('.showfscs').text(data.Data[0].turnNum);
+			$('.showqycs').text(data.Data[0].outNum);
+
+
+			var allSleepTime=MillisecondToDate((data.Data[0].deepSleepTime+data.Data[0].lightSleepTime)*1000);
+
+			var deepSleepTime=MillisecondToDate((data.Data[0].deepSleepTime)*1000);
+
+			var lightSleepTime=MillisecondToDate((data.Data[0].lightSleepTime)*1000);
+
+
+			$('#sample-pb1').append('<p>深度睡眠时长:'+ deepSleepTime +'</p>');
+			$('#sample-pb2').append('<p>浅度睡眠时长:'+ lightSleepTime +'</p>');
+			$('#sample-pb3').append('<p>总睡眠时长:'+ allSleepTime +'</p>');
+
+			//上床到开始睡眠比例
+
+//				var num=((data.Data[0].goToBed)*1000/(data.Data[0].sleepEnd-data.Data[0].sleepStart))*100;
+
+			var num=((data.Data[0].sleepStart-data.Data[0].goToBed)/(data.Data[0].outOfBed-data.Data[0].goToBed))*100;
+
+			console.log(num);
+			//深度睡眠比例
+			var num1=((data.Data[0].deepSleepTime)/(data.Data[0].lightSleepTime+data.Data[0].deepSleepTime))*100;
+
+
+			//浅度睡眠比例
+			var num2=((data.Data[0].lightSleepTime)/(data.Data[0].lightSleepTime+data.Data[0].deepSleepTime))*100;
+
+			var date_sleepStart = new Date(parseInt(data.Data[0].sleepStart));
+			var date_fmt_sleepStart=date_sleepStart.format(" hh:mm");
+
+			$('.number-pb.rumian').append('<span class="showgotoBed tosleep">'+date_fmt_sleepStart+'</span>');
+
+			var date_goToBed = new Date(parseInt(data.Data[0].goToBed));
+			var date_fmt_goToBed=date_goToBed.format(" hh:mm");
+			$('.sc').append('<span class="showgotoBed">'+date_fmt_goToBed+'</span>');
+
+
+			var date_outOfBed = new Date(parseInt(data.Data[0].outOfBed));
+			var date_fmt_outOfBed=date_outOfBed.format(" hh:mm");
+			$('.qc').append('<span class="showgotoBed outOfBed">'+date_fmt_outOfBed+'</span>');
+
+			if(data.Data[0].score!=0){
+				var num=20;
+				var num3 = 100;
+				var controlBar = $('#sample-pb .number-pb').NumberProgressBar({
+					duration: 3000,
+					percentage: num
+				});
+
+				var controlBar3 = $('#sample-pb3 .number-pb').NumberProgressBar({
+					duration: 3000,
+					percentage: num3
+				});
+
+			}else{
+
+
+				var num = 0;
+
+				var num3 = 0;
+				var controlBar = $('#sample-pb .number-pb').NumberProgressBar({
+					duration: 3000,
+					percentage: num
+				});
+
+				var controlBar3 = $('#sample-pb3 .number-pb').NumberProgressBar({
+					duration: 3000,
+					percentage: num3
+				});
+
+			}
+
+
+
+			var controlBar1 = $('#sample-pb1 .number-pb').NumberProgressBar({
+				duration: 3000,
+				percentage: num1
+			});
+
+			var controlBar2 = $('#sample-pb2 .number-pb').NumberProgressBar({
+				duration: 3000,
+				percentage: num2
+			});
+
+
+		},
+		error: function (data) {
+			console.log(data);
+			var txt = data.Message;
+			window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+		}
+	});
+
+
+}
 	})
 
 
@@ -302,19 +493,7 @@
 </script>
 <script>
 	$(function() {
-		var num = 30;
-//		var num1 = 60;
-//		var num2 = 70;
-		var num3 = 100;
-		var controlBar = $('#sample-pb .number-pb').NumberProgressBar({
-			duration: 3000,
-			percentage: num
-		});
 
-		var controlBar3 = $('#sample-pb3 .number-pb').NumberProgressBar({
-			duration: 3000,
-			percentage: num3
-		});
 
 
 		function animate(val) {

@@ -165,15 +165,6 @@
 		        config.onOk();
 			$("#" + popId).remove(); 
 			config.onClose(eventType.ok);
-
-
-
-
-
-
-
-
-
 		}
 		
 		//取消按钮事件

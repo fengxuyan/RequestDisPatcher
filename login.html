@@ -40,17 +40,18 @@
 				},
 				dataType:"json",
 				success:function(data){
-						if(data.Code!=1){
-							document.getElementById("img").src = "/RequestDisPatcher/Verification.jsp?date=" + new Date();
-							alert(data.Message);
-						}else{
+					console.log(data);
+if(data.Code==1){
 							document.cookie="userData="+JSON.stringify(data.Data);
 							document.cookie="dluEmail="+$('#Email').val();
 							document.cookie="dlumima="+$('#password').val();
 							document.cookie="token="+JSON.stringify(data.Data.token);
+	window.location.href="homepage.html";
+}else{
+	alert(data.Message);
 
-							window.location.href="homepage.html";
-						}
+}
+//							window.location.href="homepage.html";
 					},
 				error:function(data,Code){
 					console.log(data);
@@ -62,8 +63,6 @@
 		});
 			var myEmail = document.cookie.match(new RegExp("(^| )dluEmail=([^;]*)(;|$)"));
 			var myPassword = document.cookie.match(new RegExp("(^| )dlumima=([^;]*)(;|$)"));
-
-		console.log(myEmail);
 			$('#Email').val(myEmail[2]);
 			$('#password').val(myPassword[2]);
 	});

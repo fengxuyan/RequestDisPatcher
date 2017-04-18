@@ -17,16 +17,16 @@
 	    //添加月份
 	    for(i = 1;i <= 12; i++){
 
-		// if(i<10){
-		// 	// i='0'+i;
-		// 	con += "<option value='"+i+"'>"+i+"月"+"</option>";
-		// }else if(i>=10)
-		// {
-        //
-        //
-		// 	con += "<option value='"+i+"'>"+i+"月"+"</option>";
-		// }
+		if(i<10){
+			i='0'+i;
 			con += "<option value='"+i+"'>"+i+"月"+"</option>";
+		}else if(i>=10)
+		{
+
+
+			con += "<option value='"+i+"'>"+i+"月"+"</option>";
+		}
+
 
 	    }
 	    $month.append(con);
@@ -34,15 +34,14 @@
 	    //添加日期
 	    var n = MonHead[0];//默认显示第一月
 	    for(i = 1; i <= n; i++){
-			con += "<option value='"+i+"'>"+i+"日"+"</option>";
 
-			// if(i<10){
-			// 	i='0'+i;
-			// 	con += "<option value='"+i+"'>"+i+"日"+"</option>";
-			// }else{
-			// 	con += "<option value='"+i+"'>"+i+"日"+"</option>";
-            //
-			// }
+			if(i<10){
+				i='0'+i;
+				con += "<option value='"+i+"'>"+i+"日"+"</option>";
+			}else{
+				con += "<option value='"+i+"'>"+i+"日"+"</option>";
+
+			}
 
 	    }
 	    $day.append(con);

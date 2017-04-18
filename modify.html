@@ -5,13 +5,17 @@
 	<title>Modify Information</title>
 	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
 	<script src="/RequestDisPatcher/JS/jquery-ui.js"></script>
-	<link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
+	<link rel="stylesheet" href="/RequestDisPatcher/CSS/jquery-ui.css">
 	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
 	<script src="/RequestDisPatcher/JS/ajaxfileupload.js"></script>
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
+	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
+	<script src="/RequestDisPatcher/JS/checkForm.js" type="text/javascript"></script>
+	<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
+	<script src="/RequestDisPatcher/JS/birthday.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
@@ -21,157 +25,115 @@
 			var middle = Info.middleName;
 			var last = Info.lastName;
 			var gender = Info.gender;
-			var token = Info.token;
-			var  image=Info.image;
+			var tokens = document.cookie.match(new RegExp("(^| )token=([^;]*)(;|$)"));
+			var pwds = document.cookie.match(new RegExp("(^| )dlumima=([^;]*)(;|$)"));
 
-			if(image==null){
-				if(gender==1){
-
-					$('#head').attr('src','Heads/header_man.png');
-
-				}else if(gender==0){
-
-					$('#head').attr('src','Heads/header_woman.png');
-
-				}
-
-			}else{
-				$('#head').attr('src',image);
-			}
-			$("#yearOfBirth").datepicker();
-		});
-	</script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$("#submit_submit").click(function(){
-				var flog = checkForm();
-				if(flog!=false){
-					$.ajaxFileUpload({
-						url: "/RequestDisPatcher/login/modify",
-						type: "POST",
-						data : {
-							firstName:document.getElementById("firstName").value,
-							middleName:document.getElementById("middleName").value,
-							lastName:document.getElementById("lastName").value,
-							yearOfBirth:document.getElementById("yearOfBirth").value,
-							gender:document.getElementById("gender").value,
-							phoneNumber:document.getElementById("phone").value,
-							address:document.getElementById("address").value,
-							email:document.getElementById("email").value,
-							password:document.getElementById("password").value,
-						},
-						secureuri: false, //一般设置为false
-						fileElementId: "head", // 上传文件的id、name属性名
-						dataType: "json",
-						success: function(data){
-							if(data.Code==1006){
-								re_request();
-							}else{
-								alert(data.Message);
-							}
-						},
-						error: function(){
-							alert("Unknow Error.Please Try Again");
-						}
-					});
-				}
-			});
-		});
-	</script>
-	<script type="text/javascript">
-		function re_request(){
-			$.ajax({
-				type:"POST",
-				url:"/SleepMonitor/login/login",
-				data:{
-					Email:document.getElementById("email").value,
-					password:document.getElementById("password").value,
-				},
-				dataType:"json",
-				success:function(data){
-					if(data.Code!=1){
-						alert(data.Message);
-					}else{
-						document.cookie="userData="+JSON.stringify(data.data);
-						alert("Successfully Modify!");
-						window.location.href="homepage.html";
-					}
-				},
-				error:function(){
-					alert("Unkonw Error.Please Try Again!");
-				}
-			});
-		}
-	</script>
-	<script type="text/javascript">
-		function checkForm(){
-			var x1 = document.forms["re_form"]["firstName"].value;
-			var x2 = document.forms["re_form"]["lastName"].value;
-			var x3 = document.forms["re_form"]["yearOfBirth"].value;
-			var select = document.getElementById("gender");
-			if(select[0].selected==true){
-				alert("The Gender is not Filled");
-				return false;
-			}
-			var x5 = document.forms["re_form"]["phone"].value;
-			var x6 = document.forms["re_form"]["Email"].value;
-			var x7 = document.forms["re_form"]["password"].value;
-			if(x1==null||x1==""||x2==null||x2==""||x3==null||x3==""){
-				alert("Some Option is not Filled");
-				return false;
-			}
-			if(x5==null||x5==""||x6==null||x6==""||x7==null||x7==""){
-				alert("Some Option is not Filled");
-				return false;
-			}
-
-			var x9 = document.forms["re_form"]["repassword"].value;
-			if(x7!=x9){
-				alert("Please Check Your Password!Keep the Same");
-				return false;
-			}
-		}
-	</script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
-
-//			console.log(userInfo);
-//
-			var info = JSON.parse(userInfo[2]);
-			var Info=info['userInfo'];
-
+//			console.log(tokens[2]);
+			var token_t = tokens[2];
+			var image=Info.image;
+			var year=Info['birthDay'].year;
+			var month=Info['birthDay'].month;
+			var day=Info['birthDay'].day;
+			var birthday=month+'/'+day+'/'+year;
+			$("#yearOfBirth").val(birthday);
 			document.getElementById("firstName").value = Info.firstName;
 			document.getElementById("middleName").value = Info.middleName;
 			document.getElementById("lastName").value = Info.lastName;
 
-
-
-//			console.log(info);
-
-
-
-			var year = Info.yearOfBirth;
-			if(year!==null&&!(year=="")&&!(year==undefined))
-				document.getElementById("yearOfBirth").value = year;
+console.log(Info);
 
 			var gender = Info.gender;
 			$("#gender").val(gender);
 
-
 			$("#year").val(Info['birthDay'].year);
 			$("#month").val(Info['birthDay'].month);
 			$("#day").val(Info['birthDay'].day);
+			$("#phone").val(Info.mphone);
 
-			document.getElementById("phone").value = Info.mphone;
 			var address = Info.address;
 			if(address!==null&&!(address=="")&&!(address==undefined))
-				document.getElementById("address").value = address;
-			document.getElementById("email").value = Info.email;
-			document.getElementById("email").readOnly="readOnly";
-			document.getElementById("password").value = Info.password;
-			document.getElementById("re_password").value = Info.password;
+			{
+				$("#address").val(address);
+			}else{
+
+				$("#address").val('');
+			};
+
+			$("#email").val(Info.email);
+			$("#password").val(pwds[2]);
+			$("#repassword").val(pwds[2]);
+			$("#email").readOnly="readOnly";
+			if(image==null){
+				if(gender==1){
+					$('#head').attr('src','Heads/header_man.png');
+				}else if(gender==0){
+					$('#head').attr('src','Heads/header_woman.png');
+				}
+			}else{
+				$('#head').attr('src',image);
+			}
+			$("#yearOfBirth").datepicker();
+			$("#submit_submit").click(function(){
+				var flog = checkFormmodify1();
+				if(flog!=false){
+					$.ajaxFileUpload({
+						type:"POST",
+						url:"/RequestDisPatcher/request/upload.do",
+						async:false,
+						secureuri:false,
+						fileElementId:"upload",//file标签的id
+						dataType: "json",//返回数据的类型
+						data:{
+							url:"http://101.37.100.209:9001/login/modify",
+							params:"firstName="+$('#firstName').val()+"&password="+$('#password').val()+"&middleName="+$('#middleName').val()+"&lastName="+$('#lastName').val()+"&birth="+$("#yearOfBirth").val()+"&gender="+$('#gender').val()+"&mphone="+$('#phone').val()+"&address="+$('#address').val()+"&email="+$('#email').val()+'&head='+$.cookie('head_pic'),
+							token:token_t.substring(1,token_t.length-1)
+						},//一同上传的数据
+						success: function (data) {
+							console.log(data);
+						},
+						error: function (data, status, e) {
+							alert(e);
+						}
+					});
+
+
+
+				}
+			});
 		});
+	</script>
+
+	<script type="text/javascript">
+		function PreviewImage(imgFile) {
+			var filextension = imgFile.value.substring(imgFile.value.lastIndexOf("."), imgFile.value.length);
+			filextension = filextension.toLowerCase();
+			if ((filextension != '.jpg') && (filextension != '.gif')  && (filextension != '.jpeg') && (filextension != '.png') && (filextension != '.bmp')) {
+				alert("对不起，系统仅支持标准格式的照片，请您调整格式后重新上传，谢谢 !");
+				imgFile.focus();
+			}
+			else {
+				var path;
+				if (document.all)//IE
+				{
+					imgFile.select();
+					path = document.selection.createRange().text;
+
+					$.cookie('head_pic', path, {expires: 1000*60*30, path: '/'});
+
+					document.getElementById("head").innerHTML = "";
+					document.getElementById("head").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='scale',src=\"" + path + "\")";//使用滤镜效果
+				}
+				else//FF
+				{
+					path = window.URL.createObjectURL(imgFile.files[0]);
+					$.cookie('head_pic', path, {expires: 1000*60*30, path: '/'});
+
+
+					$('#head').attr('src',path);
+				}
+			}
+		}
+		console.log($.cookie('head_pic'));
 	</script>
 
 </head>
@@ -181,10 +143,13 @@
 	<div class="left_nav reg_nav" >
 		<div class="header_text">
 			<div class="header_text_right">
-				<span class="header_pic"><a href="modify.html" ><img src="Heads/head_test.jpg" id="head"></a></span>
+				<span class="header_pic"><img src="Heads/default.jpg" id="head"></span>
 			</div>
 		</div>
 		<ul>
+			<li class="select_picture">Select Picture</li>
+			<input type="file" name="upload" style="position: relative;opacity:0;bottom: 35px;left: 57px;" onchange="PreviewImage(this)" id="upload" />
+
 			<a href="javascript:scroll(0,0)"><li>First Name</li></a>
 			<a href="#middleName"><li>Middle Name</li></a>
 			<a href="#lastName"><li>Last Name</li></a>
@@ -206,129 +171,73 @@
 		<span onclick="javascript:history.back(-1);" class="glyphicon icon-caret-right"></span>
 		<div class="show_detail register">
 			<form name="re_form" onsubmit="return checkForm()">
-				<div class="form_txt">
+				<div class="form_txt"></div>
 
-				</div>
+				<span class="bir_txt">First Name *</span>
 				<div class="panel_input reg_input mod_input">
-					<input type="text" placeholder="First Name *" id="firstName" value="" />
+					<input type="text"  id="firstName" value="" />
 				</div>
+
+				<span class="bir_txt">Middle Name</span>
 				<div class="panel_input reg_input mod_input">
-					<input type="text" placeholder="Middle Name" id="middleName" value="" />
+					<input type="text"  id="middleName" value="" />
 				</div>
+
+				<span class="bir_txt">Last Name *</span>
 				<div class="panel_input reg_input mod_input">
-					<input type="text" placeholder="Last Name *" id="lastName" value="" />
+					<input type="text"  id="lastName" value="" />
 				</div>
+
 				<span class="bir_txt">Birthday *</span>
-				<div class="reg_input reg_select ymd mod_input mod_ymd"  id="birthday_container">
-
-					<select id="year" name="year"></select>
-					<select id='month' name="month"></select>
-					<select id="day" name="day"></select>
-					<!--<input type="text" placeholder="Birthday *" id="yearOfBirth" value="01/01/1975" />-->
+				<div class="panel_input reg_input mod_input">
+					<input type="text"  id="yearOfBirth" value='' />
 				</div>
+
+				<span class="bir_txt">Gender *</span>
 				<div class="reg_input reg_select sex mod_input mod_sex">
 					<select  id="gender" name ="gender">
-						<option value ="" selected>Gender *</option>
 						<option value="1" >Male</option>
 						<option value="0" >Female</option>
 					</select>
 				</div>
 
+				<span class="bir_txt">Phone Number *</span>
 				<div class="panel_input reg_input mod_input">
-					<input type="text" placeholder="Phone Number *" id="phone" value="" />
+					<input type="text"  id="phone" value="" />
 				</div>
 
+				<span class="bir_txt">Address</span>
 				<div class="panel_input reg_input mod_input">
-					<input type="text" placeholder="Address" id="address" value="" />
+					<input type="text"  id="address" value="" />
 				</div>
 
+				<span class="bir_txt">E-mail *</span>
 				<div class="panel_input reg_input mod_input">
-					<input type="text" placeholder="E-mail *" id="email" value="" />
+					<input type="text"  id="email" value="" />
 				</div>
 
+				<span class="bir_txt">Password *</span>
 				<div class="panel_input reg_input mod_input">
-					<input type="password" placeholder="Password *" id="password" value="" />
+					<input type="password"  id="password" value="" />
 				</div>
 
+				<span class="bir_txt">Confirm Password</span>
 				<div class="panel_input reg_input mod_input">
-					<input type="password" placeholder="Confirm Password" id="repassword" value="" />
+					<input type="password"  id="repassword" value="" />
 				</div>
 				<div class="foot_btn">
 					<input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back">
-					<input type="button" value="Submit" id="submit_submit" class="submit_submit">
+					<input type="button" value="Submit" id="submit_submit" onclick="return checkFormmodify();" class="submit_submit">
 				</div>
 			</form>
 
 		</div>
 	</div>
 
-	<script src="/RequestDisPatcher/JS/mine.js"></script>
-	<script src="/RequestDisPatcher/JS/birthday.js"></script>
+
 	<script>
 		$("#birthday_container").birthday();
 	</script>
 </div>
 </body>
-<!--<body class="modify_page">-->
-	<!--<div class="modify_info" style="height:480px" id="modify_info">-->
-		<!--<form name="re_form" onsubmit="return checkForm()" >-->
-			<!--<h3 class="title">Modify</h3>-->
-			<!--<h6 class="notice" id="notice">Attention:The message with * must be filled out!</h6>-->
-			<!--<table width="340" class="table">-->
-				<!--<tr>-->
-					<!--<td class="message">First Name: *</td>-->
-					<!--<td><input type="text" name="firstName" id="firstName" class="input" ></td>-->
-				<!--</tr>-->
-				<!--<tr>-->
-					<!--<td class="message">Middle Name:</td>-->
-					<!--<td><input type="text" name="middleName" id="middleName" class="input" ></td>-->
-				<!--</tr>-->
-				<!--<tr>-->
-					<!--<td class="message">Last Name: *</td>-->
-					<!--<td><input type="text" name="lastName" id="lastName" class="input" ></td>-->
-				<!--</tr>-->
-				<!--<tr>-->
-					<!--<td class="message" >Year Of Birth: *</td>-->
-					<!--<td><input type="text" class="input" name="yearOfBirth" id="yearOfBirth"></td>-->
-				<!--</tr>-->
-				<!--<tr>-->
-					<!--<td class="message">Gender: *</td>-->
-					<!--<td class="gender_input" id="Gender" ><select class="gender_style" id="gender" name ="gender">-->
-							<!--<option value ="0"></option>-->
-							<!--<option value="Male" >Male</option>-->
-							<!--<option value="Female" >Female</option>-->
-						<!--</select>-->
-					<!--</td>-->
-				<!--</tr>-->
-				<!--<tr>-->
-					<!--<td class="message">Phone Number: *</td>-->
-					<!--<td><input type="text" name="phone" id="phone" class="input" ></td>-->
-				<!--</tr>-->
-				<!--<tr>-->
-					<!--<td class="message">Address:</td>-->
-					<!--<td><input type="text" name="address" id="address" class="input" ></td>-->
-				<!--</tr>-->
-				<!--<tr>-->
-					<!--<td class="message">Email: *</td>-->
-					<!--<td><input type="text" name="Email" id="email" class="input" readOnly="false"></td>-->
-				<!--</tr>-->
-				<!--<tr>-->
-					<!--<td class="message">Password: *</td>-->
-					<!--<td><input type="password" placeholder="Password" name="password" id="password" class="input"></td>-->
-				<!--</tr>-->
-				<!--<tr>-->
-					<!--<td class="message">Confirm Password:*</td>-->
-					<!--<td><input type="password" placeholder="Re-type Your Password" name="repassword" id="re_password" class="input"></td>-->
-				<!--</tr>-->
-				<!--<tr>-->
-					<!--<td class="message">Image:</td>-->
-					<!--<td><input type="file" name="head" class="input" id="head" ></td>-->
-				<!--</tr>-->
-			<!--</table>-->
-			<!--<input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back">-->
-			<!--<input type="button" value="Submit" id="submit_submit" class="submit_submit">-->
-		<!--</form>-->
-	<!--</div>-->
-
-<!--</body>-->
 </html>

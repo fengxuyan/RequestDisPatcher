@@ -4,52 +4,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Product Upgrade</title>
 	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+	<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
-	<!--<script type="text/javascript">-->
-	<!--$(document).ready(function(){-->
-	<!--var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));-->
-	<!--var info = JSON.parse(userInfo[2]);-->
-	<!--var type1 = info.type1sn;-->
-	<!--var level1 = info.level1;-->
-	<!--var type2 = info.type2sn;-->
-	<!--var level2 = info.level2;-->
-	<!--var type3 = info.type3sn;-->
-	<!--var level3 = info.level3;-->
-	<!--var deadline1 = info.deadline1;-->
-	<!--var deadline2 = info.deadline2;-->
-	<!--var deadline3 = info.deadline3;-->
-	<!--var today = new Date().Format("MM/dd/yyyy");-->
-	<!--if(type1==null||type1=="")-->
-	<!--document.getElementById("cd").style="display:none";-->
-	<!--else{-->
-	<!--$("#no_info").remove();-->
-	<!--if(level1=="1"&&(Date.parse(deadline1)>=Date.parse(today)))-->
-	<!--document.getElementById("cd_1").style="display:none";-->
-	<!--else-->
-	<!--document.getElementById("cd_2").style="display:none";-->
-	<!--}-->
-	<!--if(type2==null||type2=="")-->
-	<!--document.getElementById("zt").style="display:none";-->
-	<!--else{-->
-	<!--$("#no_info").remove();-->
-	<!--if(level2=="1"&&(Date.parse(deadline2)>=Date.parse(today)))-->
-	<!--document.getElementById("zt_1").style="display:none";-->
-	<!--else-->
-	<!--document.getElementById("zt_2").style="display:none";-->
-	<!--}-->
-	<!--if(type3==null||type3=="")-->
-	<!--document.getElementById("sh").style="display:none";-->
-	<!--else{-->
-	<!--$("#no_info").remove();-->
-	<!--if(level3=="1"&&(Date.parse(deadline3)>=Date.parse(today)))-->
-	<!--document.getElementById("sh_1").style="display:none";-->
-	<!--else-->
-	<!--document.getElementById("sh_2").style="display:none";-->
-	<!--}-->
-	<!--});-->
-	<!--</script>-->
+
 	<script>
 		$(document).ready(function() {
 			var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
@@ -61,6 +20,14 @@
 			var gender = Info.gender;
 			var token = Info.token;
 			var image = Info.image;
+			var device = Info.device;
+
+			//位绑定设备
+			if(device == null || device.length == 0){
+				$("#products").remove();
+				$("#no_product").remove();
+				$("#product_list").append("<div id='no_product' style='text-align:center;font-size:2.5em;'>No Product!</div>");
+			}
 
 			if (image == null) {
 				if (gender == 1) {
@@ -78,14 +45,14 @@
 			}
 
 		})
-		</script>
+	</script>
 </head>
 <body >
 <div class="holder proupdate" >
 	<div class="left_nav">
 		<div class="header_text">
 			<div class="header_text_right">
-				<span class="header_pic"><a href="modify.html" ><img src="Heads/header_woman.png" id="head"></a></span>
+				<span class="header_pic"><a href="modify.html" ><img src="Heads/default.jpg" id="head"></a></span>
 			</div>
 		</div>
 		<ul>
@@ -105,47 +72,29 @@
 					<div class="mesg">
 						<h4>news news news!</h4>
 						<p>
-							1 必选参数
-							2 运单号
-							3 业务类型。。
-							4 代收贷款业务。。可为空
-							5 目的地代码  √
-							6 收件方信息
-							7 寄件方信息</p>
+
 					</div>
 				</div>
 			</div>
 			<div class="show_detail_data proupdate">
 				<h3>新品发布</h3>
 				<div class="data_table">
-					<img id="image" alt="" src="images/head_test.jpg"><span>新闻标题</span>
+					<!--<img id="image" alt="" src="images/head_test.jpg"><span>新闻标题</span>-->
 					<p class="newProductLists">
-						1 必选参数
-						2 运单号
-						3 业务类型。。
-						4 代收贷款业务。。可为空
-						5 目的地代码  √
-						6 收件方信息
-						7 寄件方信息
+
 					</p>
 				</div>
 				<div class="data_table">
-					<img id="image" alt="" src="images/head_test.jpg"><span>新闻标题</span>
+					<!--<img id="image" alt="" src="images/head_test.jpg"><span>新闻标题</span>-->
 					<p class="newProductLists">
-						1 必选参数
-						2 运单号
-						3 业务类型。。
-						4 代收贷款业务。。可为空
-						5 目的地代码  √
-						6 收件方信息
-						7 寄件方信息
+
 					</p>
 				</div>
 			</div>
-			<div class="show_detail_data proupdate detail_update">
+			<div class="show_detail_data proupdate detail_update" id="product_list">
 				<h3>增值服务</h3>
 				<h4 class="firsth4">您当前拥有的产品：</h4>
-				<div class="data_table ">
+				<div class="data_table " id="products">
 					<div id="cd">
 						<div id="cd_1">
 							<h4>智能床垫<span>普通版</span>	<a href="/SleepMonitor/pay.html">
@@ -169,7 +118,7 @@
 		</div>
 	</div>
 	<script>
-		$(".right_show").css("padding-bottom",60);
+		$(".right_show").css("padding-bottom",30);
 		$(".right_show").css("border-bottom",'1px solid #ddd');
 	</script>
 	<script src="/RequestDisPatcher/JS/mine.js"></script>

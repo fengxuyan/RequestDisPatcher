@@ -4,12 +4,20 @@
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Forget Password</title>
-<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+	<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
+	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
 <script type="text/javascript">
+
+
+	var myEmail = document.cookie.match(new RegExp("(^| )dluEmail=([^;]*)(;|$)"));
+
+
+
 $(document).ready(function(){
+	$('#email').val(myEmail[2]);
 	$("#submit").click(function(){
 		var Email = document.getElementById("email").value;
 		$.ajax({
@@ -17,15 +25,15 @@ $(document).ready(function(){
 			url:"/RequestDisPatcher/request/dispatcher.do",
 			data:{
 				url:"http://127.0.0.1:9001/login/forget",
-				params:"email=1"+Email
+				params:"email="+Email
 			},
 			dataType:"json",
 			success:function(data){
 				console.log(data);
-					if(data.Code==1001)
-						alert(data.Message);
-					else{
-						window.location.href="/RequestDisPatcher/login.html";
+					if(data.Code==1){
+
+//						window.location.href="/RequestDisPatcher/login.html";
+						window.location.href="/RequestDisPatcher/verifi.html?email="+Email;
 					}
 				},
 			error:function(){
@@ -62,7 +70,6 @@ $(document).ready(function(){
 		</div>
 	</div>
 </div>
-<script src="RequestDisPatcher/JS/mine.js"></script>
 </body>
 
 <!--<link rel="stylesheet" type="text/css" href="/SleepMonitor/CSS/forget.css">-->

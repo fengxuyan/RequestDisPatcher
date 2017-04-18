@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-transform" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes" />
-    <link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
     <script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
     <script src="/RequestDisPatcher/amcharts/amcharts.js"></script>
     <script src="/RequestDisPatcher/amcharts/serial.js"></script>
@@ -45,6 +45,52 @@
             }else{
                 $('#head').attr('src',image);
             }
+
+            function cancelconcernMe() {
+                $(".concern2 .concern202 .concern_item2").unbind().each(function(index,item){
+
+                            $('.itme1_rabish',item).on("click",function(event) {
+
+
+                                var email=$('.email',item)[0].innerText;
+                                console.log(email);
+
+                                var statu = confirm('确认取消此人关注？');
+                                if(!statu){
+                                    return false;
+                                }
+                                else{
+                                    $(this).parents('.concern_item2').remove();
+                                    $.ajax({
+                                        type:"POST",
+                                        url:"/RequestDisPatcher/request/dispatcher.do",
+                                        data:{
+                                            url:"http://127.0.0.1:9001/login/cancel",
+                                            params:"email="+email+"&type="+'concernMe'+"&token="+token
+                                        },
+                                        dataType:"json",
+                                        success:function(data) {
+                                            console.log(data);
+                                            $(item).parents('.concern_item2').remove();
+//                                    location.reload();
+
+                                        },
+                                        error: function (jqXHR, textStatus, errorThrown,Code) {
+                                            console.log(data);
+                                            alert("Unkonw Error.Please Try Again!");
+                                        }
+                                    })
+                                }
+
+
+                            })
+                        }
+                )
+
+
+            }
+
+
             function bindListener(){
                 $('.concern_item1  .clickLi ').siblings().hide();
                 $(".clickLi").unbind().each(function(index,item){
@@ -52,52 +98,114 @@
                     $(item).on("click",function(event){
                         $target=$(event.target);
                         var email=$('span:last-child',this).text();
+                        $('.itme1_rabish',this).bind('click',function(){
 
+                            var statu = confirm('确认取消关注？');
+                            if(!statu){
+                                return false;
+                            }
+                            else{
+                                $.ajax({
+                                    type:"POST",
+                                    url:"/RequestDisPatcher/request/dispatcher.do",
+                                    data:{
+                                        url:"http://127.0.0.1:9001/login/cancel",
+                                        params:"email="+email+"&type="+'myConcern'+"&token="+token
+                                    },
+                                    dataType:"json",
+                                    success:function(data) {
+                                        console.log(data);
+                                        $(item).parents('.concern_item1').remove();
+//                                    location.reload();
 
-
-
-
-                        $('i',this).bind('click',function(){
-                            var txt="确定不关注此人？";
-                            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown,Code) {
+                                        console.log(data);
+                                        alert("Unkonw Error.Please Try Again!");
+                                    }
+                                })
+                            }
+//                            var txt="确定不关注此人？";
+//                            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
                         });
-//                        $('i',this).click(function () {
-//                            $.ajax({
-//                                type:"POST",
-//                                url:"/RequestDisPatcher/request/dispatcher.do",
-//                                data:{
-//                                    url:"http://127.0.0.1:9001/login/cancel",
-//                                    params:"email="+email+"&type="+'myConcer'+"&token="+token
-//                                },
-//                                dataType:"json",
-//                                success:function(data) {
-//                                   console.log(data);
-//                                    $(item).parents('.concern_item1').remove();
-//                                },
-//                                error: function (jqXHR, textStatus, errorThrown,Code) {
-//                                    console.log(data);
-//                                    alert("Unkonw Error.Please Try Again!");
-//
-//                                }
-//                            })
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//                        });
 
-//                                .toggleClass('itme1_arrow').toggleClass('itme2_arrow');
                         $(this).siblings().toggle('item1_product_list');
+                    });
+                });
+            }
+
+            function yesORno(num){
+                $(".concern2 .concern201 .concern_item2 ").unbind().each(function(index,item){
+
+                    $('.cancel .submit_submit',item).on("click",function(event){
+                        var email=$('.email',item)[0].innerText;
+                        var name=$('.name',item)[0].innerText;
+                        var image=$('.header_pic img',item)[0].src;
+                        $(this).parents('.concern_item2').remove();
+                        $.ajax({
+                            type:"post",
+                            url:"/RequestDisPatcher/request/dispatcher.do",
+                            data: {
+                                url:"http://101.37.100.209:9001/login/handle",
+                                params:"token="+token+"&email="+email+"&handle=agree"
+                            },
+                            success: function (data) {
+                                console.log(data);
+//                    console.log(data.Data.length);
+                                $(this).parents('.concern_item2').remove();
+
+                                $(".concern2 .concern202").append('<ul class="concern_item2"> <div class="detail_pic"> <div class="header_pic"> <i class="itme1_arrow"></i>  <img src="'+image+'" id="head"> <span class="name">'+name+'</span> <span class="email">'+email+'</span> </div><i class="itme1_rabish"></i> </div> </ul>');
+                                $('.concern_list li:last-child  i span').text(num-1);
+
+                                if($('.concern_list li:last-child  i span').text()==0) {
+
+                                    $('.concern_list li:last-child  i').remove();
+
+                                };
+
+                            },
+                            error: function (data) {
+                                alert('faile');
+                            }
+                        });
+
+
+                    });
+
+                    $('.cancel .submit_back',item).on("click",function(event){
+                        var email=$('.email',item)[0].innerText;
+                        console.log(email);
+                        $(this).parents('.concern_item2').remove();
+
+                        $.ajax({
+                            type:"post",
+                            url:"/RequestDisPatcher/request/dispatcher.do",
+                            data: {
+                                url:"http://101.37.100.209:9001/login/handle",
+                                params:"token="+token+"&email="+email+"&handle=disagree"
+                            },
+                            success: function (data) {
+                                console.log(data);
+
+                                $('.concern_list li:last-child  i span').text(num-1);
+                                if($('.concern_list li:last-child  i span').text()==0) {
+
+                                    $('.concern_list li:last-child  i').remove();
+
+                                };
+
+                                $(this).parents('.concern_item2').remove();
+
+                            },
+                            error: function (data) {
+                                var txt=data.Message;
+                                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+                            }
+                        });
 
                     });
                 });
+
             }
             $.ajax({
                 type:"post",
@@ -110,18 +218,14 @@
 //                    console.log(data.Data.length);
                     var num=data.Data.length;
 //                    $('.concern_item2').empty();
-
-if(num>0){
-
-    $('.concern_list li:last-child  i').addClass("num");
-
-    $('.concern_list li:last-child  i span').text(num);
-
-};
-
+                    if(num>0){
+                        $('.concern_list li:last-child  i').addClass("num");
+                        $('.concern_list li:last-child  i span').text(num);
+                    };
                     $.each(data.Data, function(i, item) {
-                        $(".concern2 .concern201").append('<ul class="concern_item2"><div class="detail_pic"> <div class="header_pic"> <i class="itme1_arrow"></i> <img src="'+item.image+'" id="head">  <span class="name">'+item.firstName+'</span> <span class="email">'+item.email+'</span> </div> <div class="detail_btn"> <input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back"> <input type="button" value="Submit" id="submit_submit" class="submit_submit"> </div> </div> </ul>');
+                        $(".concern2 .concern201").append('<ul class="concern_item2"><div class="detail_pic"> <div class="header_pic"> <i class="itme1_arrow"></i> <img src="'+item.image+'" id="head">  <span class="name">'+item.firstName+'</span> <span class="email">'+item.email+'</span> </div> <div class="cancel"> <input type="button" value="同意" name="yes" class="submit_submit"><input type="button" name="no"  value="拒绝" class="submit_back">  </div> </div> </ul>');
                     });
+                    yesORno(num);
                 },
                 error: function (data) {
                     alert('faile');
@@ -139,8 +243,16 @@ if(num>0){
 //                    console.log(data);
 //                    $('.concern_item2').empty();
                     $.each(data.Data, function(i, item) {
-                        $(".concern2 .concern202").append('<ul class="concern_item2"> <div class="detail_pic"> <div class="header_pic"> <i class="itme1_arrow"></i>  <img src="'+item.image+'" id="head"> <span class="name">'+item.name+'</span> <span class="email">'+item.email+'</span> </div>                 <i class="itme1_rabish"></i> </div> </ul>');
+                        $(".concern2 .concern202").append('<ul class="concern_item2"> <div class="detail_pic"> <div class="header_pic"> <i class="itme1_arrow"></i>  <img src="'+item.image+'" id="head"> <span class="name">'+item.name+'</span> <span class="email">'+item.email+'</span> </div><i class="itme1_rabish"></i> </div> </ul>');
                     });
+
+
+
+                    cancelconcernMe();
+
+
+
+
                 },
                 error: function (data) {
                     alert('faile');
@@ -158,14 +270,43 @@ if(num>0){
 //                    $('.concern_item1').empty();
                     $.each(data.Data, function(i, item) {
 
-                        $(".concern1").append('<ul class="concern_item1"> <div class="detail_pic"> <li class="clickLi"> <div class="header_pic"> <i class="itme1_arrow" ></i>  <img src="' + item.image + '" id="head">  <span class="name">' + item.name + '</span> <span class="email">' + item.email + '</span> </div> <i class="itme1_rabish"></i> </li> <li> <div class="item1_product_list"> <ul> <li><span>智能床垫</span> <a href="real.html">查看实时数据</a> <a href="healthy.html">查看健康档案</a> </li> <li><span>智能枕</span> <a href="real.html?id=123">查看实时数据</a> <a href="healthy.html">查看健康档案</a> </li> <li><span>智能手环</span> <a href="real.html">查看实时数据</a> <a href="healthy.html">查看健康档案</a> </li> </ul> </div> </li> </div> </ul>');
+                        var sn=item.device;
+                        if(sn!=null){
+                        if(sn.length==0){
+                            $(".concern1").append('<ul class="concern_item1"> <div class="detail_pic"> <li class="clickLi"> <div class="header_pic"> <i class="itme1_arrow" ></i>  <img src="' + item.image + '" id="head">  <span class="name">' + item.name + '</span> <span class="email">' + item.email + '</span> </div> <i class="itme1_rabish"></i> </li> <li> <div class="item1_product_list"> <ul> <li><span style="color:#7f7373">智能床垫</span> <a href="#" title="No Device.Can not View!">查看实时数据</a> <a href="#" title="No Device.Can not View!">查看健康档案</a> </li> <li><span style="color:#7f7373">智能枕</span> <a href="#" title="No Device.Can not View!">查看实时数据</a> <a href="#" title="No Device.Can not View!">查看健康档案</a> </li> <li><span style="color:#7f7373">智能手环</span> <a href="#" title="No Device.Can not View!">查看实时数据</a> <a href="#" title="No Device.Can not View!">查看健康档案</a> </li> </ul> </div> </li> </div> </ul>');
+                        }else{
+                            $(".concern1").append('<ul class="concern_item1"> <div class="detail_pic"> <li class="clickLi"> <div class="header_pic"> <i class="itme1_arrow" ></i>  <img src="' + item.image + '" id="head">  <span class="name">' + item.name + '</span> <span class="email">' + item.email + '</span> </div> <i class="itme1_rabish"></i> </li> <li> <div class="item1_product_list"> <ul> <li><span>智能床垫</span> <a href="real.html?&email='+item.email+'&sn='+sn+'">查看实时数据</a> <a href="healthy.html?&email='+item.email+'">查看健康档案</a> </li> <li><span style="color:#7f7373">智能枕</span> <a href="#" title="No Device.Can not View!">查看实时数据</a> <a href="#" title="No Device.Can not View!">查看健康档案</a> </li> <li><span style="color:#7f7373">智能手环</span> <a href="#" title="No Device.Can not View!">查看实时数据</a> <a href="#" title="No Device.Can not View!">查看健康档案</a> </li> </ul> </div> </li> </div> </ul>');
+
+                        }
+                        }else{
+
+                            $(".concern1").append('<ul class="concern_item1"> <div class="detail_pic"> <li class="clickLi"> <div class="header_pic"> <i class="itme1_arrow" ></i>  <img src="' + item.image + '" id="head">  <span class="name">' + item.name + '</span> <span class="email">' + item.email + '</span> </div> <i class="itme1_rabish"></i> </li> <li> <div class="item1_product_list"> <ul> <li><span style="color:#7f7373">智能床垫</span> <a href="#">查看实时数据</a> <a href="#">查看健康档案</a> </li> <li><span style="color:#7f7373">智能枕</span> <a href="#" title="No Device.Can not View!">查看实时数据</a> <a href="#" title="No Device.Can not View!">查看健康档案</a> </li> <li><span style="color:#7f7373">智能手环</span> <a href="#" title="No Device.Can not View!">查看实时数据</a> <a href="#" title="No Device.Can not View!">查看健康档案</a> </li> </ul> </div> </li> </div> </ul>');
+
+                        }
+
+
+
+
+
+                        ;
+
                     });
+
                     bindListener();
                 },
                 error: function (data) {
                     alert('faile');
                 }
             });
+
+            /* //实现鼠标悬浮文字提示
+             function over(){
+             document.getElementById("device_info").style.innerHTML="";
+             }
+             function out(){
+             document.getElementById("device_info").style.innerHTML="No Device!";
+             } */
+
             function quit() {
                 $.ajax({
                     type:"post",
@@ -175,183 +316,17 @@ if(num>0){
                         params:"token="+token
                     },
                     success: function (data) {
-                        var txt=data.Message;
-                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+                        alert(data.Message);
+//                        var txt=data.Message;
+//                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
 //
                     },
                     error: function (data) {
-                        alert('fail');
+                        alert(data.Message);
                     }
                 });
             }
         });
-    </script>
-    <script type="text/javascript">
-        function cancel_apply(){
-            $("#search_result").remove();
-        }
-        function apply_apply(){
-            var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
-            var info = JSON.parse(userInfo[2]);
-            var myEmail = info.Email;
-            var firstName = info.firstName;
-            var middleName = info.middleName;
-            var lastName = info.lastName;
-            var otherEmails = document.cookie.match(new RegExp("(^| )applyPeopleEmail=([^;]*)(;|$)"));
-            var otherEmail = otherEmails[2];
-            $.ajax({
-                type:"post",
-                url:"/SleepMonitor/concern/apply",
-                data:{
-                    myEmail:myEmail,
-                    otherEmail:otherEmail,
-                    firstName:firstName,
-                    middleName:middleName,
-                    lastName:lastName
-                },
-                dataType:"json",
-                success:function(data){
-                    if(data.Code==1013){
-                        var txt=data.Message;
-                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-                        javascript:location.reload();
-                    }else{
-                        var txt=data.Message;
-                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-                    }
-                },
-                error:function(){
-                    alert("Unkonw Error.Please Try Again!");
-                }
-            });
-        }
-        function agree(index){
-            var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
-            var info = JSON.parse(userInfo[2]);
-            var myEmail = info.Email;
-            var firstName = info.firstName;
-            var middleName = info.middleName;
-            var lastName = info.lastName;
-            var applyInfo1 = document.cookie.match(new RegExp("(^| )applyUser"+index+"=([^;]*)(;|$)"));
-            var otherName = applyInfo1[2];
-            var applyInfo2 = document.cookie.match(new RegExp("(^| )applyEmail"+index+"=([^;]*)(;|$)"));
-            var otherEmail = applyInfo2[2];
-            $.ajax({
-                type:"post",
-                url:"/SleepMonitor/concern/agree",
-                data:{
-                    myEmail:myEmail,
-                    otherEmail:otherEmail,
-                    firstName:firstName,
-                    middleName:middleName,
-                    lastName:lastName,
-                    otherName:otherName
-                },
-                dataType:"json",
-                success:function(data){
-                    if(data.Code==1015){
-                        var txt=data.Message;
-                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-                        javascript:location.reload();
-                    }else{
-                        var txt=data.Message;
-                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-                    }
-                },
-                error:function(){
-                    alert("Unkonw Error.Please Try Again!");
-                }
-            });
-        }
-        function disagree(index){
-            var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
-            var info = JSON.parse(userInfo[2]);
-            var myEmail = info.Email;
-            var applyInfo2 = document.cookie.match(new RegExp("(^| )applyEmail"+index+"=([^;]*)(;|$)"));
-            var otherEmail = applyInfo2[2];
-            $.ajax({
-                type:"post",
-                url:"/SleepMonitor/concern/disagree",
-                data:{
-                    myEmail:myEmail,
-                    otherEmail:otherEmail
-                },
-                dataType:"json",
-                success:function(data){
-                    if(data.Code==1015){
-                        var txt=data.Message;
-                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-                        javascript:location.reload();
-                    }else{
-                        var txt=data.Message;
-                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-                    }
-                },
-                error:function(){
-                    alert("Unkonw Error.Please Try Again!");
-                }
-            });
-        }
-        function myConcernCancel(index){
-            var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
-            var info = JSON.parse(userInfo[2]);
-            var myEmail = info.Email;
-            var applyInfo2 = document.cookie.match(new RegExp("(^| )myconcernEmail"+index+"=([^;]*)(;|$)"));
-            var otherEmail = applyInfo2[2];
-            $.ajax({
-                type:"post",
-                url:"/SleepMonitor/concern/cancel",
-                data:{
-                    myEmail:myEmail,
-                    otherEmail:otherEmail,
-                    flog:"true"
-                },
-                dataType:"json",
-                success:function(data){
-                    if(data.Code==1017){
-                        var txt=data.Message;
-                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-                        javascript:location.reload();
-                    }else{
-                        var txt=data.Message;
-                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-                    }
-                },
-                error:function(){
-                    alert("Unkonw Error.Please Try Again!");
-                }
-            });
-        }
-        function concernMeConcel(index){
-            var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
-            var info = JSON.parse(userInfo[2]);
-            var myEmail = info.Email;
-            var applyInfo2 = document.cookie.match(new RegExp("(^| )concernMeEmail"+index+"=([^;]*)(;|$)"));
-            var otherEmail = applyInfo2[2];
-            $.ajax({
-                type:"post",
-                url:"/SleepMonitor/concern/cancel",
-                data:{
-                    myEmail:myEmail,
-                    otherEmail:otherEmail,
-                    flog:"false"
-                },
-                dataType:"json",
-                success:function(data){
-                    if(data.Code==1017){
-                        var txt=data.Message;
-                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-                        javascript:location.reload();
-                    }else{
-                        var txt=data.Message;
-                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-                    }
-                },
-                error:function(){
-                    alert("Unkonw Error.Please Try Again!");
-                }
-            });
-        }
     </script>
 
 </head>
@@ -360,7 +335,7 @@ if(num>0){
     <div class="left_nav contest">
         <div class="header_text">
             <div class="header_text_right">
-                <span class="header_pic"><a href="modify.html" ><img src="Heads/header_woman.png" id="head"></a></span>
+                <span class="header_pic"><a href="modify.html" ><img src="Heads/default.jpg" id="head"></a></span>
             </div>
         </div>
         <ul>
@@ -424,7 +399,7 @@ if(num>0){
                             if(data.Code==1){
                                 $(".concern_item0").remove();
 
-                                $(".concern0").append(' <ul class="concern_item0"> <div  class="concern_someone_detail"> <div class="detail_pic"> <span class="header_pic"><img src="' + data.Data.image + '" id="head">  <p class="appl_name">' + data.Data.name + '</p> <p class="appl_email">' + data.Data.email + '</p> </span> <div class="detail_btn"> <input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back"> <input type="button" value="Submit" id="submit_submit" class="submit_submit"> </div> </div> </div> </ul> ');
+                                $(".concern0").append(' <ul class="concern_item0"> <div  class="concern_someone_detail"> <div class="detail_pic"> <span class="header_pic"><img src="' + data.Data.image + '" id="head">  <p class="appl_name">' + data.Data.name + '</p> <p class="appl_email">' + data.Data.email + '</p> </span> <div class="detail_btn"> <input type="button" name="Submit" onclick="remove()" value="Cancel" class="submit_back"> <input type="button" value="Submit" id="submit_submit" class="submit_submit"> </div> </div> </div> </ul> ');
 
                                 $("#submit_submit").click(function () {
                                     $.ajax({
@@ -436,9 +411,9 @@ if(num>0){
                                         },
                                         dataType:"json",
                                         success:function(data) {
-
-                                            var txt=data.Message;
-                                            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+                                            alert(data.Message);
+//                                            var txt=data.Message;
+//                                            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
                                         },
                                         error: function (jqXHR, textStatus, errorThrown,Code) {
                                             alert("Unkonw Error.Please Try Again!");
@@ -453,6 +428,12 @@ if(num>0){
                     }
             );}
     });
+
+    //清除查询的结果
+    function remove(){
+        $(".concern_item0").remove();
+    }
+
 </script>
 <!--<script src="/SleepMonitor/JS/mine.js"></script>-->
 <script src="/RequestDisPatcher/JS/mine.js"></script>

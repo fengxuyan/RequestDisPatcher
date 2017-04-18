@@ -3,18 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>HomePage</title>
-	<link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-	<!--<link rel="stylesheet" type="text/css" href="/SleepMonitor/CSS/layout.css">-->
-	<!--<link rel="stylesheet" type="text/css" href="/SleepMonitor/CSS/global.css">-->
-	<!--<link rel="stylesheet" type="text/css" href="/SleepMonitor/CSS/font-awesome.min.css">-->
+	<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
 	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
 	<script src="/RequestDisPatcher/JS/mine.js"></script>
 <script type="text/javascript">
-
-
 	function quit() {
 		$.ajax({
 			type:"post",
@@ -86,7 +81,7 @@ if(image==null){
 		</div>
 		<div class="header_text">
 			<div class="header_text_right">
-				<span class="header_pic"><a href="modify.html" ><img src="" id="head"></a></span>
+				<span class="header_pic"><a href="modify.html" ><img src="Heads/default.jpg" id="head"></a></span>
 				<a href="modify.html"><span>个人资料</span></a><a href="login.html"><span onclick="quit()" >退出登录</span></a>
 			</div>
 		</div>
@@ -104,21 +99,4 @@ if(image==null){
 </div>
 
 </body>
-<!--<body id="home">-->
-	<!--<div id="info">-->
-		<!--<div id="head_pic"><a href="modify.html" style="text-decoration: none;"><img src="" id="head"></a></div>-->
-		<!--<h3 id="user_name"></h3>-->
-		<!--<div class="product" id="product">-->
-			<!--<a href="chuangdian.html" id="cd" style="text-decoration: none;"><span id="product_info">智能床垫</span></a>-->
-			<!--<a href="" id="zt" style="text-decoration: none;" title="Yet open, please wait patiently"><span id="product_info">智能枕</span></a>-->
-			<!--<a href="" id="sh" style="text-decoration: none;" title="Yet open, please wait patiently"><span id="product_info">智能手环</span></a>-->
-		<!--</div>-->
-		<!--<div style="margin-top:75px">-->
-			<!--<a href="concern.html" style="text-decoration: none;"><span id="info_select">亲情关注</span></a>-->
-			<!--<a href="productupgrade.html" style="text-decoration: none;"><span id="info_select_product">产品升级</span></a>-->
-			<!--<a href="" style="text-decoration: none;"><span id="info_select" title="Yet open, please wait patiently">名医坐堂</span></a>-->
-			<!--<a href="modify.html" style="text-decoration: none;"><span id="info_select">信息修改</span></a>-->
-		<!--</div>-->
-	<!--</div>-->
-<!--</body>-->
 </html>

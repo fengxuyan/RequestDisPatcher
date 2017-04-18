@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Real Data</title>
-	<link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
@@ -12,80 +12,79 @@
 	<script src="/RequestDisPatcher/JS/number-pb.js"></script>
 	<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
 	<script src="/RequestDisPatcher/JS/real.js"></script>
-<style>
-.block_pic{
-	overflow:hidden;
-}
-	.lixian{
-		background: url("images/onmove_block.png")!important; ;
-		background-size: 10px 116px;
-		display: inline-block;
-		height:116px;
-		width:10px;
-	}
+	<style>
+		.block_pic{
+			overflow:hidden;
+		}
+		.lixian{
+			background:#000;
+			background-size: 10px 116px;
+			display: inline-block;
+			height:116px;
+			width:2px;
+		}
 
-	.wuren{
-		background: url("images/noperson_block.png")!important; ;
-		background-size: 10px 116px;
-		display: inline-block;
-		height:116px;
-		width:10px;
-	}
-	.fanshen{
-		background: url("images/onbed_block.png")!important; ;
-		background-size: 10px 116px;
-		display: inline-block;
-		height:116px;
-		width:10px;
+		.wuren{
+			background: url("images/noperson_block.png")!important; ;
+			background-size: 10px 116px;
+			display: inline-block;
+			height:116px;
+			width:2px;
+		}
+		.fanshen{
+			background: url("images/onmove_block.png")!important; ;
+			background-size: 10px 116px;
+			display: inline-block;
+			height:116px;
+			width:2px;
 
-	}
-	.tidong{
-
-		background: url("images/onmove_block.png")!important; ;
-		background-size: 10px 116px;
-		display: inline-block;
-		height:116px;
-		width:10px;
-	}
-
-	.time.time1 span{
-		float:right;
-		padding-top: 7px;
-		font-weight: normal;
-		margin-left: 12px;
-		margin-right: -68px;
-
-	}
-	#sj span{
-		float:left;
-		padding-top: 31px;
-		font-weight: normal;
-		/*margin-left: 12px;*/
-		margin-left: -68px;
-
-	}
+		}
+		.youren{
+			background: url("images/onbed_block.png")!important; ;
+			background-size: 10px 116px;
+			display: inline-block;
+			height:116px;
+			width:2px;
 
 
+		}
+		.tidong{
 
-</style>
+			background: url("images/onmove_block.png")!important; ;
+			background-size: 10px 116px;
+			display: inline-block;
+			height:116px;
+			width:2px;
+		}
+
+		.time.time1 span{
+			float:right;
+			padding-top: 7px;
+			font-weight: normal;
+			margin-left: 12px;
+			margin-right: -68px;
+
+		}
+		#sj span{
+			float:left;
+			padding-top: 31px;
+			font-weight: normal;
+			/*margin-left: 12px;*/
+			margin-left: -68px;
+
+		}
+
+
+
+	</style>
 </head>
 <script type="text/javascript">
-	setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
-//		window.location.reload();//页面刷新
-
-//		document.a.location.reload();
-
-//		window.frames['a'].document.location.reload();
-	},3000);
-
-
-
 	function quit() {
 		$.ajax({
 			type:"post",
 			url:"/RequestDisPatcher/request/dispatcher.do",
 			data: {
-				url:"http://127.0.0.1:9001/login/logout",
+				url:"http://101.37.100.209:9001/login/logout",
 				params:"token="+token
 			},
 			success: function (data) {
@@ -97,7 +96,104 @@
 			}
 		});
 	}
+	function getQueryString(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null) return unescape(r[2]);
+		return null;
+	}
+
+	var otheremail=getQueryString('email');
+	var sn=getQueryString('sn');
+	console.log(getQueryString('email'));
+
+
 	$(document).ready(function() {
+
+
+		//进入页面或者刷新页面之后清除旧的cookie值
+		var showpic_event=$.cookie('showpic_event');
+		if((showpic_event!=undefined)&&(showpic_event!=null)&&(showpic_event!='')){
+			$.cookie('showpic_event',null);
+		}
+
+		setInterval("fetchData(otheremail)",10000);
+
+
+		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+		var info = JSON.parse(userInfo[2]);
+		var Info = info['userInfo'];
+		var first = Info.firstName;
+		var middle = Info.middleName;
+		var last = Info.lastName;
+		var gender = Info.gender;
+		var token = Info.token;
+		var image=Info.image;
+
+		if(image==null){
+			if(gender==1){
+
+				$('#head').attr('src','Heads/header_man.png');
+
+			}else if(gender==0){
+
+				$('#head').attr('src','Heads/header_woman.png');
+
+			}
+
+		}else{
+			$('#head').attr('src',image);
+		}
+
+	})
+
+	window.onload = fetchData(otheremail);
+
+	// timeHandle();
+
+	//拼接成新的数组
+	function arrayHandle(array,obj){
+		if(array.length==180){
+			array1 = array.slice(1,179);
+		}
+		return array.concat(obj);
+	}
+
+	window.onload = function timeHandle(){
+		var time = new Date();
+		//获取当前年
+		var year = myDate.getFullYear();
+		//获取当前月
+		var month = myDate.getMonth() + 1;
+		//获取当前日S
+
+		var time_getHours = (time.getHours() < 10 ? ('0' + time.getHours() ): ('' + time.getHours()));
+
+		var time_getMinutes = (time.getMinutes() < 10 ? ('0' + time.getMinutes() ): ('' + time.getMinutes()));
+
+		//var time_getSeconds = (time.getSeconds() < 10 ? ('0' + time.getSeconds()) : ('' + time.getSeconds()));
+
+		var tnow =  time_getHours + ":" + time_getMinutes;
+
+		var d1=new Date();
+		var d2=new Date(d1.getTime()+1*60*30*1000);
+
+		var getMinutes = (d2.getMinutes() < 10 ? ('0' + d2.getMinutes() ): ('' + d2.getMinutes()));
+
+		var getHours = (d2.getHours() < 10 ? ('0' + d2.getHours() ): ('' + d2.getHours()));
+
+		//var getSeconds = (d2.getSeconds() < 10 ? ('0' + d2.getSeconds()) : ('' + d2.getSeconds()));
+
+		var tnext=getHours+":"+getMinutes;
+		console.log(tnext);
+
+		document.getElementById("time1_append1").innerText = tnow;
+		document.getElementById("time1_append2").innerText = tnext;
+
+	}
+
+	function fetchData(otheremail){
+
 		if ($.cookie('the_cookie') == '') {
 			location.href = "login.html";//location.href实现客户端页面的跳转
 		}
@@ -108,172 +204,291 @@
 		var middle = Info.middleName;
 		var last = Info.lastName;
 		var gender = Info.gender;
-		var  image=Info.image;
+		var image=Info.image;
 
 		var device=Info.device;
 
 
-		if(image==null){
-			if(gender==1){
-				$('#head').attr('src','Heads/header_man.png');
+		if(otheremail==''){
+			$.ajax({
+				type:"post",
+				url:"/RequestDisPatcher/request/dispatcher.do",
 
-			}else if(gender==0){
-				$('#head').attr('src','Heads/header_woman.png');
-			}
-		}else{
-			$('#head').attr('src',image);
-		}
-
-		var  showpic=new Array();
-		$.ajax({
-			type:"post",
-			url:"/RequestDisPatcher/request/dispatcher.do",
-
-
-			data: {
-				url:"http://101.37.100.209:9000/api/realdata",
-				params:"sn="+device[0]
-			},
-			success: function (data) {
-				console.log(data.Data.event);
-				var showpic_event1=$.cookie('showpic_event')
-				$.cookie('showpic_event', showpic_event1+data.Data.event, {expires: 1000*60*30, path: '/'});
+				data: {
+					url:"http://101.37.100.209:9000/api/realdata",
+					params:"sn="+device[0]
+				},
+				success: function (data) {
+//					console.log("event:"+data.Data.heart);
+//					console.log("event:"+data.Data.breath);
+					var showpic_event1=$.cookie('showpic_event').split(',');
+//					console.log("showpic_event1:"+showpic_event1);
+					var cookie_arr = [];//用来存放sleep_event;
+					if(showpic_event1=='null'){ //cookie中不存在以前的记录
+						cookie_arr = arrayHandle(cookie_arr,data.Data.event);
+					}else{
+						cookie_arr = arrayHandle(showpic_event1,data.Data.event);
+					}
+					$.cookie('showpic_event', cookie_arr.join(','));
 //				if(showpic_event1!=''){
 
 //				};
-				console.log($.cookie('showpic_event'));
+//					console.log("cookie:"+$.cookie('showpic_event'));
 
-				if(data.Data.heart=0){
-					$('.xl_line').css('background-image','none !important');
-				}
-
-				if(data.Data.heart<60){
-					$('.xl_line').css('background-image','url(./images/60.gif)');
-				}
-				if(60<data.Data.heart<70){
-					$('.xl_line').css('background-image','url(./images/70.gif)');
-				}
-				$('.xl_line').append('<h2>'+data.Data.heart+'</h2><h4>次/分</h4>');
-				$('.hxl_line').append('<h2>'+data.Data.breath+'</h2><h4>次/分</h4>');
-
-
-
-
-				var time = new Date();
-				//获取当前年
-				var year = myDate.getFullYear();
-				//获取当前月
-				var month = myDate.getMonth() + 1;
-				//获取当前日S
-
-				var tnow = time.getHours() + ":"
-						+ time.getMinutes() + ":" + time.getSeconds();
-
-				var d1=new Date();
-				var d2=new Date(d1.getTime()+1*60*30*1000);
-
-				d2.getMinutes() < 10 ? '0' + d2.getMinutes() : '' + d2.getMinutes();
-
-				d2.getHours() < 10 ? '0' + d2.getHours() : '' + d2.getHours();
-
-				d2.getSeconds() < 10 ? '0' + d2.getSeconds() : '' + d2.getSeconds();
-
-				var tnext=d2.getHours()+":"+d2.getMinutes()+":"+d2.getSeconds();
-
-
-				$('.time.time1').append('<span>'+tnext+'</span>');
-
-
-				$('#sj').append('<span>'+tnow+'</span>');
-
-
-
-			/*
-
-			 根据实时数据不同 根据状态绘制拼接block_pic 的背景图
-			 ajax请求返回状态 根据状态append div div对应着背景图  刷新当前页面 超出最外面的框就隐藏
-			 同时更改心率呼吸率
-
-			   */
-
-				var show=$.cookie('showpic_event');
-
-				var div1=$('.block_pic');
-
-				console.log(show.length);
-
-				if(show.length>80){
-
-					show.length=75;
-
-				}
-
-
-
-				for(var i=0;i<show.length;i++){
-
-					console.log(show[i]);
-					switch(show[i])
-					{
-							//设备离线
-						case '0':
-							console.log(show[i]);
-							var htm2='<div class="lixian"></div>';
-//							div1.empty();
-							div1.append(htm2);
-							break;
-							//设备体动
-
-						case '1':
-							console.log(show[i]);
-							var htm2='<div class="tidong"></div>';
-//							div1.empty();
-							div1.append(htm2);
-							break;
-							//有人
-						case '2':
-							console.log(show[i]);
-							var htm2='<div class="fanshen"></div>';
-//							div1.empty();
-							div1.append(htm2);
-							break;
-
-							//翻身
-						case '3':
-							console.log(show[i]);
-							var htm2='<div class="tidong"></div>';
-//							div1.empty();
-							div1.append(htm2);
-							break;
-							//无人
-						case '4':
-							console.log(show[i]);
-							var htm2='<div class="wuren"></div>';
-//							div1.empty();
-							div1.append(htm2);
-							break;
-						default:
-							break;
+					if(data.Data.heart==0){
+						$('.xl_line').css('height','0');
 					}
-				};
+
+					if(data.Data.heart<=60){
+						$('.xl_line').css('background-image','url(./images/60.gif)');
+					}
+					if(60<data.Data.heart<=70){
+						$('.xl_line').css('background-image','url(./images/70.gif)');
+					}
+
+					if(70<data.Data.heart<=80){
+						$('.xl_line').css('background-image','url(./images/80.gif)');
+					}
+					if(80<data.Data.heart<=90){
+						$('.xl_line').css('background-image','url(./images/90.gif)');
+					}
+					if(90<data.Data.heart<=100){
+						$('.xl_line').css('background-image','url(./images/100.gif)');
+					}
+
+
+					//清除追加内容
+					/* $('#xl_real').remove();
+					 $('#hxl_real').remove();
+					 $('#rule1').remove();
+					 $('#rule2').remove() */;
+
+
+					$('.xl_line').append("<h2 id='xl_real'>"+data.Data.heart+"</h2><h4 id='rule1'>次/分</h4>");
+					$('.hxl_line').append("<h2 id='hxl_real'>"+data.Data.breath+"</h2><h4 id ='rule2'>次/分</h4>");
+
+
+					/*
+
+					 根据实时数据不同 根据状态绘制拼接block_pic 的背景图
+					 ajax请求返回状态 根据状态append div div对应着背景图  刷新当前页面 超出最外面的框就隐藏
+					 同时更改心率呼吸率
+
+					 */
+
+					var show=$.cookie('showpic_event');
+
+					var div1=$('.block_pic');
+
+//					console.log(show.length);
+
+//					if(show.length>80){
+//
+//						show.length=75;
+//
+//					}
+
+
+					for(var i=0;i<show.length;i++){
+
+						var time = (new Date()).valueOf();
+
+//						console.log(show[i]);
+						switch(show[i])
+						{
+								//设备离线
+							case '0':
+//								console.log(show[i]);
+								var htm2="<div class='lixian lixian"+time+"'></div>";
+								//div1.empty();
+								div1.append(htm2);
+								break;
+								//设备体动
+
+							case '1':
+
+								var htm2="<div class='tidong tidong"+time+"'></div>";
+								//div1.empty();
+								div1.append(htm2);
+								break;
+								//有人
+							case '2':
+
+								var htm2="<div class='youren youren"+time+"'></div>";
+								//div1.empty();
+								div1.append(htm2);
+								break;
+
+								//翻身
+							case '3':
+
+								var htm2="<div class='tidong tidong"+time+"'></div>";
+								//div1.empty();
+								div1.append(htm2);
+								break;
+								//无人
+							case '4':
+
+								var htm2="<div class='wuren wuren"+time+"'></div>";
+								//div1.empty();
+								div1.append(htm2);
+								break;
+							default:
+								break;
+						}
+					};
 
 
 
-			},
-			error: function (data) {
-				console.log(data);
-			}
-		});
-	})
+				},
+				error: function (data) {
+					console.log(data);
+				}
+			});
+
+		}else if(sn!='') {
+
+			$.ajax({
+				type:"post",
+				url:"/RequestDisPatcher/request/dispatcher.do",
+
+
+				data: {
+					url:"http://101.37.100.209:9000/api/realdata",
+					params:"sn="+sn
+				},
+				success: function (data) {
+					var showpic_event1=$.cookie('showpic_event').split(',');
+//					console.log("showpic_event1:"+showpic_event1);
+					var cookie_arr = [];//用来存放sleep_event;
+					if(showpic_event1=='null'){ //cookie中不存在以前的记录
+						cookie_arr = arrayHandle(cookie_arr,data.Data.event);
+					}else{
+						cookie_arr = arrayHandle(showpic_event1,data.Data.event);
+					}
+					$.cookie('showpic_event', cookie_arr.join(','));
+//				if(showpic_event1!=''){
+
+//				};
+//					console.log("cookie:"+$.cookie('showpic_event'));
+//
+					if(data.Data.heart==0){
+						$('.xl_line').css('height','0');
+					}
+
+					if(data.Data.heart<=60){
+						$('.xl_line').css('background-image','url(./images/60.gif)');
+					}
+					if(60<data.Data.heart<=70){
+						$('.xl_line').css('background-image','url(./images/70.gif)');
+					}
+
+					if(70<data.Data.heart<=80){
+						$('.xl_line').css('background-image','url(./images/80.gif)');
+					}
+					if(80<data.Data.heart<=90){
+						$('.xl_line').css('background-image','url(./images/90.gif)');
+					}
+					if(90<data.Data.heart<=100){
+						$('.xl_line').css('background-image','url(./images/100.gif)');
+					}
+
+
+					//清除前一次追加内容
+					$('#xl_real').remove();
+					$('#hxl_real').remove();
+					$('#rule1').remove();
+					$('#rule2').remove();
+
+
+					$('.xl_line').append("<h2 id='xl_real'>"+data.Data.heart+"</h2><h4 id='rule1'>次/分</h4>");
+					$('.hxl_line').append("<h2 id='hxl_real'>"+data.Data.breath+"</h2><h4 id ='rule2'>次/分</h4>");
+
+
+					/*
+
+					 根据实时数据不同 根据状态绘制拼接block_pic 的背景图
+					 ajax请求返回状态 根据状态append div div对应着背景图  刷新当前页面 超出最外面的框就隐藏
+					 同时更改心率呼吸率
+
+					 */
+
+					var show=$.cookie('showpic_event');
+
+					var div1=$('.block_pic');
+
+					div1.empty();
+
+					for(var i=0;i<show.length;i++){
+
+						var time = (new Date()).valueOf();
+
+//						console.log(show[i]);
+						switch(show[i])
+						{
+								//设备离线
+							case '0':
+//								console.log(show[i]);
+								var htm2="<div class='lixian lixian"+time+"'></div>";
+								//div1.empty();
+								div1.append(htm2);
+								break;
+								//设备体动
+
+							case '1':
+
+								var htm2="<div class='tidong tidong"+time+"'></div>";
+								//div1.empty();
+								div1.append(htm2);
+								break;
+								//有人
+							case '2':
+
+								var htm2="<div class='youren youren"+time+"'></div>";
+								//div1.empty();
+								div1.append(htm2);
+								break;
+
+								//翻身
+							case '3':
+
+								var htm2="<div class='tidong tidong"+time+"'></div>";
+								//div1.empty();
+								div1.append(htm2);
+								break;
+								//无人
+							case '4':
+
+								var htm2="<div class='wuren wuren"+time+"'></div>";
+								//div1.empty();
+								div1.append(htm2);
+								break;
+							default:
+								break;
+						}
+					};
+
+
+
+				},
+				error: function (data) {
+					console.log(data);
+				}
+			});
+
+
+
+
+		}
+
+
+
+
+	}
+
+
 </script>
 <body>
-
-<!--<div id="wrapper">-->
-<!--<div class="loader-container">-->
-<!--<div class="meter">0</div>-->
-<!--<span class="runner"></span>-->
-<!--</div>-->
-<!--</div>-->
 <div class="holder">
 	<div class="left_nav">
 		<div class="header_text">
@@ -312,15 +527,14 @@
 			</div>
 			<div class="clear"></div>
 
-
-<!--<iframe  src='show_detail_status.html' name="a" id="a">-->
+			<!--<iframe  src='show_detail_status.html' name="a" id="a">-->
 
 			<div id="zt" class="show_detail_status">
 				<ul class="status">
 					<li class="itmes"><span>状态</span></li>
 					<li>
 						<label for="ztai" id="status">
-							<input type="checkbox" name="ztai" value="ztai" /><span>status</span>
+							<input type="checkbox" name="ztai" value="ztai" /><span>离线</span>
 						</label>
 					</li>
 
@@ -342,22 +556,17 @@
 
 				</ul>
 				<div class="block_pic"></div>
-				<div class="time" id="sj"></div>
-				<div id='next' class="time time1"></div>
+				<div class="time" id="sj">
+					<span id='time1_append1'></span>
+				</div>
+				<div id='next' class="time time1">
+					<span id='time1_append2'></span>
+				</div>
 			</div>
-<!--</iframe>-->
+			<!--</iframe>-->
 		</div>
 	</div>
 </div>
-
-<script src="/RequestDisPatcher/amcharts/amcharts.js"></script>
-<script src="/RequestDisPatcher/amcharts/serial.js"></script>
-<script src="/RequestDisPatcher/amcharts/themes/light.js"></script>
-<!--<script src="/SleepMonitor/JS/birthday.js"></script>-->
-<!--<script src="/SleepMonitor/JS/radialIndicator.js"></script>-->
-<!--<script src="/SleepMonitor/JS/mine.js"></script>-->
-<!--<script src="/SleepMonitor/JS/jquery.velocity.min.js"></script>-->
-<!--<script src="/SleepMonitor/JS/number-pb.js"></script>-->
 <script src="/RequestDisPatcher/JS/birthday.js"></script>
 <script src="/RequestDisPatcher/JS/radialIndicator.js"></script>
 <script src="/RequestDisPatcher/JS/jquery.velocity.min.js"></script>
@@ -392,24 +601,9 @@
 
 	var now=p(h)+':'+p(m)+":"+p(s);
 
-	$('.time span').text(now);
+	//$('.time span').text(now);
 	$('.right_show').css("padding-bottom",60);
 
 </script>
 </body>
-<!--<body id="real">-->
-<!--<div id="real_info">-->
-<!--<h3 id="real_title">Real-time Data</h3>-->
-<!--<div id="xl"><h4>心率:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4><h4>/min</h4></div>-->
-<!--<div id="hxl"><h4>呼吸率:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4><h4>/min</h4></div>-->
-<!--<div id="zt">-->
-<!--<h4>状态:&nbsp;&nbsp;</h4>-->
-<!--<div><input type="checkbox" name="ztai" value="ztai" />在床</div>-->
-<!--<div><input type="checkbox" name="ztai" value="ztai" />体动</div>-->
-<!--<div><input type="checkbox" name="ztai" value="ztai" />无人</div>-->
-<!--</div>-->
-<!--<div id="sj"><h4>时间:</h4></div>-->
-<!--<button type="button" onclick="javascript:location.reload()" style="padding:10px;" >Refresh</button>-->
-<!--</div>-->
-<!--</body>-->
 </html>
