@@ -6,6 +6,8 @@
     <title>Forget Password</title>
     <link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
     <script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+    <script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
+    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
     <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
     <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
     <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
@@ -16,37 +18,56 @@
             if (r != null) return unescape(r[2]);
             return null;
         }
+        function checkpwd(str) {
+            var reg=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/;
+            return reg.test(str);
+        }
         var email =  getQueryString('email');
         $(document).ready(function(){
             $("#submit").click(function(){
-                $.ajax({
-                    type:"post",
-                    url:"/RequestDisPatcher/request/dispatcher.do",
-                    data:{
-                        url:"http://127.0.0.1:9001/login/modifyPwd",
+                var x7 = $('#password').val();
+                var x9 = $('#repassword').val();
+                if( !checkpwd(x7)){
+                    var txt="密码只能是数字或字母组合且不能少于6位或多余16位";
+                    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+                    return false;
+
+                }else{
+                if(x7!=x9){
+                    var txt="Please Check Your Password!Keep the Same";
+                    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+                    return false;
+                }else{
+                    $.ajax({
+                        type:"post",
+                        url:"/RequestDisPatcher/request/dispatcher.do",
+                        data:{
+                            url:"http://127.0.0.1:9001/login/modifyPwd",
 //                        url:"http://101.37.100.209:9001/login/verifi",
-                        params:"email="+email+'&password='+$('#password').val()
-                    },
-                    dataType:"json",
-                    success:function(data){
-                        console.log(data);
-                        if(data.Code==1){
-                            document.cookie="dluEmail="+email;
-                            document.cookie="dlumima="+$('#password').val();
-                          window.location.href="/RequestDisPatcher/login.html";
-
-                        }else{
-
-                            alert(data.Message);
-
+                            params:"email="+email+'&password='+$('#password').val()
+                        },
+                        dataType:"json",
+                        success:function(data){
+                            if(data.Code==1){
+                                document.cookie="dluEmail="+email;
+                                document.cookie="dlumima="+$('#password').val();
+                                window.location.href="/RequestDisPatcher/login.html";
+                            }else{
+                            }
+                        },
+                        error:function(){
+                            var txt="Unkonw Error.Please Try Again!";
+                            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
                         }
-                    },
-                    error:function(){
-                        alert("Unkonw Error.Please Try Again!");
-                    }
-                });
+                    });
+                }
+                }
+
             });
+
+
         });
+
     </script>
 </head>
 <body>
@@ -56,15 +77,15 @@
             <h2>isleep</h2>
         </div>
         <div class="header_text">
-            <h2 class="title">Modify Password</h2>
+            <h2 class="title">Reset Password</h2>
         </div>
     </div>
     <div>
-        <div class="foPwdTxt">
-            <h2 class="title Email">Enter New Password</h2>
+        <div class="panel_input reg_input res">
+            <input type="text" placeholder="new password"  name="password" class="email" id="password" />
         </div>
-        <div class="panel_input">
-            <input type="text" placeholder="input new password"  name="password" class="email" id="password" />
+        <div class="panel_input reg_input res">
+            <input type="text" placeholder="confirm password"  name="repassword" class="email" id="repassword" />
         </div>
         <div class="foot_btn fo">
             <input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back">

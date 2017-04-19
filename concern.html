@@ -48,40 +48,29 @@
 
             function cancelconcernMe() {
                 $(".concern2 .concern202 .concern_item2").unbind().each(function(index,item){
-
                             $('.itme1_rabish',item).on("click",function(event) {
-
-
                                 var email=$('.email',item)[0].innerText;
-                                console.log(email);
+                                var txt=  "确认取消此人关注?";
+                                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm,{
+                                    onOk:function(){
+                                        $(item).remove();
+                                        $.ajax({
+                                            type:"POST",
+                                            url:"/RequestDisPatcher/request/dispatcher.do",
+                                            data:{
+                                                url:"http://127.0.0.1:9001/login/cancel",
+                                                params:"email="+email+"&type="+'concernMe'+"&token="+token
+                                            },
+                                            dataType:"json",
+                                            success:function(data) {
+                                            },
+                                            error: function (jqXHR, textStatus, errorThrown,Code) {
+                                                var txt="Unkonw Error.Please Try Again!";
+                                                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
+                                            }
+                                        })
 
-                                var statu = confirm('确认取消此人关注？');
-                                if(!statu){
-                                    return false;
-                                }
-                                else{
-                                    $(this).parents('.concern_item2').remove();
-                                    $.ajax({
-                                        type:"POST",
-                                        url:"/RequestDisPatcher/request/dispatcher.do",
-                                        data:{
-                                            url:"http://127.0.0.1:9001/login/cancel",
-                                            params:"email="+email+"&type="+'concernMe'+"&token="+token
-                                        },
-                                        dataType:"json",
-                                        success:function(data) {
-                                            console.log(data);
-                                            $(item).parents('.concern_item2').remove();
-//                                    location.reload();
-
-                                        },
-                                        error: function (jqXHR, textStatus, errorThrown,Code) {
-                                            console.log(data);
-                                            alert("Unkonw Error.Please Try Again!");
-                                        }
-                                    })
-                                }
-
+                                    }});
 
                             })
                         }
@@ -99,34 +88,31 @@
                         $target=$(event.target);
                         var email=$('span:last-child',this).text();
                         $('.itme1_rabish',this).bind('click',function(){
-
-                            var statu = confirm('确认取消关注？');
-                            if(!statu){
-                                return false;
-                            }
-                            else{
-                                $.ajax({
-                                    type:"POST",
-                                    url:"/RequestDisPatcher/request/dispatcher.do",
-                                    data:{
-                                        url:"http://127.0.0.1:9001/login/cancel",
-                                        params:"email="+email+"&type="+'myConcern'+"&token="+token
-                                    },
-                                    dataType:"json",
-                                    success:function(data) {
-                                        console.log(data);
-                                        $(item).parents('.concern_item1').remove();
+                            var txt='确认取消关注此人？';
+                            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm,{
+                                onOk:function(){
+                                    $(item).parents('.concern_item1').remove();
+                                    $.ajax({
+                                        type:"POST",
+                                        url:"/RequestDisPatcher/request/dispatcher.do",
+                                        data:{
+                                            url:"http://127.0.0.1:9001/login/cancel",
+                                            params:"email="+email+"&type="+'myConcern'+"&token="+token
+                                        },
+                                        dataType:"json",
+                                        success:function(data) {
+                                            console.log(data);
+//                                            $(item).parents('.concern_item1').remove();
 //                                    location.reload();
 
-                                    },
-                                    error: function (jqXHR, textStatus, errorThrown,Code) {
-                                        console.log(data);
-                                        alert("Unkonw Error.Please Try Again!");
-                                    }
-                                })
-                            }
-//                            var txt="确定不关注此人？";
-//                            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+                                        },
+                                        error: function (jqXHR, textStatus, errorThrown,Code) {
+                                            var txt="Unkonw Error.Please Try Again!";
+                                            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
+                                        }
+                                    })
+
+                                }});
                         });
 
                         $(this).siblings().toggle('item1_product_list');
@@ -141,6 +127,13 @@
                         var email=$('.email',item)[0].innerText;
                         var name=$('.name',item)[0].innerText;
                         var image=$('.header_pic img',item)[0].src;
+                        $('.concern_list li:last-child  i span').text(num-1);
+
+                        if($('.concern_list li:last-child  i span').text()==0) {
+
+                            $('.concern_list li:last-child  i').remove();
+
+                        };
                         $(this).parents('.concern_item2').remove();
                         $.ajax({
                             type:"post",
@@ -150,22 +143,16 @@
                                 params:"token="+token+"&email="+email+"&handle=agree"
                             },
                             success: function (data) {
-                                console.log(data);
-//                    console.log(data.Data.length);
                                 $(this).parents('.concern_item2').remove();
 
                                 $(".concern2 .concern202").append('<ul class="concern_item2"> <div class="detail_pic"> <div class="header_pic"> <i class="itme1_arrow"></i>  <img src="'+image+'" id="head"> <span class="name">'+name+'</span> <span class="email">'+email+'</span> </div><i class="itme1_rabish"></i> </div> </ul>');
-                                $('.concern_list li:last-child  i span').text(num-1);
 
-                                if($('.concern_list li:last-child  i span').text()==0) {
-
-                                    $('.concern_list li:last-child  i').remove();
-
-                                };
+                                cancelconcernMe();
 
                             },
                             error: function (data) {
-                                alert('faile');
+                                var txt="Unkonw Error.Please Try Again!";
+                                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
                             }
                         });
 
@@ -174,7 +161,6 @@
 
                     $('.cancel .submit_back',item).on("click",function(event){
                         var email=$('.email',item)[0].innerText;
-                        console.log(email);
                         $(this).parents('.concern_item2').remove();
 
                         $.ajax({
@@ -228,7 +214,8 @@
                     yesORno(num);
                 },
                 error: function (data) {
-                    alert('faile');
+                    var txt="Unkonw Error.Please Try Again!";
+                    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
                 }
             });
 
@@ -255,7 +242,8 @@
 
                 },
                 error: function (data) {
-                    alert('faile');
+                    var txt="Unkonw Error.Please Try Again!";
+                    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
                 }
             });
             $.ajax({
@@ -273,14 +261,14 @@
                         var sn=item.device;
                         if(sn!=null){
                         if(sn.length==0){
-                            $(".concern1").append('<ul class="concern_item1"> <div class="detail_pic"> <li class="clickLi"> <div class="header_pic"> <i class="itme1_arrow" ></i>  <img src="' + item.image + '" id="head">  <span class="name">' + item.name + '</span> <span class="email">' + item.email + '</span> </div> <i class="itme1_rabish"></i> </li> <li> <div class="item1_product_list"> <ul> <li><span style="color:#7f7373">智能床垫</span> <a href="#" title="No Device.Can not View!">查看实时数据</a> <a href="#" title="No Device.Can not View!">查看健康档案</a> </li> <li><span style="color:#7f7373">智能枕</span> <a href="#" title="No Device.Can not View!">查看实时数据</a> <a href="#" title="No Device.Can not View!">查看健康档案</a> </li> <li><span style="color:#7f7373">智能手环</span> <a href="#" title="No Device.Can not View!">查看实时数据</a> <a href="#" title="No Device.Can not View!">查看健康档案</a> </li> </ul> </div> </li> </div> </ul>');
+                            $(".concern1").append('<ul class="concern_item1"> <div class="detail_pic"> <li class="clickLi"> <div class="header_pic"> <i class="itme1_arrow" ></i>  <img src="' + item.image + '" id="head">  <span class="name">' + item.name + '</span> <span class="email">' + item.email + '</span> </div> <i class="itme1_rabish"></i> </li> <li> <div class="item1_product_list"> <ul> <li><span >智能床垫</span> <a href="#" style="background:#ada9a5" title="No Device.Can not View!">查看实时数据</a> <a href="#" style="background:#ada9a5" title="No Device.Can not View!">查看健康档案</a> </li> <li><span >智能枕</span> <a href="#" style="background:#ada9a5" title="No Device.Can not View!">查看实时数据</a> <a href="#" title="No Device.Can not View!" style="background:#ada9a5">查看健康档案</a> </li> <li><span >智能手环</span> <a style="background:#ada9a5" href="#" title="No Device.Can not View!" style="background:#ada9a5">查看实时数据</a> <a href="#" title="No Device.Can not View!" style="background:#ada9a5">查看健康档案</a> </li> </ul> </div> </li> </div> </ul>');
                         }else{
-                            $(".concern1").append('<ul class="concern_item1"> <div class="detail_pic"> <li class="clickLi"> <div class="header_pic"> <i class="itme1_arrow" ></i>  <img src="' + item.image + '" id="head">  <span class="name">' + item.name + '</span> <span class="email">' + item.email + '</span> </div> <i class="itme1_rabish"></i> </li> <li> <div class="item1_product_list"> <ul> <li><span>智能床垫</span> <a href="real.html?&email='+item.email+'&sn='+sn+'">查看实时数据</a> <a href="healthy.html?&email='+item.email+'">查看健康档案</a> </li> <li><span style="color:#7f7373">智能枕</span> <a href="#" title="No Device.Can not View!">查看实时数据</a> <a href="#" title="No Device.Can not View!">查看健康档案</a> </li> <li><span style="color:#7f7373">智能手环</span> <a href="#" title="No Device.Can not View!">查看实时数据</a> <a href="#" title="No Device.Can not View!">查看健康档案</a> </li> </ul> </div> </li> </div> </ul>');
+                            $(".concern1").append('<ul class="concern_item1"> <div class="detail_pic"> <li class="clickLi"> <div class="header_pic"> <i class="itme1_arrow" ></i>  <img src="' + item.image + '" id="head">  <span class="name">' + item.name + '</span> <span class="email">' + item.email + '</span> </div> <i class="itme1_rabish"></i> </li> <li> <div class="item1_product_list"> <ul> <li><span>智能床垫</span> <a href="real.html?&email='+item.email+'&sn='+sn+'">查看实时数据</a> <a href="healthy.html?&email='+item.email+'">查看健康档案</a> </li> <li><span>智能枕</span> <a href="#" style="background:#ada9a5"title="No Device.Can not View!">查看实时数据</a> <a href="#"  style="background:#ada9a5" title="No Device.Can not View!">查看健康档案</a> </li> <li><span >智能手环</span> <a href="#" title="No Device.Can not View!">查看实时数据</a> <a href="#" style="background:#ada9a5" title="No Device.Can not View!">查看健康档案</a> </li> </ul> </div> </li> </div> </ul>');
 
                         }
                         }else{
 
-                            $(".concern1").append('<ul class="concern_item1"> <div class="detail_pic"> <li class="clickLi"> <div class="header_pic"> <i class="itme1_arrow" ></i>  <img src="' + item.image + '" id="head">  <span class="name">' + item.name + '</span> <span class="email">' + item.email + '</span> </div> <i class="itme1_rabish"></i> </li> <li> <div class="item1_product_list"> <ul> <li><span style="color:#7f7373">智能床垫</span> <a href="#">查看实时数据</a> <a href="#">查看健康档案</a> </li> <li><span style="color:#7f7373">智能枕</span> <a href="#" title="No Device.Can not View!">查看实时数据</a> <a href="#" title="No Device.Can not View!">查看健康档案</a> </li> <li><span style="color:#7f7373">智能手环</span> <a href="#" title="No Device.Can not View!">查看实时数据</a> <a href="#" title="No Device.Can not View!">查看健康档案</a> </li> </ul> </div> </li> </div> </ul>');
+                            $(".concern1").append('<ul class="concern_item1"> <div class="detail_pic"> <li class="clickLi"> <div class="header_pic"> <i class="itme1_arrow" ></i>  <img src="' + item.image + '" id="head">  <span class="name">' + item.name + '</span> <span class="email">' + item.email + '</span> </div> <i class="itme1_rabish"></i> </li> <li> <div class="item1_product_list"> <ul> <li><span >智能床垫</span> <a href="#" style="background:#ada9a5">查看实时数据</a> <a href="#" style="background:#ada9a5">查看健康档案</a> </li> <li><span >智能枕</span> <a href="#" style="background:#ada9a5" title="No Device.Can not View!">查看实时数据</a> <a href="#" style="background:#ada9a5" title="No Device.Can not View!">查看健康档案</a> </li> <li><span >智能手环</span> <a href="#" style="background:#ada9a5" title="No Device.Can not View!">查看实时数据</a> <a href="#" style="background:#ada9a5" title="No Device.Can not View!">查看健康档案</a> </li> </ul> </div> </li> </div> </ul>');
 
                         }
 
@@ -295,7 +283,8 @@
                     bindListener();
                 },
                 error: function (data) {
-                    alert('faile');
+                    var txt="Unkonw Error.Please Try Again!";
+                    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
                 }
             });
 
@@ -316,13 +305,13 @@
                         params:"token="+token
                     },
                     success: function (data) {
-                        alert(data.Message);
-//                        var txt=data.Message;
-//                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+                        var txt=data.Message;
+                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
 //
                     },
                     error: function (data) {
-                        alert(data.Message);
+                        var txt=data.Message;
+                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
                     }
                 });
             }
@@ -346,7 +335,7 @@
         </ul>
     </div>
     <div class="right_show">
-        <h2>isleep</h2>
+        <h3>isleep</h3>
         <a href="homepage.html"><span class="glyphicon glyphicon-home"></span></a>
         <div class="show_detail">
             <div class="show_detail_data">
@@ -358,7 +347,7 @@
                 <div class="concern0">
                     <div class="left" >
                         <div class="panel_input item0_input">
-                            <input type="email" class="" id="apply_txt"/>
+                            <input type="email" style="    border: 2px solid #DFDDDB;" class="" id="apply_txt"/>
                             <input type="button" class="search_btn" id="search_btn" >
                             <!--<img src="images/search.png" class="search_pic"/>-->
                         </div>
@@ -383,7 +372,8 @@
         var token = info.token;
         var approval_box0_email = $("#apply_txt").val();
         if ($.trim(approval_box0_email) == '') {
-            alert("input email!");
+            var txt="input email!";
+            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
             return false;
         }
         else{
@@ -411,19 +401,21 @@
                                         },
                                         dataType:"json",
                                         success:function(data) {
-                                            alert(data.Message);
-//                                            var txt=data.Message;
-//                                            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+//                                            alert(data.Message);
+                                            var txt=data.Message;
+                                            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
                                         },
                                         error: function (jqXHR, textStatus, errorThrown,Code) {
-                                            alert("Unkonw Error.Please Try Again!");
+                                            var txt="Unkonw Error.Please Try Again!";
+                                            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
                                         }
                                     })
                                 });
                             }
                         },
                         error: function (jqXHR, textStatus, errorThrown,Code) {
-                            alert("Unkonw Error.Please Try Again!");
+                            var txt="Unkonw Error.Please Try Again!";
+                            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
                         }
                     }
             );}

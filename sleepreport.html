@@ -204,9 +204,7 @@
 		if (r != null) return unescape(r[2]);
 		return null;
 	}
-	$("#search_time").birthday();
-	$("#search_times").birthday();
-	$("#search_times2").birthday();
+
 	$(".right_show").css("border-bottom", '1px solid #ddd');
 	$(".right_show").css("padding-bottom", 30);
 
@@ -258,11 +256,12 @@ if(otheremail==null){
 				$('.report_detail h5').append('<span>'+timetoshow[0]+'月'+timetoshow[1]+'日'+'</span>');
 				var radialObj4 = $('#indicatorContainer4').radialIndicator({
 					barColor: {
-						0: '#FF0000',
-						33: '#FFFF00',
-						66: '#0066FF',
-						100: '#33CC33'
+						0: '#8A847F',
+						33: '#8A847F',
+						66: '#8A847F',
+						100: '#8A847F'
 					},
+					fontColor: '#000',
 					percentage: true
 				}).data('radialIndicator');
 				radialObj4.animate(data.Data[0].score);

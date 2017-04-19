@@ -8,14 +8,33 @@
 	<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
 	<link rel="stylesheet" href="/RequestDisPatcher/CSS/jquery-ui.css">
 	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
+	<script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
 	<script src="/RequestDisPatcher/JS/ajaxfileupload.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
+
+
+	<script src="/RequestDisPatcher/JS/jquery-1.7.1.min.js" type="text/javascript"></script> <!--jquery库-->
+	<link href="/RequestDisPatcher/CSS/animate.min.css" type="text/css" rel="stylesheet"><!--动画库---css-->
+	<!---------------------------------------------------------------------------------------------->
+	<script src="/RequestDisPatcher/JS/mobiscroll_002.js" type="text/javascript"></script>
+	<script src="/RequestDisPatcher/JS/mobiscroll_004.js" type="text/javascript"></script>
+	<link href="/RequestDisPatcher/CSS/mobiscroll_002.css" rel="stylesheet" type="text/css">
+	<link href="/RequestDisPatcher/CSS/mobiscroll.css" rel="stylesheet" type="text/css">
+	<script src="/RequestDisPatcher/JS/mobiscroll.js" type="text/javascript"></script>
+	<script src="/RequestDisPatcher/JS/mobiscroll_003.js" type="text/javascript"></script>
+	<script src="/RequestDisPatcher/JS/mobiscroll_005.js" type="text/javascript"></script>
+	<link href="/RequestDisPatcher/CSS/mobiscroll_003.css" rel="stylesheet" type="text/css">
+	<script src="/RequestDisPatcher/JS/datamodify.js" type="text/javascript"></script>
+
+
 	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
 	<script src="/RequestDisPatcher/JS/checkForm.js" type="text/javascript"></script>
 	<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
-	<script src="/RequestDisPatcher/JS/birthday.js"></script>
+	<!--<script src="/RequestDisPatcher/JS/birthday.js"></script>-->
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
@@ -27,20 +46,22 @@
 			var gender = Info.gender;
 			var tokens = document.cookie.match(new RegExp("(^| )token=([^;]*)(;|$)"));
 			var pwds = document.cookie.match(new RegExp("(^| )dlumima=([^;]*)(;|$)"));
-
-//			console.log(tokens[2]);
+			var image = document.cookie.match(new RegExp("(^| )image=([^;]*)(;|$)"));
+//			console.log(image);
 			var token_t = tokens[2];
 			var image=Info.image;
 			var year=Info['birthDay'].year;
 			var month=Info['birthDay'].month;
 			var day=Info['birthDay'].day;
 			var birthday=month+'/'+day+'/'+year;
-			$("#yearOfBirth").val(birthday);
+
+
+//			document.getElementById("appDate").value = birthday;
 			document.getElementById("firstName").value = Info.firstName;
 			document.getElementById("middleName").value = Info.middleName;
 			document.getElementById("lastName").value = Info.lastName;
-
-console.log(Info);
+			document.getElementById("appDate").value = birthday;
+			console.log(Info);
 
 			var gender = Info.gender;
 			$("#gender").val(gender);
@@ -72,8 +93,16 @@ console.log(Info);
 			}else{
 				$('#head').attr('src',image);
 			}
-			$("#yearOfBirth").datepicker();
+//			$("#yearOfBirth").datepicker();
+
+//			if($.cookie('head_pic')!=''){
+//
+//				$.cookie('head_pic', '', {expires: 1000*60*30, path: '/'});
+//			}
+//			$.cookie('head_pic','', { expires: -1 });
+
 			$("#submit_submit").click(function(){
+				console.log($("#appDate").val());
 				var flog = checkFormmodify1();
 				if(flog!=false){
 					$.ajaxFileUpload({
@@ -85,14 +114,51 @@ console.log(Info);
 						dataType: "json",//返回数据的类型
 						data:{
 							url:"http://101.37.100.209:9001/login/modify",
-							params:"firstName="+$('#firstName').val()+"&password="+$('#password').val()+"&middleName="+$('#middleName').val()+"&lastName="+$('#lastName').val()+"&birth="+$("#yearOfBirth").val()+"&gender="+$('#gender').val()+"&mphone="+$('#phone').val()+"&address="+$('#address').val()+"&email="+$('#email').val()+'&head='+$.cookie('head_pic'),
+							params:"firstName="+$('#firstName').val()+"&password="+$('#password').val()+"&middleName="+$('#middleName').val()+"&lastName="+$('#lastName').val()+"&birth="+$("#appDate").val()+"&gender="+$('#gender').val()+"&mphone="+$('#phone').val()+"&address="+$('#address').val()+"&email="+$('#email').val()+'&head='+$.cookie('head_pic'),
 							token:token_t.substring(1,token_t.length-1)
 						},//一同上传的数据
 						success: function (data) {
-							console.log(data);
+							var txt=data.Message;
+							window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
+
+							$.ajax({
+								type:"POST",
+								url:"/RequestDisPatcher/request/dispatcher.do",
+								data:{
+									url:"http://127.0.0.1:9001/login/login",
+									Email:$('#Email').val(),
+									params:"email="+$('#email').val()+"&password="+$('#password').val()
+								},
+								dataType:"json",
+								success:function(data){
+									console.log(data);
+									if(data.Code==1){
+										document.cookie="userData="+JSON.stringify(data.Data);
+										document.cookie="dluEmail="+$('#email').val();
+										document.cookie="dlumima="+$('#password').val();
+										document.cookie="token="+JSON.stringify(data.Data.token);
+//										document.cookie="image="+JSON.stringify(data.Data['userInfo'].image);
+//										window.location.href="modify.html";
+									}else{
+
+									}
+//							window.location.href="homepage.html";
+								},
+								error:function(data,Code){
+									console.log(data);
+									console.log(Code);
+									alert("Unkonw Error.Please Try Again!");
+								}
+							});
+
+
+
+
+
 						},
 						error: function (data, status, e) {
-							alert(e);
+							var txt=data.Message;
+							window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
 						}
 					});
 
@@ -117,8 +183,9 @@ console.log(Info);
 				{
 					imgFile.select();
 					path = document.selection.createRange().text;
+					$.cookie('head_pic', null);
 
-					$.cookie('head_pic', path, {expires: 1000*60*30, path: '/'});
+					$.cookie('head_pic', path, {expires: 1000*60*10, path: '/'});
 
 					document.getElementById("head").innerHTML = "";
 					document.getElementById("head").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='scale',src=\"" + path + "\")";//使用滤镜效果
@@ -126,20 +193,21 @@ console.log(Info);
 				else//FF
 				{
 					path = window.URL.createObjectURL(imgFile.files[0]);
-					$.cookie('head_pic', path, {expires: 1000*60*30, path: '/'});
+					$.cookie('head_pic', null);
+					$.cookie('head_pic', path, {expires: 1000*60*10, path: '/'});
 
 
 					$('#head').attr('src',path);
 				}
 			}
 		}
-		console.log($.cookie('head_pic'));
 	</script>
 
 </head>
 <body>
 
 <div class="holder reg_container">
+
 	<div class="left_nav reg_nav" >
 		<div class="header_text">
 			<div class="header_text_right">
@@ -190,12 +258,15 @@ console.log(Info);
 
 				<span class="bir_txt">Birthday *</span>
 				<div class="panel_input reg_input mod_input">
-					<input type="text"  id="yearOfBirth" value='' />
+
+					<input name="appDate" id="appDate"  type="text" >
+					<!--<input type="text"  id="yearOfBirth" value='' onClick="laydate({istime: true, format: 'MM-DD'})" />-->
+					<!--<input type="date" value="2015-09-24"/>-->
 				</div>
 
 				<span class="bir_txt">Gender *</span>
 				<div class="reg_input reg_select sex mod_input mod_sex">
-					<select  id="gender" name ="gender">
+					<select style="outline:none !important;"  id="gender" name ="gender">
 						<option value="1" >Male</option>
 						<option value="0" >Female</option>
 					</select>
@@ -233,11 +304,6 @@ console.log(Info);
 
 		</div>
 	</div>
-
-
-	<script>
-		$("#birthday_container").birthday();
-	</script>
 </div>
 </body>
 </html>

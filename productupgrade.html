@@ -10,6 +10,25 @@
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
 
 	<script>
+		function quit() {
+			$.ajax({
+				type:"post",
+				url:"/RequestDisPatcher/request/dispatcher.do",
+				data: {
+					url:"http://127.0.0.1:9001/login/logout",
+					params:"token="+token
+				},
+				success: function (data) {
+					var txt=data.Message;
+					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
+//
+				},
+				error: function (data) {
+					var txt=data.Message;
+					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
+				}
+			});
+		}
 		$(document).ready(function() {
 			var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 			var info = JSON.parse(userInfo[2]);
@@ -56,7 +75,7 @@
 			</div>
 		</div>
 		<ul>
-			<a href="#"><li>退出登录</li></a>
+			<a href="login.html"><li onclick="quit()"  >退出登录</li></a>
 			<a href="concern.html"><li>亲请关注</li></a>
 			<a href="productupgrade.html"><li class="on">增值服务</li></a>
 			<a href="" ><span title="Yet open, please wait patiently"><li>名医坐堂</li></span></a>
@@ -97,13 +116,13 @@
 				<div class="data_table " id="products">
 					<div id="cd">
 						<div id="cd_1">
-							<h4>智能床垫<span>普通版</span>	<a href="/SleepMonitor/pay.html">
+							<h4>智能床垫<span >普通版</span>	<a href="/SleepMonitor/pay.html">
 								<input type="button" value="Upgrade" id="upgrade_select" style=""></a></h4>
 						</div>
 					</div>
 					<div id="zt">
 						<div id="zt_1">
-							<h4>智能枕<span>普通版</span>
+							<h4>智能枕<span style="font-size: 16px">普通版</span>
 								<a href="/SleepMonitor/pay.html"><input type="button" value="Upgrade" id="upgrade_select"></a></h4>
 						</div>
 					</div>
@@ -118,7 +137,7 @@
 		</div>
 	</div>
 	<script>
-		$(".right_show").css("padding-bottom",30);
+		$(".right_show").css("padding-bottom",60);
 		$(".right_show").css("border-bottom",'1px solid #ddd');
 	</script>
 	<script src="/RequestDisPatcher/JS/mine.js"></script>

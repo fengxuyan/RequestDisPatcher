@@ -16,16 +16,33 @@
 	<script src="/RequestDisPatcher/JS/number-pb.js"></script>
 	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
 	<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
+
+
+	<script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
+
+	<link href="/RequestDisPatcher/CSS/animate.min.css" type="text/css" rel="stylesheet"><!--动画库---css-->
+	<!---------------------------------------------------------------------------------------------->
+	<script src="/RequestDisPatcher/JS/mobiscroll_002.js" type="text/javascript"></script>
+	<script src="/RequestDisPatcher/JS/mobiscroll_004.js" type="text/javascript"></script>
+	<link href="/RequestDisPatcher/CSS/mobiscroll_002.css" rel="stylesheet" type="text/css">
+	<link href="/RequestDisPatcher/CSS/mobiscroll.css" rel="stylesheet" type="text/css">
+	<script src="/RequestDisPatcher/JS/mobiscroll01.js" type="text/javascript"></script>
+	<script src="/RequestDisPatcher/JS/mobiscroll_003.js" type="text/javascript"></script>
+	<script src="/RequestDisPatcher/JS/mobiscroll_005.js" type="text/javascript"></script>
+	<link href="/RequestDisPatcher/CSS/mobiscroll_003.css" rel="stylesheet" type="text/css">
+	<script src="/RequestDisPatcher/JS/data.js" type="text/javascript"></script>
 	<style>
 		#chartdiv ,#chartdiv1,#chartdiv2,#chartdiv3{
 			width: 590px;
 			height	:300px;
 		}
 		.chooseTime{
-			background:#C6BDB5 !important; ;
+			background:#C6BDB5 !important;
 		}
 	</style>
 	<script>
+
 		function getQueryString(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 			var r = window.location.search.substr(1).match(reg);
@@ -45,7 +62,7 @@
 //
 				},
 				error: function (data) {
-					alert('fail');
+
 				}
 			});
 		}
@@ -56,6 +73,10 @@
 
 		$(document).ready(function() {
 
+			//清除cookie
+			for(i =0;i<3;i++){
+				document.cookie="select_time"+i+"="+"";
+			}
 
 			var Info = info['userInfo'];
 			var first = Info.firstName;
@@ -82,9 +103,10 @@
 			if(userInfo==''){
 				location.href = "login.html";//location.href实现客户端页面的跳转
 			};
-			$("#search_time").birthday();
-			$("#search_times").birthday();
-			$("#search_times2").birthday();
+//			$("#search_time").birthday();
+//			$("#search_times").birthday();
+//			$("#search_times2").birthday();
+
 			var myDate = new Date();
 			//获取当前年
 			var year = myDate.getFullYear();
@@ -103,71 +125,86 @@
 			}else{
 				var day=day;
 			};
+			var remember_one_selectime =  document.cookie.match(new RegExp("(^| )remember_one_selectime=([^;]*)(;|$)"));
+//			console.log(remember_one_selectime[2]);
 
-			//获取当前日S
-
-			$("#year").val(year);
-			$("#month").val(month);
-			$("#day").val(day);
-
-
-			var myDate1 = new Date(myDate.getTime() - 1000 * 60 * 60 * 24 * 7);
-
-			var year1 = myDate1.getFullYear();
-			//获取当前月
-			var month1 = myDate1.getMonth() + 1;
-			var day1 = myDate1.getDate();
-
-			if(month1<10){
-				var month1='0'+month1;
-			}else{
-				var month1=month1;
-			};
-
-			if(day1<10){
-				var day1='0'+day1;
-			}else{
-				var day1=day1;
-			};
-
-
-
-			$("#year2").val(year);
-			$("#month2").val(month);
-			$("#day2").val(day);
-
-
-			$("#year1").val(year1);
-			$("#month1").val(month1);
-			$("#day1").val(day1);
-
-
-			var time=month+'/'+day+'/'+$("#year").val();
+			var time=month+'/'+day+'/'+year;
 
 			if(otheremail==null){
 //页面加载后单次查询列表显示
-				$.ajax({
-					type: "post",
-					url: "/RequestDisPatcher/request/dispatcher.do",
-					data: {
-						url: "http://101.37.100.209:9002/device/getInfo",
-						params: "token=" + token+"&time="+time
-					},
-					success: function (data) {
-						$.each(data.Data, function(i, item) {
-							var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
-							var date = new Date(parseInt(item.date));
-							var date_fmt=date.format("yyyy-MM-dd");
-							$(".oneDayLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
-						});
+				if(remember_one_selectime!=null){
+					var txttoarray=remember_one_selectime[2].split('/');
 
-					},
-					error: function (data) {
-						var txt=data.Message;
-						window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-					}
+					document.getElementById("changetimeyear").value=txttoarray[2];
+					document.getElementById("changetimemonth").value=txttoarray[0];
+					document.getElementById("changetime").value=txttoarray[1];
 
-				});
+					$.ajax({
+						type: "post",
+						url: "/RequestDisPatcher/request/dispatcher.do",
+						data: {
+							url: "http://101.37.100.209:9002/device/getInfo",
+							params: "token=" + token+"&time="+remember_one_selectime[2]
+						},
+						success: function (data) {
+							$.each(data.Data, function(i, item) {
+								var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
+								var date = new Date(parseInt(item.date));
+								var date_fmt=date.format("yyyy-MM-dd");
+								$(".oneDayLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
+								bindListener();
+							});
+
+						},
+						error: function (data) {
+							var txt=data.Message;
+							window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+						}
+
+					});
+
+
+
+
+				}else{
+
+
+
+					document.getElementById("changetime").value=time;
+
+					var txttoarray1=$('#changetime').val().split('/');
+
+					document.getElementById("changetimeyear").value=txttoarray1[2];
+					document.getElementById("changetimemonth").value=txttoarray1[0];
+					document.getElementById("changetime").value=txttoarray1[1];
+
+
+					$.ajax({
+						type: "post",
+						url: "/RequestDisPatcher/request/dispatcher.do",
+						data: {
+							url: "http://101.37.100.209:9002/device/getInfo",
+							params: "token=" + token+"&time="+time
+						},
+						success: function (data) {
+							$.each(data.Data, function(i, item) {
+								var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
+								var date = new Date(parseInt(item.date));
+								var date_fmt=date.format("yyyy-MM-dd");
+								$(".oneDayLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
+							});
+
+						},
+						error: function (data) {
+							var txt=data.Message;
+							window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+						}
+
+					});
+
+				};
+
+
 
 //页面加载后多次查询列表显示
 				$.ajax({
@@ -183,7 +220,7 @@
 							var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
 							var date = new Date(parseInt(item.date));
 							var date_fmt=date.format("yyyy-MM-dd");
-							$(".daysLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
+							$(".daysLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
 
 						});
 
@@ -202,54 +239,54 @@
 						var selecttime = chooseTime0[1] + '/' + chooseTime0[2] + '/' + chooseTime0[0];
 					}
 					if(chooseTime==''){
-					var selectmonth=$("#month").val();
-					var selectday=$("#day").val();
-					var selectyear=$("#year").val();
-					var selecttime=selectmonth+'/'+selectday+'/'+selectyear;
+						var selecttime=$('#changetimemonth').val()+'/'+$('#changetime').val()+'/'+$('#changetimeyear').val();
 					}
 					window.location.href='sleepreport.html?time='+selecttime;
-
-
 				})
 				$('#confirms').click(function () {
-					var chooseTimearray=new Array();
+					var chooseTimearray = new Array();
 
-					$.each($('span:first-child','.chooseTime'), function(i, item) {
-						chooseTimearray.push(item.innerText);
-					});
+					/* $.each($('span:first-child','.chooseTime'), function(i, item) {
+					 chooseTimearray.push(item.innerText);
+					 }); */
+					//从cookie里面取出选择的时间
+					var starts = document.cookie.match(new RegExp("(^| )select_time1=([^;]*)(;|$)"));
+					var ends = document.cookie.match(new RegExp("(^| )select_time0=([^;]*)(;|$)"));
+
+					if((starts[2]==null || starts[2] =='' ||starts[2] =="") && (ends[2]==null || ends[2] =='' ||ends[2] =="")){
+						chooseTimearray.length = 0;
+					}else if ((starts[2]==null || starts[2] =='' ||starts[2] =="") || (ends[2]==null || ends[2] =='' ||ends[2] =="")){
+						chooseTimearray.length = 1;
+					}else{
+						chooseTimearray.length = 2;
+					}
+
 					if(chooseTimearray.length==1) {
 						alert('请至少选择两个日期');
 						return;
 					}
 					if(chooseTimearray.length==0) {
-						var selectmonth1=$("#month1").val();
-						var selectday1=$("#day1").val();
-						var selectyear1=$("#year1").val();
+						var startTime=$("#changetimesleft").val();
+						var endTime=$("#changetimesright").val();
 
-						var selectmonth2=$("#month2").val();
-						var selectday2=$("#day2").val();
-						var selectyear2=$("#year2").val();
-
-
-						var startTime=selectmonth1+'/'+selectday1+'/'+selectyear1;
-						var endTime=selectmonth2+'/'+selectday2+'/'+selectyear2;
 						$.cookie('startTime', startTime, {expires: 1000*60*30, path: '/'});
 						$.cookie('endTime', endTime, {expires: 1000*60*30, path: '/'});
 
 					}
 					if(chooseTimearray.length>1){
-						var starttime=chooseTimearray[0].split('-');
-						var endtime=chooseTimearray[chooseTimearray.length-1].split('-');
 
-						var startTime=starttime[1]+'/'+starttime[2]+'/'+starttime[0];
-						var endTime=endtime[1]+'/'+endtime[2]+'/'+endtime[0];
+
+						var start = starts[2].split("-");
+						var end = ends[2].split("-");
+
+						var startTime=start[1]+'/'+start[2]+'/'+start[0];
+						var endTime=end[1]+'/'+end[2]+'/'+end[0];
 						$.cookie('startTime', startTime, {expires: 1000*60*30, path: '/'});
 						$.cookie('endTime', endTime, {expires: 1000*60*30, path: '/'});
 					}
 //					window.location.href='sleepreport.html?time='+selecttime;
 					window.location.href='SleepAnalysis.html';
 				})
-
 			}
 			else{
 //页面加载后单次查询列表显示
@@ -261,17 +298,14 @@
 						params: "token=" + token+"&time="+time+"&email="+otheremail
 					},
 					success: function (data) {
-						console.log(data);
 						$.each(data.Data, function(i, item) {
 
 							var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
 							var date = new Date(parseInt(item.creatTime));
 							var date_fmt=date.format("yyyy-MM-dd");
-							$(".oneDayLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
-
+							$(".oneDayLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
 
 						});
-
 					},
 					error: function (data) {
 						alert(data.Message);
@@ -295,7 +329,7 @@
 							var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
 							var date = new Date(parseInt(item.creatTime));
 							var date_fmt=date.format("yyyy-MM-dd");
-							$(".daysLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
+							$(".daysLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
 
 
 
@@ -308,6 +342,8 @@
 						window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
 					}
 				});
+
+
 
 				function quit() {
 					$.ajax({
@@ -322,23 +358,18 @@
 //
 						},
 						error: function (data) {
-//							alert('fail');
+
 						}
 					});
 				}
 				$('#confirm').click(function () {
-
-
 					var chooseTime=$('span:first-child','.chooseTime').text();
 					if(chooseTime!='') {
 						var chooseTime0 = chooseTime.split('-');
 						var selecttime = chooseTime0[1] + '/' + chooseTime0[2] + '/' + chooseTime0[0];
 					}
 					if(chooseTime==''){
-						var selectmonth=$("#month").val();
-						var selectday=$("#day").val();
-						var selectyear=$("#year").val();
-						var selecttime=selectmonth+'/'+selectday+'/'+selectyear;
+						var selecttime=$('#changetimemonth').val()+'/'+$('#changetime').val()+'/'+$('#changetimeyear').val();
 					}
 					window.location.href='sleepreport.html?time='+selecttime+'&otheremail='+otheremail;
 
@@ -351,34 +382,39 @@
 
 					var chooseTimearray=new Array();
 
-					$.each($('span:first-child','.chooseTime'), function(i, item) {
-						chooseTimearray.push(item.innerText);
-					});
+					/* $.each($('span:first-child','.chooseTime'), function(i, item) {
+					 chooseTimearray.push(item.innerText);
+					 }); */
+
+					//从cookie里面取出选择的时间
+					var starts = document.cookie.match(new RegExp("(^| )select_time1=([^;]*)(;|$)"));
+					var ends = document.cookie.match(new RegExp("(^| )select_time0=([^;]*)(;|$)"));
+
+					if((starts[2]==null || starts[2] =='' ||starts[2] =="") && (ends[2]==null || ends[2] =='' ||ends[2] =="")){
+						chooseTimearray.length = 0;
+					}else if ((starts[2]==null || starts[2] =='' ||starts[2] =="") || (ends[2]==null || ends[2] =='' ||ends[2] =="")){
+						chooseTimearray.length = 1;
+					}else{
+						chooseTimearray.length = 2;
+					}
+
 					if(chooseTimearray.length==1) {
 						alert('请至少选择两个日期');
 					}
 					if(chooseTimearray.length==0) {
-						var selectmonth1=$("#month1").val();
-						var selectday1=$("#day1").val();
-						var selectyear1=$("#year1").val();
+						var startTime=$("#changetimesleft").val();
+						var endTime=$("#changetimesright").val();
 
-						var selectmonth2=$("#month2").val();
-						var selectday2=$("#day2").val();
-						var selectyear2=$("#year2").val();
-
-
-						var startTime=selectmonth1+'/'+selectday1+'/'+selectyear1;
-						var endTime=selectmonth2+'/'+selectday2+'/'+selectyear2;
 						$.cookie('startTime', startTime, {expires: 1000*60*30, path: '/'});
 						$.cookie('endTime', endTime, {expires: 1000*60*30, path: '/'});
 
 					}
 					if(chooseTimearray.length>1){
-						var starttime=chooseTimearray[0].split('-');
-						var endtime=chooseTimearray[chooseTimearray.length-1].split('-');
+						var start = starts[2].split("-");
+						var end = ends[2].split("-");
 
-						var startTime=starttime[1]+'/'+starttime[2]+'/'+starttime[0];
-						var endTime=endtime[1]+'/'+endtime[2]+'/'+endtime[0];
+						var startTime=start[1]+'/'+start[2]+'/'+ start[0];
+						var endTime=end[1]+'/'+end[2]+'/'+end[0];
 						$.cookie('startTime', startTime, {expires: 1000*60*30, path: '/'});
 						$.cookie('endTime', endTime, {expires: 1000*60*30, path: '/'});
 					}
@@ -410,27 +446,28 @@
 			});
 		}
 
-		function bindListeners(){
-			$(".daysLists ul li").unbind().each(function(index,item){
-				$(item).on("click",function(event){
-					$(this).toggleClass('chooseTime');
-				});
-			});
-		}
+		/* function bindListeners(){
+		 $(".daysLists ul li").unbind().each(function(index,item){
+		 $(item).on("click",function(event){
+		 $(this).toggleClass('chooseTime');
+		 });
+		 });
+		 } */
 
 		function change() {
 
-			var selectmonth=$("#month").val();
-			var selectday=$("#day").val();
-			var selectyear=$("#year").val();
+			var selecttime=$('#changetime').val();
+			var txttoarray=selecttime.split('/');
+			document.getElementById("changetimeyear").value=txttoarray[2];
+			document.getElementById("changetimemonth").value=txttoarray[0];
+			document.getElementById("changetime").value=txttoarray[1];
 
-
-
-			var selecttime=selectmonth+'/'+selectday+'/'+selectyear;
+			document.cookie="remember_one_selectime="+selecttime;
 
 			$(".oneDayLists ul li").remove();
 
 			if(otheremail==null) {
+
 				$.ajax({
 					type: "post",
 					url: "/RequestDisPatcher/request/dispatcher.do",
@@ -451,9 +488,6 @@
 							var date_fmt = date.format("yyyy-MM-dd");
 							$(".oneDayLists ul").append('<li> <span>' + date_fmt + '</span><span>' + sleeptime + '  h</span><span>' + item.score + '</span></li>');
 							bindListener();
-
-//						$(".oneDayLists ul").append('<label for "date_fmt"><li ><span>'+date_fmt+'</span><span>'+sleeptime+'</span><span>'+item.score+'</span><input name="date_fmt" class="date_fmt" type="checkbox" /></li></label>');
-
 						});
 					},
 					error: function (data) {
@@ -489,46 +523,51 @@
 			}
 		}
 		function changes() {
-			var selectmonth1=$("#month1").val();
-			var selectday1=$("#day1").val();
-			var selectyear1=$("#year1").val();
+			var startTime=$('#changetimesleft').val();
+			var endTime=$('#changetimesright').val();
 
-			var selectmonth2=$("#month2").val();
-			var selectday2=$("#day2").val();
-			var selectyear2=$("#year2").val();
+			var beginDate=$("#startTime").val();
+			var endDate=$("#endTime").val();
+			var d1 = new Date(startTime.replace(/\-/g, "\/"));
+			var d2 = new Date(endTime.replace(/\-/g, "\/"));
 
+			if(beginDate!=""&&endDate!=""&&d1 >=d2)
+			{
+				var txt="开始时间不能大于结束时间！";
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+				return false;
+			}
 
-			var startTime=selectmonth1+'/'+selectday1+'/'+selectyear1;
-			var endTime=selectmonth2+'/'+selectday2+'/'+selectyear2;
 
 			if(otheremail==null){
-			$.ajax({
-				type: "post",
-				url: "/RequestDisPatcher/request/dispatcher.do",
-				data: {
-					url: "http://101.37.100.209:9002/device/getData",
-					params: "token=" + token+"&endTime="+endTime+"&startTime="+startTime
-				},
-				success: function (data) {
-					console.log(data);
-					$(".daysLists ul li").remove();
-					$.each(data.Data, function(i, item) {
 
-						var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
 
-						var date = new Date(parseInt(item.creatTime));
-						var date_fmt=date.format("yyyy-MM-dd");
-						$(".daysLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
-						bindListeners();
-					});
+				$.ajax({
+					type: "post",
+					url: "/RequestDisPatcher/request/dispatcher.do",
+					data: {
+						url: "http://101.37.100.209:9002/device/getData",
+						params: "token=" + token+"&endTime="+endTime+"&startTime="+startTime
+					},
+					success: function (data) {
+						console.log(data);
+						$(".daysLists ul li").remove();
+						$.each(data.Data, function(i, item) {
 
-				},
-				error: function (data) {
-					var txt=data.Message;
-					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-				}
+							var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
+							var date = new Date(parseInt(item.creatTime));
+							var date_fmt=date.format("yyyy-MM-dd");
+							$(".daysLists ul").append('<li onclick=saveTime("'+date_fmt+'") id="'+date_fmt+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+							//bindListeners();
+						});
 
-			});
+					},
+					error: function (data) {
+						var txt=data.Message;
+						window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+					}
+
+				});
 
 			}else{
 
@@ -547,8 +586,8 @@
 							var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
 							var date = new Date(parseInt(item.creatTime));
 							var date_fmt=date.format("yyyy-MM-dd");
-							$(".daysLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
-							bindListeners();
+							$(".daysLists ul").append('<li onclick=saveTime("'+date_fmt+'") id="'+date_fmt+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+							//bindListeners();
 						});
 
 					},
@@ -563,6 +602,87 @@
 			}
 		}
 
+		//处理多次选择的时间问题
+		function saveTime(time_str){
+			//$(this).toggleClass('chooseTime');
+			var i;
+			var time = new Array();
+			for(i =0;i<3;i++){
+				time[i]= document.cookie.match(new RegExp("(^| )select_time"+i+"=([^;]*)(;|$)"));
+				if(time[i][2] ==null || time[i][2] =='' || time[i][2] ==""){
+					break;
+				}
+			}
+			if(i==0){
+				document.cookie="select_time0="+time_str;
+				document.getElementById(time_str).style="background:#C6BDB5 !important;";
+			}else if(i==1){
+				if(time[0][2]!=time_str){
+					document.cookie="select_time1="+time_str;
+					document.getElementById(time_str).style="background:#C6BDB5 !important;";
+				}else{
+					document.cookie="select_time0="+"";
+					document.getElementById(time_str).style="background:#F8F8F8 !important;";
+				}
+			}else{
+				if(time[0][2]==time_str){
+					document.cookie="select_time0="+"";
+					document.getElementById(time_str).style="background:#F8F8F8 !important;";
+				}else if(time[1][2]==time_str){
+					document.cookie="select_time1="+"";
+					document.getElementById(time_str).style="background:#F8F8F8 !important;";
+				}else{
+					var time0 =  document.cookie.match(new RegExp("(^| )select_time0=([^;]*)(;|$)"));
+					var time1 = document.cookie.match(new RegExp("(^| )select_time1=([^;]*)(;|$)"));
+					var time0_real = new Date(time0[2]);
+					var time1_real = new Date(time1[2]);
+					var timex_xx = new Date();
+					var time_real = new Date(time_str)
+					if(time0_real.getTime() > time1_real.getTime()){
+						if(time0_real.getTime()<time_real.getTime()){
+							document.cookie="select_time0="+time_str;
+							document.getElementById(time0[2]).style="background:#F8F8F8 !important;";
+							document.getElementById(time1[2]).style="background:#C6BDB5 !important;";
+							document.getElementById(time_str).style="background:#C6BDB5 !important;";
+						}else{
+							document.cookie="select_time1="+time_str;
+							document.getElementById(time0[2]).style="background:#C6BDB5 !important;";
+							document.getElementById(time1[2]).style="background:#F8F8F8 !important;";
+							document.getElementById(time_str).style="background:#C6BDB5 !important;";
+						}
+					}else if(time0_real.getTime() < time1_real.getTime()){
+						if(time1_real.getTime()<time_real.getTime()){
+							document.cookie="select_time0="+time_str;
+							document.cookie="select_time1="+time0[2];
+							document.getElementById(time0[2]).style="background:#C6BDB5 !important;";
+							document.getElementById(time1[2]).style="background:#F8F8F8 !important;";
+							document.getElementById(time_str).style="background:#C6BDB5 !important;";
+						}else {
+							document.cookie="select_time0="+time1[2];
+							document.cookie="select_time1="+time_str;
+							document.getElementById(time0[2]).style="background:#F8F8F8 !important;";
+							document.getElementById(time1[2]).style="background:#C6BDB5 !important;";
+							document.getElementById(time_str).style="background:#C6BDB5 !important;";
+						}
+					}else{
+						document.cookie="select_time1="+'';
+					}
+				}
+			}
+
+			var time0_last =  document.cookie.match(new RegExp("(^| )select_time0=([^;]*)(;|$)"));
+			var time1_last = document.cookie.match(new RegExp("(^| )select_time1=([^;]*)(;|$)"));
+			if(time1_last[2]!=null && time1_last[2]!='' && time1_last[2]!=""){
+				var time0_last_real = new Date(time0_last[2]);
+				var time1_last_real = new Date(time1_last[2]);
+
+				if(time0_last_real.getTime()<time1_last_real.getTime()){
+					document.cookie="select_time0="+time1_last[2];
+					document.cookie="select_time1="+time0_last[2];
+				}
+			}
+
+		}
 	</script>
 
 </head>
@@ -594,10 +714,10 @@
 					</ul>
 					<div class="one" >
 						<div class="reg_input reg_select1  search_time"  id="search_time">
-							<select id="year" name="year"></select>
-							<select id="month" name="month" onchange="change()"></select>
-							<select id="day" name="day" onchange="change()"></select>
-							<!--<input type="text" placeholder="Birthday *" id="yearOfBirth" value="01/01/1975" />-->
+							<input id="changetimeyear" readonly="readonly" /><span>年</span>
+							<input id="changetimemonth" readonly="readonly"/><span>月</span>
+							<!--<input id="changetime" name="day" onchange="change()" />-->
+							<input id="changetime" name="day" value=" " onchange="change()" /><span>日</span>
 						</div>
 						<!--<input type="button" id='confirm' class=" time_confirm" value="确认">-->
 
@@ -617,19 +737,14 @@
 					</div>
 
 					<div class="two">
-						<div class="reg_input  reg_select1  ymd1"  id="search_times">
-							<select id="year1" name="year" onchange="changes()"></select>
-							<select id="month1" name="month" onchange="changes()"></select>
-							<select id="day1" name="day" onchange="changes()"></select>
-							<!--<input type="text" placeholder="Birthday *" id="yearOfBirth" value="01/01/1975" />-->
+						<div class="reg_input  reg_select1  ymd1 zhongwen">
+							<!--<input id="changetimesleft"  onchange="changes()" />-->
+							<input id="changetimesleft" value=" " onchange="changes()"/>
 						</div>
-						<!--<input type="button" id='confirms' class=" time_confirms" value="确认">-->
 						<i></i>
-						<div class="reg_input  reg_select1  ymd1 times2"  id="search_times2">
-							<select id="year2" name="year"></select>
-							<select id="month2" name="month" onchange="changes()"></select>
-							<select id="day2" name="day" onchange="changes()"></select>
-							<!--<input type="text" placeholder="Birthday *" id="yearOfBirth" value="01/01/1975" />-->
+						<div class="reg_input  reg_select1  ymd1 times2 zhongwen" >
+							<!--<span>终</span><input id="changetimesright" value=" " /><span>日期</span>-->
+							<input id="changetimesright" value=" " onchange="changes()" />
 						</div>
 						<div>
 							<ul class="search_list1 table">
@@ -651,7 +766,7 @@
 </div>
 <script src="/RequestDisPatcher/JS/mine.js"></script>
 <script>
-	$('.right_show').css("padding-bottom",-60);
+	$('.right_show').css("padding-bottom",60);
 </script>
 </body>
 

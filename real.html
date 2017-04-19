@@ -21,7 +21,7 @@
 			background-size: 10px 116px;
 			display: inline-block;
 			height:116px;
-			width:2px;
+			width:3px;
 		}
 
 		.wuren{
@@ -29,14 +29,14 @@
 			background-size: 10px 116px;
 			display: inline-block;
 			height:116px;
-			width:2px;
+			width:3px;
 		}
 		.fanshen{
 			background: url("images/onmove_block.png")!important; ;
 			background-size: 10px 116px;
 			display: inline-block;
 			height:116px;
-			width:2px;
+			width:3px;
 
 		}
 		.youren{
@@ -44,7 +44,7 @@
 			background-size: 10px 116px;
 			display: inline-block;
 			height:116px;
-			width:2px;
+			width:3px;
 
 
 		}
@@ -54,7 +54,7 @@
 			background-size: 10px 116px;
 			display: inline-block;
 			height:116px;
-			width:2px;
+			width:3px;
 		}
 
 		.time.time1 span{
@@ -209,7 +209,8 @@
 		var device=Info.device;
 
 
-		if(otheremail==''){
+		if(otheremail==null){
+			console.log('12');
 			$.ajax({
 				type:"post",
 				url:"/RequestDisPatcher/request/dispatcher.do",
@@ -222,7 +223,7 @@
 //					console.log("event:"+data.Data.heart);
 //					console.log("event:"+data.Data.breath);
 					var showpic_event1=$.cookie('showpic_event').split(',');
-//					console.log("showpic_event1:"+showpic_event1);
+					console.log("showpic_event1:"+showpic_event1);
 					var cookie_arr = [];//用来存放sleep_event;
 					if(showpic_event1=='null'){ //cookie中不存在以前的记录
 						cookie_arr = arrayHandle(cookie_arr,data.Data.event);
@@ -258,12 +259,12 @@
 
 
 					//清除追加内容
-					/* $('#xl_real').remove();
+					$('#xl_real').remove();
 					 $('#hxl_real').remove();
 					 $('#rule1').remove();
-					 $('#rule2').remove() */;
+					 $('#rule2').remove() ;
 
-
+//
 					$('.xl_line').append("<h2 id='xl_real'>"+data.Data.heart+"</h2><h4 id='rule1'>次/分</h4>");
 					$('.hxl_line').append("<h2 id='hxl_real'>"+data.Data.breath+"</h2><h4 id ='rule2'>次/分</h4>");
 
@@ -293,7 +294,7 @@
 
 						var time = (new Date()).valueOf();
 
-//						console.log(show[i]);
+						console.log(show[i]);
 						switch(show[i])
 						{
 								//设备离线
@@ -305,7 +306,7 @@
 								break;
 								//设备体动
 
-							case '1':
+							case '10':
 
 								var htm2="<div class='tidong tidong"+time+"'></div>";
 								//div1.empty();
@@ -328,7 +329,7 @@
 								break;
 								//无人
 							case '4':
-
+								console.log(show[i]);
 								var htm2="<div class='wuren wuren"+time+"'></div>";
 								//div1.empty();
 								div1.append(htm2);
@@ -346,7 +347,7 @@
 				}
 			});
 
-		}else if(sn!='') {
+		}else if(sn!=null) {
 
 			$.ajax({
 				type:"post",

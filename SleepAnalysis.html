@@ -8,12 +8,9 @@
     <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
     <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/number-pb.css">
-    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
-    <!--<link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>-->
-    <script src="/RequestDisPatcher/JS/highcharts.js"></script>
-    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/highslide.css" />
 
-    <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+    <script src="/RequestDisPatcher/JS/highcharts.js"></script>
     <script src="/RequestDisPatcher/JS/birthday.js"></script>
     <script src="/RequestDisPatcher/JS/radialIndicator.js"></script>
     <script src="/RequestDisPatcher/JS/jquery.velocity.min.js"></script>
@@ -47,7 +44,7 @@
             <a href="deleteProduct.html"><li>删除设备</li></a>
         </ul>
     </div>
-    <div class="right_show" >
+    <div class="right_show analysis" >
         <h3>isleep</h3>
         <a href="homepage.html"><span class="glyphicon glyphicon-home"></span></a>
         <div class="show_detail">
@@ -60,7 +57,6 @@
                     <div class="reports">
                         <div class="reports_detail">
                             <h4 class="">分析统计</h4>
-
                         </div>
                         <div class="statistics_table">
                             <p>心率</p>
@@ -90,8 +86,6 @@
 
 </div>
 <script>
-    $("#search_time").birthday();
-    $("#search_times").birthday();
     $(".right_show").css("border-bottom",'1px solid #ddd');
     $(".right_show").css("padding-bottom",30);
 
@@ -262,7 +256,10 @@ if(otheremail!=null){
 
             var chart = new Highcharts.Chart('chartdiv', {
                 chart:{
-                    type:'spline'
+                    type:'spline',
+                    tooltip: {
+                        enabled : false
+                    },
                 },
                 title: {
                     text: '心率',
@@ -278,6 +275,9 @@ if(otheremail!=null){
                     labels: {
                         enabled: false
                     }
+                },
+                tooltip: {
+                    enabled : false
                 },
                 yAxis: {
                     style: {
@@ -336,7 +336,7 @@ if(otheremail!=null){
                     ]
                 },
                 tooltip: {
-                    valueSuffix: '次/分'
+                    enabled : false
                 },
                 legend: {
                     itemStyle: {
@@ -367,7 +367,10 @@ if(otheremail!=null){
 
             var chart = new Highcharts.Chart('chartdiv1', {
                 chart:{
-                    type:'spline'
+                    type:'spline',
+                },
+                tooltip: {
+                    enabled: false
                 },
                 title: {
                     text: '呼吸率',
@@ -398,6 +401,9 @@ if(otheremail!=null){
 
                     title: {
                         text: ''
+                    },
+                    tooltip: {
+                        enabled : false
                     },
                     plotLines:[
 
@@ -449,7 +455,7 @@ if(otheremail!=null){
                     ]
                 },
                 tooltip: {
-                    valueSuffix: '次/分'
+                    enabled : false
                 },
                 legend: {
                     enabled: false,
@@ -475,6 +481,9 @@ if(otheremail!=null){
 
             var chart = new Highcharts.Chart('chartdiv2', {
                 chart:{
+                    tooltip: {
+                        enabled : false
+                    },
                     type:'spline'
                 },
                 title: {
@@ -546,7 +555,7 @@ if(otheremail!=null){
                     ]
                 },
                 tooltip: {
-                    valueSuffix: '时'
+                    enabled : false
                 },
                 legend: {
                     layout: 'vertical',
@@ -572,6 +581,9 @@ if(otheremail!=null){
 
             var chart = new Highcharts.Chart('chartdiv3', {
                 chart:{
+                    tooltip: {
+                        enabled : false
+                    },
                     type:'spline'
                 },
                 title: {
@@ -646,7 +658,7 @@ if(otheremail!=null){
                     ]
                 },
                 tooltip: {
-                    valueSuffix: '分'
+                    enabled : false
                 },
                 legend: {
                     enabled: false,
@@ -752,7 +764,10 @@ if(otheremail!=null){
 
             var chart = new Highcharts.Chart('chartdiv', {
                 chart:{
-                    type:'spline'
+                    type:'spline',
+                    tooltip: {
+                        enabled : false
+                    },
                 },
                 title: {
                     text: '心率',
@@ -826,7 +841,7 @@ if(otheremail!=null){
                     ]
                 },
                 tooltip: {
-                    valueSuffix: '次/分'
+                    enabled : false
                 },
                 legend: {
                     itemStyle: {
@@ -855,8 +870,12 @@ if(otheremail!=null){
             });
 
 
+
             var chart = new Highcharts.Chart('chartdiv1', {
                 chart:{
+                    tooltip: {
+                        enabled : false
+                    },
                     type:'spline'
                 },
                 title: {
@@ -965,6 +984,9 @@ if(otheremail!=null){
 
             var chart = new Highcharts.Chart('chartdiv2', {
                 chart:{
+                    tooltip: {
+                        enabled : false
+                    },
                     type:'spline'
                 },
                 title: {
@@ -1062,6 +1084,9 @@ if(otheremail!=null){
 
             var chart = new Highcharts.Chart('chartdiv3', {
                 chart:{
+                    tooltip: {
+                        enabled : false
+                    },
                     type:'spline'
                 },
                 title: {

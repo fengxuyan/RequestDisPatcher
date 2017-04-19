@@ -75,7 +75,7 @@
 		var $box = $("<div>").addClass("xcConfirm");//弹窗插件容器
 		var $layer = $("<div>").addClass("xc_layer");//遮罩层
 		var $popBox = $("<div>").addClass("popBox");//弹窗盒子
-		var $ttBox = $("<div>").addClass("ttBox");//弹窗顶部区域
+		// var $ttBox = $("<div>").addClass("ttBox");//弹窗顶部区域
 		var $txtBox = $("<div>").addClass("txtBox");//弹窗内容主体区
 		var $btnArea = $("<div>").addClass("btnArea");//按钮区域
 		
@@ -103,13 +103,8 @@
 		}
 		
 		function creatDom(){
-			$popBox.append(
-				$ttBox.append(
-					$clsBtn
-				).append(
-					$tt
-				)
-			).append(
+			$popBox
+			.append(
 				$txtBox.append($icon).append($txt)
 			).append(
 				$btnArea.append(creatBtnGroup(btn))

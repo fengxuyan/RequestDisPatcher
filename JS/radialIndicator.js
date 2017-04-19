@@ -285,7 +285,7 @@
         format: null, //format indicator numbers, can be a # formator ex (##,###.##) or a function
         frameTime: 10, //miliseconds to move from one frame to another
         frameNum: null, //Defines numbers of frame in indicator, defaults to 100 when showing percentage and 500 for other values
-        fontColor: null, //font color
+        fontColor: '#000', //font color
         fontFamily: null, //defines font family
         fontWeight: 'bold', //defines font weight
         fontSize : null, //define the font size of indicator number
