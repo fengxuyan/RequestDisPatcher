@@ -4,7 +4,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Real Data</title>
 	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
-	<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
@@ -108,11 +107,9 @@
 				params:"token="+token
 			},
 			success: function (data) {
-				alert(data.Message);
 //
 			},
 			error: function (data) {
-				alert('fail');
 			}
 		});
 	}
@@ -140,7 +137,7 @@
 			$.cookie('showpic_event',null);
 		}
 
-		//清除心率的cookie
+		//清除Heart rate的cookie
 		document.cookie = "heart0="+'';
 		document.cookie = "heart1="+'';
 		document.cookie = "heart2="+'';
@@ -353,15 +350,15 @@
 					$('.showBreathNumber span').remove();
 
 //
-					$('.showHeartNumber').append("<span>"+data.Data.heart+"</span><span>次/分</span>");
-					$('.showBreathNumber').append("<span>"+data.Data.breath+"</span><span>次/分</span>");
+					$('.showHeartNumber').append("<span>"+data.Data.heart+"</span><span>Times/Min</span>");
+					$('.showBreathNumber').append("<span>"+data.Data.breath+"</span><span>Times/Min</span>");
 
 
 					/*
 
-					 根据实时数据不同 根据状态绘制拼接block_pic 的背景图
+					 根据Real-time Data不同 根据状态绘制拼接block_pic 的背景图
 					 ajax请求返回状态 根据状态append div div对应着背景图  刷新当前页面 超出最外面的框就隐藏
-					 同时更改心率呼吸率
+					 同时更改Heart rateRespiration
 
 					 */
 					/*
@@ -469,15 +466,15 @@
 					}
 					var heart=heartHandle(data.Data.heart);
 
-					$('.showHeartNumber').append("<span>"+heart+"</span><span>次/分</span>");
-					$('.showBreathNumber').append("<span>"+data.Data.breath+"</span><span>次/分</span>");
+					$('.showHeartNumber').append("<span>"+heart+"</span><span>Times/Min</span>");
+					$('.showBreathNumber').append("<span>"+data.Data.breath+"</span><span>Times/Min</span>");
 
 
 					/*
 
-					 根据实时数据不同 根据状态绘制拼接block_pic 的背景图
+					 根据Real-time Data不同 根据状态绘制拼接block_pic 的背景图
 					 ajax请求返回状态 根据状态append div div对应着背景图  刷新当前页面 超出最外面的框就隐藏
-					 同时更改心率呼吸率
+					 同时更改Heart rateRespiration
 
 					 */
 					var div1=$('.block_pic');
@@ -534,7 +531,7 @@
 
 		}
 	}
-	//对heart进行处理,没有heart值直接返回，有heart返回平均值
+	//对heart进行处理,没有heart值直接返回，有heart返回Average Value
 	function heartHandle(heart){
 
 		var heart0 = document.cookie.match(new RegExp("(^| )heart0=([^;]*)(;|$)"));
@@ -646,28 +643,28 @@
 			</div>
 		</div>
 		<ul>
-			<a href="login.html"><li onclick="quit()"  >退出登录</li></a>
-			<a ><li class="on">实时数据</li></a>
-			<a onclick="js_method_healthy()"><li>健康档案</li></a>
-			<a href="addProduct.html"><li>添加或更改设备</li></a>
-			<a href="deleteProduct.html"><li>删除设备</li></a>
+			<a href="login.html"><li onclick="quit()"  >Logout</li></a>
+			<a ><li class="on">Real-time Data</li></a>
+			<a onclick="js_method_healthy()"><li>Health Archives</li></a>
+			<a href="addProduct.html"><li>Add or Change device</li></a>
+			<a href="deleteProduct.html"><li>Delete device</li></a>
 		</ul>
 	</div>
 	<div class="right_show">
-		<h3>isleep</h3>
-		<a href="homepage.html"><span class="glyphicon glyphicon-home"></span></a>
+		<h4 class="titl">isleep</h4>
+		<a href="homepage.html"><span class="home"></span></a>
 		<div class="show_detail">
 			<div class="show_detail_data">
 				<div class="data_table real_table">
 
 					<div class="left_heart_rate">
 
-						<div class="heart_txt"><span>心率</span></div>
+						<div class="heart_txt"><span>Heart rate</span></div>
 						<div class="heart_pic">
 
 							<div class="showHeartNumber">
 								<!--<span>90</span>-->
-								<!--<span>次/分</span>-->
+								<!--<span>Times/Min</span>-->
 							</div>
 
 						</div>
@@ -679,11 +676,11 @@
 
 
 					<div class="right_breath_rate">
-						<div class="breath_txt"><span>呼吸率</span></div>
+						<div class="breath_txt"><span>Respiration</span></div>
 						<div class="breath_pic">
 							<div class="showBreathNumber">
 								<!--<span>90</span>-->
-								<!--<span>次/分</span>-->
+								<!--<span>Times/Min</span>-->
 							</div>
 						</div>
 
@@ -760,7 +757,7 @@
 	var month=myDate.getMonth()+1;
 	//获取当前日
 	var date=myDate.getDate();
-	var h=myDate.getHours();       //获取当前小时数(0-23)
+	var h=myDate.getHours();       //获取当前hour数(0-23)
 	var m=myDate.getMinutes();     //获取当前分钟数(0-59)
 	var s=myDate.getSeconds();
 

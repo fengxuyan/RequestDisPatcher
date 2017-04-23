@@ -52,14 +52,14 @@ $.ajax({
 		var hightest=Math.max.apply(null, map2);//最大值
 		var minest=Math.min.apply(null, map2);//最小值
         var avg=arrAverageNum2(map2);
-		var fields1 = {data:map2,color:'#000',name:'心率',width:2};
+		var fields1 = {data:map2,color:'#000',name:'Heart rate',width:2};
 
 		var chart = new Highcharts.Chart('container', {
 			chart:{
 				type:'spline'
 			},
 			title: {
-				text: '心率',
+				text: 'Heart rate',
 				x: -60,
 				y: 90
 			},
@@ -83,7 +83,7 @@ $.ajax({
 
 
 							label:{
-								text:'最高值',    //标签的内容
+								text:'Maximum Value',    //标签的内容
 								align:'right',                //标签的水平位置，水平居左,默认是水平居中center
 								x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
 							},
@@ -98,7 +98,7 @@ $.ajax({
 					{
 
 						label:{
-							text:'最低值',   //标签的内容
+							text:'Minimum Value',   //标签的内容
 							align:'right',                //标签的水平位置，水平居左,默认是水平居中center
 							x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
 						},
@@ -112,7 +112,7 @@ $.ajax({
 					{
 
 						label:{
-							text:'平均值',  //标签的内容
+							text:'Average Value',  //标签的内容
 							align:'right',                //标签的水平位置，水平居左,默认是水平居中center
 							x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
 						},
@@ -125,7 +125,7 @@ $.ajax({
 				]
 			},
 			tooltip: {
-				valueSuffix: '次/分'
+				valueSuffix: 'Times/Min'
 			},
 			legend: {
 				layout: 'vertical',
@@ -135,7 +135,7 @@ $.ajax({
 				verticalAlign: 'top',
 				x: 190,
 				y: 45,
-				labelFormat: '<span style="color:#fff">"心率"</span>'
+				labelFormat: '<span style="color:#fff">"Heart rate"</span>'
 			},
 			series:
 					[

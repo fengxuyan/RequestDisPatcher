@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
     <script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
     <script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
+
     <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
     <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
     <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
@@ -28,7 +29,7 @@
                 var x7 = $('#password').val();
                 var x9 = $('#repassword').val();
                 if( !checkpwd(x7)){
-                    var txt="密码只能是数字或字母组合且不能少于6位或多余16位";
+                    var txt="Password can only be the combination of numbers and letters. It may not be less than 6 or more than 16 bits";
                     window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
                     return false;
 
@@ -43,15 +44,19 @@
                         url:"/RequestDisPatcher/request/dispatcher.do",
                         data:{
                             url:"http://127.0.0.1:9001/login/modifyPwd",
-//                        url:"http://101.37.100.209:9001/login/verifi",
                             params:"email="+email+'&password='+$('#password').val()
                         },
                         dataType:"json",
                         success:function(data){
                             if(data.Code==1){
-                                document.cookie="dluEmail="+email;
-                                document.cookie="dlumima="+$('#password').val();
-                                window.location.href="/RequestDisPatcher/login.html";
+                                var txt=data.Message;
+                                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success ,{
+                                    onOk:function() {
+                                        document.cookie="dluEmail="+email;
+                                        document.cookie="dlumima="+$('#password').val();
+                                        window.location.href="/RequestDisPatcher/login.html";
+                                    }}
+                                );
                             }else{
                             }
                         },
@@ -76,16 +81,16 @@
         <div class="header_scroll">
             <h2>isleep</h2>
         </div>
-        <div class="header_text">
+        <div class="header_text" STYLE="height: 52px;">
             <h2 class="title">Reset Password</h2>
         </div>
     </div>
-    <div style="margin-top: 80px">
+    <div style="margin-top: 91px;">
         <div class="panel_input reg_input res">
-            <input type="text" placeholder="new password"  name="password" class="email" id="password" />
+            <input type="password" placeholder="new password"  name="password" class="email" id="password" />
         </div>
         <div class="panel_input reg_input res">
-            <input type="text" placeholder="confirm password"  name="repassword" class="email" id="repassword" />
+            <input type="password" placeholder="confirm password"  name="repassword" class="email" id="repassword" />
         </div>
         <div class="foot_btn fo">
             <input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back">

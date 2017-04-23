@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Healthy Consultation</title>
-	<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
+
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
@@ -41,31 +41,44 @@
 		}
 
 		.showgotoBed{
-			font-weight: normal !important;
-
-			line-height: 123px!important;
-			font-family:华文细黑,STHeiti,MingLiu;
+			font-size: 16px;
 
 		}
 
 		.showgotoBed.outOfBed{
+			top: 33px;
+			font-size: 16px;
+			position: relative;
 			font-weight: normal !important;
-
-			line-height: 123px!important;
-			font-family:华文细黑,STHeiti,MingLiu;
-			margin-right: 20px;
+			line-height: 19px!important;
+			font-family: 华文细黑,STHeiti,MingLiu;
+			margin-right: 12px;
 			display: inline-block;
 			float: right;
 		}
 		.showgotoBed.tosleep{
+			top: 35px;
+			font-size: 16px;
+			position: relative;
 			font-weight: normal !important;
-
-			line-height: 123px!important;
-			font-family:华文细黑,STHeiti,MingLiu;
-			margin-left: 50px;
+			line-height: 19px!important;
+			font-family: 华文细黑,STHeiti,MingLiu;
+			margin-left: 58px;
 			display: inline-block;
 			float: left;
 		}
+		.showgotoBed.gotobed{
+			top: 35px;
+			position: relative;
+			font-weight: normal !important;
+			line-height: 19px!important;
+			font-family: 华文细黑,STHeiti,MingLiu;
+			/* margin-left: 1px; */
+			display: inline-block;
+			float: left;
+			font-size: 16px;
+		}
+
 
 		.qc{
 			position: absolute;
@@ -87,60 +100,66 @@
 			</div>
 		</div>
 		<ul>
-			<a href="login.html"><li onclick="quit()"  >退出登录</li></a>
-			<a href="real.html"><li>实时数据</li></a>
-			<a href="healthy.html"><li class="on">健康档案</li></a>
-			<a href="addProduct.html"><li>添加或更改设备</li></a>
-			<a href="deleteProduct.html"><li>删除设备</li></a>
+			<a href="login.html"><li onclick="quit()"  >Logout</li></a>
+			<a href="real.html"><li>Real-time Data</li></a>
+			<a href="healthy.html"><li class="on">Health Archives</li></a>
+			<a href="addProduct.html"><li>Add or Change device</li></a>
+			<a href="deleteProduct.html"><li>Delete device</li></a>
 		</ul>
 	</div>
 	<div class="right_show">
-		<h3>isleep</h3>
-		<a href="homepage.html"><span class="glyphicon glyphicon-home"></span></a>
+		<h4 class="titl">isleep</h4>
+		<a href="homepage.html"><span class="home"></span></a>
 		<div class="show_detail">
 			<div class="show_detail_data" style="    padding-top: 40px;">
 				<div class="data_table search">
 					<ul class="search_list report" >
-						<li class="clickC">查询单次睡眠</li>
-						<li>查询多次睡眠</li>
+						<li class="clickC">One report</li>
+						<li>Multiple reports</li>
 					</ul>
 					<div class="report">
 						<div class="report_detail">
-							<h4 class="">监测报告</h4>
-							<h5>监测日期：</h5>
+							<h4 class="">Tracking report </h4>
+							<h5>Tracking date：</h5>
 							<div class="circle">
 								<ul>
-									<li><span class="showxl"></span><span>次/分</span><span>平均心率</span></li>
-									<li><span class="showhxl"></span><span>次/分</span><span>平均呼吸率</span></li>
+									<li><span class="showxl"></span><span style="font-size: 11px">Times/Min</span><span>Average Heart Rate</span></li>
+									<li><span class="showhxl"></span><span style="font-size: 11px">Times/Min</span><span>Average Respiration</span></li>
 									<li>
 										<div id="indicatorContainer4">
 										</div>
-										<span class="pf">睡眠评分</span>
+										<span class="pf">Sleep score</span>
 									</li>
-									<li><span class="showfscs"></span><span>次/分</span><span>翻身次数</span></li>
-									<li><span class="showqycs"></span><span>次/分</span><span>起夜次数</span></li>
+									<li><span class="showfscs"></span><span style="font-size: 11px">Times</span><span>Sleep-turning times</span></li>
+									<li><span class="showqycs"></span><span style="font-size: 11px;">Times</span><span>Bed exits</span></li>
 								</ul>
 							</div>
 							<div class="line">
 								<ul>
 									<li>
-										<i class="sc"><span>上床</span></i>
+										<i class="sc"><span style="left: 4px;text-align: center;">Go to bed</span></i>
 
 										<section id="sample-pb">
 											<article>
 												<div class="number-pb rumian">
-													<div class="number-pb-shown "><i class="icon_sleepright">入眠</i></div>
+													<div class="number-pb-shown ">
+														<i class="icon_sleepright"><span style="    top: 8px;left: 0px;
+    text-align: center;">Fall sleep</span></i>
+													</div>
 
 												</div>
 											</article>
 										</section>
-										<i class="qc"><span>起床</span></i>
+										<i class="qc"><span style="top: 15px;left: 4px;">Get up</span></i>
 									</li>
 									<li>
 										<section id="sample-pb1">
 											<article>
 												<div class="number-pb">
-													<div class="number-pb-shown"><i class="icon_sleepright">深睡</i></div>
+													<div class="number-pb-shown">
+														<i class="icon_sleepright"><span style="    top: 8px;left: 0px;
+    text-align: center;">Deep sleep</span></i>
+													</div>
 													<!--<div class="number-pb-num">深睡</div>-->
 												</div>
 											</article>
@@ -151,7 +170,10 @@
 										<section id="sample-pb2">
 											<article>
 												<div class="number-pb">
-													<div class="number-pb-shown"><i class="icon_sleepright">浅睡</i></div>
+													<div class="number-pb-shown">
+														<i class="icon_sleepright"><span style="    top: 8px;left: 0px;
+    text-align: center;">Light Sleep</span></i>
+													</div>
 													<!--<div class="number-pb-num">浅睡</div>-->
 												</div>
 											</article>
@@ -162,7 +184,8 @@
 										<section id="sample-pb3">
 											<article>
 												<div class="number-pb">
-													<div class="number-pb-shown"><i class="icon_sleepright">总长</i></div>
+													<div class="number-pb-shown"><i class="icon_sleepright"><span style="    top: 8px;left: 0px;
+    text-align: center;">Sleep time</span></i></div>
 													<!--<div class="number-pb-num">总长</div>-->
 												</div>
 											</article>
@@ -189,11 +212,11 @@
 				params:"token="+token
 			},
 			success: function (data) {
-				alert(data.Message);
+
 //
 			},
 			error: function (data) {
-				alert('fail');
+
 			}
 		});
 	}
@@ -261,6 +284,7 @@ if(otheremail==null){
 						66: '#8A847F',
 						100: '#8A847F'
 					},
+					radius:60,
 					fontColor: '#000',
 					percentage: true
 				}).data('radialIndicator');
@@ -271,17 +295,19 @@ if(otheremail==null){
 				$('.showfscs').text(data.Data[0].turnNum);
 				$('.showqycs').text(data.Data[0].outNum);
 
-				var allSleepTime=MillisecondToDate((data.Data[0].lightSleepTime+data.Data[0].deepSleepTime)*1000);
 
 
-				var deepSleepTime=MillisecondToDate((data.Data[0].deepSleepTime)*1000);
+				var allSleepTime=((data.Data[0].lightSleepTime + data.Data[0].deepSleepTime) / (60 * 60)).toFixed(1);
 
-				var lightSleepTime=MillisecondToDate((data.Data[0].lightSleepTime)*1000);
+				var deepSleepTime=((data.Data[0].deepSleepTime) / (60 * 60)).toFixed(1);
+
+				var lightSleepTime=((data.Data[0].lightSleepTime) / (60 * 60)).toFixed(1);
 
 
-				$('#sample-pb1').append('<p>深度睡眠时长:'+ deepSleepTime +'</p>');
-				$('#sample-pb2').append('<p>浅度睡眠时长:'+ lightSleepTime +'</p>');
-				$('#sample-pb3').append('<p>总睡眠时长:'+ allSleepTime +'</p>');
+
+				$('#sample-pb1').append('<p>Deep Sleep amount: '+ deepSleepTime +' h</p>');
+				$('#sample-pb2').append('<p>Light Sleep amount: '+ lightSleepTime +' h</p>');
+				$('#sample-pb3').append('<p>Sleep time: '+ allSleepTime +' h</p>');
 
 				//上床到开始睡眠比例
 
@@ -289,7 +315,6 @@ if(otheremail==null){
 
 				var num=((data.Data[0].sleepStart-data.Data[0].goToBed)/(data.Data[0].outOfBed-data.Data[0].goToBed))*100;
 
-				console.log(num);
 				//深度睡眠比例
 				var num1=((data.Data[0].deepSleepTime)/(data.Data[0].lightSleepTime+data.Data[0].deepSleepTime))*100;
 
@@ -302,9 +327,10 @@ if(otheremail==null){
 
 				$('.number-pb.rumian').append('<span class="showgotoBed tosleep">'+date_fmt_sleepStart+'</span>');
 
+
 				var date_goToBed = new Date(parseInt(data.Data[0].goToBed));
 				var date_fmt_goToBed=date_goToBed.format(" hh:mm");
-				$('.sc').append('<span class="showgotoBed">'+date_fmt_goToBed+'</span>');
+				$('.sc').append('<span class="showgotoBed gotobed">'+date_fmt_goToBed+'</span>');
 
 
 				var date_outOfBed = new Date(parseInt(data.Data[0].outOfBed));
@@ -382,6 +408,7 @@ if(data.Data[0].score!=0){
 					66: '#8A847F',
 					100: '#8A847F'
 				},
+				radius:60,
 				fontColor: '#000',
 				percentage: true
 			}).data('radialIndicator');
@@ -393,16 +420,18 @@ if(data.Data[0].score!=0){
 			$('.showqycs').text(data.Data[0].outNum);
 
 
-			var allSleepTime=MillisecondToDate((data.Data[0].deepSleepTime+data.Data[0].lightSleepTime)*1000);
 
-			var deepSleepTime=MillisecondToDate((data.Data[0].deepSleepTime)*1000);
+			var allSleepTime=((data.Data[0].lightSleepTime + data.Data[0].deepSleepTime) / (60 * 60)).toFixed(1);
 
-			var lightSleepTime=MillisecondToDate((data.Data[0].lightSleepTime)*1000);
+			var deepSleepTime=((data.Data[0].deepSleepTime) / (60 * 60)).toFixed(1);
+
+			var lightSleepTime=((data.Data[0].lightSleepTime) / (60 * 60)).toFixed(1);
 
 
-			$('#sample-pb1').append('<p>深度睡眠时长:'+ deepSleepTime +'</p>');
-			$('#sample-pb2').append('<p>浅度睡眠时长:'+ lightSleepTime +'</p>');
-			$('#sample-pb3').append('<p>总睡眠时长:'+ allSleepTime +'</p>');
+
+			$('#sample-pb1').append('<p>Deep Sleep amount: '+ deepSleepTime +' h</p>');
+			$('#sample-pb2').append('<p>Light Sleep amount: '+ lightSleepTime +' h</p>');
+			$('#sample-pb3').append('<p>Sleep time: '+ allSleepTime +' h</p>');
 
 			//上床到开始睡眠比例
 
@@ -410,7 +439,6 @@ if(data.Data[0].score!=0){
 
 			var num=((data.Data[0].sleepStart-data.Data[0].goToBed)/(data.Data[0].outOfBed-data.Data[0].goToBed))*100;
 
-			console.log(num);
 			//深度睡眠比例
 			var num1=((data.Data[0].deepSleepTime)/(data.Data[0].lightSleepTime+data.Data[0].deepSleepTime))*100;
 
@@ -423,9 +451,10 @@ if(data.Data[0].score!=0){
 
 			$('.number-pb.rumian').append('<span class="showgotoBed tosleep">'+date_fmt_sleepStart+'</span>');
 
+
 			var date_goToBed = new Date(parseInt(data.Data[0].goToBed));
 			var date_fmt_goToBed=date_goToBed.format(" hh:mm");
-			$('.sc').append('<span class="showgotoBed">'+date_fmt_goToBed+'</span>');
+			$('.sc').append('<span class="showgotoBed gotobed">'+date_fmt_goToBed+'</span>');
 
 
 			var date_outOfBed = new Date(parseInt(data.Data[0].outOfBed));

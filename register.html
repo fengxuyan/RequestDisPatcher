@@ -4,9 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Register Account</title>
 	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
-	<script src="/RequestDisPatcher/JS/jquery-ui.js"></script>
-	<!--<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">-->
-	<link rel="stylesheet" href="/RequestDisPatcher/CSS/jquery-ui.css">
+
 	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
 	<script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
 	<script src="/RequestDisPatcher/JS/ajaxfileupload.js"></script>
@@ -30,7 +28,8 @@
 			var filextension = imgFile.value.substring(imgFile.value.lastIndexOf("."), imgFile.value.length);
 			filextension = filextension.toLowerCase();
 			if ((filextension != '.jpg') && (filextension != '.gif')  && (filextension != '.jpeg') && (filextension != '.png') && (filextension != '.bmp')) {
-				alert("对不起，系统仅支持标准格式的照片，请您调整格式后重新上传，谢谢 !");
+				var txt="The image is invalid, please select again";
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 				imgFile.focus();
 			}
 			else {
@@ -57,19 +56,19 @@
 
 			var txttoarray1=$('#yearOfBirthr').val().split('/');
 
-			document.getElementById("Changetimeyear").value=txttoarray1[2];
-			document.getElementById("Changetimemonth").value=txttoarray1[0];
-			document.getElementById("yearOfBirth").value=txttoarray1[1];
+//			document.getElementById("Changetimeyear").value=txttoarray1[2];
+//			document.getElementById("Changetimemonth").value=txttoarray1[0];
+//			document.getElementById("yearOfBirth").value=txttoarray1[1];
+
+			document.getElementById("Changetimeyear").value='';
+			document.getElementById("Changetimemonth").value='';
+			document.getElementById("yearOfBirth").value='';
 
 //
 //			$('#yearOfBirth').val('01/01/1980');
 			$("#submit_submit").click(function(){
-				var birthday=$('#changetimemonth').val()+'/'+$('#yearOfBirth').val()+'/'+$('#changetimeyear').val();
-
-				console.log(birthday);
 				var flog = checkForm1();
 				if(flog!=false){
-//					var birthday=month+'/'+day+'/'+year;
 
 					$.ajaxFileUpload({
 						type:"POST",
@@ -80,29 +79,27 @@
 						dataType: "json",//返回数据的类型
 						data:{
 							url:"http://127.0.0.1:9001/login/register",
-							params:"firstName="+$('#firstName').val()+"&password="+$('#password').val()+"&middleName="+$('#middleName').val()+"&lastName="+$('#lastName').val()+"&birth="+birthday+"&gender="+$('#gender').val()+"&mphone="+$('#phone').val()+"&address="+$('#address').val()+"&email="+$('#email').val()+'&head='+$.cookie('head_pic'),
+							params:"firstName="+$('#firstName').val()+"&password="+$('#password').val()+"&middleName="+$('#middleName').val()+"&lastName="+$('#lastName').val()+"&birth="+$('#yearOfBirthr').val()+"&gender="+$('#gender').val()+"&mphone="+$('#phone').val()+"&address="+$('#address').val()+"&email="+$('#email').val()
 						},//一同上传的数据
 						success: function (data) {
 							if(data.Code==1000){
-								var txt="邮箱或密码错误";
+								var txt="Email or Password Error";
 								window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 								return false;
 							}else if(data.Code==1001){
-								var txt="邮箱不存在";
+								var txt="The email address does not exist";
 								window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 								return false;
 
 							}else if(data.Code==1002){
-								var txt="邮箱已存在";
+								var txt="The email address has been  registered";
 								window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 								return false;
 
 							}
-
-
 							document.cookie="dluEmail="+$('#email').val();
 							document.cookie="dlumima="+$('#password').val();
-//							window.location.href="/RequestDisPatcher/login.html";
+							window.location.href="/RequestDisPatcher/login.html";
 						},
 						error: function (data, status, e) {
 
@@ -177,7 +174,7 @@
 
 
 				if( !checkpwd(x7)){
-					var txt="密码只能是数字或字母组合且不能少于6位或多余16位";
+					var txt="Password can only be the combination of numbers and letters. It may not be less than 6 or more than 16 bits";
 					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 					return false;
 
@@ -199,27 +196,16 @@
 
 
 			}else{
-				var txt="邮箱格式错误";
+				var txt="Email format error";
 				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 				return false;
 			}
 
 
 		}
-function showthis() {
-	$('#yearOfBirth').val('01/01/1980');
-//	var selecttime=$('#yearOfBirth').val();
-//
-//console.log(selecttime);
-//	var txttoarray=selecttime.split('/');
-//
-//
-//	document.getElementById("Changetimeyear").value=txttoarray[2];
-//	document.getElementById("Changetimemonth").value=txttoarray[0];
-//	document.getElementById("yearOfBirth").value=txttoarray[1];
-console.log($('#yearOfBirth').val());
-	console.log('feng');
-}
+		function goback() {
+			location.href='login.html';
+		}
 
 	</script>
 </head>
@@ -251,8 +237,8 @@ console.log($('#yearOfBirth').val());
 		</ul>
 	</div>
 	<div class="right_show">
-		<h3>Register An Account</h3>
-		<span onclick="javascript:history.back(-1);" class="glyphicon icon-caret-right"></span>
+		<h3 style="font-size: 20px;">Register</h3>
+		<span onclick="goback()" class="glyphicon icon-caret-right"></span>
 		<div class="show_detail register">
 			<form name="re_form">
 				<div class="form_txt">
@@ -269,10 +255,10 @@ console.log($('#yearOfBirth').val());
 				</div>
 				<span class="bir_txt btext">Birthday *</span>
 				<div class="reg_input  res reg_select ymd check search_timeres"  id="">
-					<input id="Changetimeyear" readonly="readonly"  /><span>年</span>
-					<input id="Changetimemonth" readonly="readonly" /><span>月</span>
+					<input id="Changetimeyear" readonly="readonly"  /><span> </span>
+					<input id="Changetimemonth" readonly="readonly" /><span> </span>
 					<input id="yearOfBirth"  type="text" >
-					<span class="day123">日</span>
+					<span class="day123"> </span>
 				</div>
 				<input id="yearOfBirthr"  type="text" value="01/01/1980" style="
 				    cursor: pointer;
@@ -307,11 +293,11 @@ console.log($('#yearOfBirth').val());
 				</div>
 
 				<div class="panel_input reg_input res check">
-					<input type="text" placeholder="Password *" id="password" value="" />
+					<input type="password" placeholder="Password *" id="password" value="" />
 				</div>
 
 				<div class="panel_input reg_input  res check">
-					<input type="text" placeholder="Confirm Password *" id="repassword" value="" />
+					<input type="password" placeholder="Confirm Password *" id="repassword" value="" />
 				</div>
 
 				<label class="checkService">
@@ -356,10 +342,6 @@ console.log($('#yearOfBirth').val());
 
 	</script>
 	<script>
-//		$("#yearOfBirth").birthday();
-//		$("#year").val("1988");
-//		$("#month").val("01");
-//		$("#day").val("01");
 	</script>
 </div>
 </body>

@@ -6,6 +6,10 @@
 <title>Forget Password</title>
 	<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
 	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+	<script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
@@ -31,13 +35,13 @@ $(document).ready(function(){
 			success:function(data){
 				console.log(data);
 					if(data.Code==1){
-
 //						window.location.href="/RequestDisPatcher/login.html";
 						window.location.href="/RequestDisPatcher/verifi.html?email="+Email;
 					}
 				},
 			error:function(){
-					alert("Unkonw Error.Please Try Again!");
+				var txt="Unkonw Error.Please Try Again!";
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
 				}
 		});
 	});
@@ -54,8 +58,8 @@ $(document).ready(function(){
 		<div class="header_scroll">
 			<h2>isleep</h2>
 		</div>
-		<div class="header_text">
-			<h2 class="title">Forget Password ?</h2>
+		<div class="header_text" style=" height: 52px;">
+			<h2 class="title" >Forget Password</h2>
 		</div>
 	</div>
 	<div>

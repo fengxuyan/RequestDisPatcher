@@ -3,7 +3,6 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>ChuangDian</title>
-	<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
@@ -18,7 +17,14 @@
 			var last = Info.lastName;
 			var device = Info.device;
 			var name;
-			console.log(Info);
+			var token = info.token;
+
+
+			if(token==''){
+				location.href='login.html';
+
+			};
+
 			if(middle==null||middle==""){
 				name = first+" "+last;
 			}else{
@@ -71,20 +77,22 @@
 		</div>
 		<div class="header_text">
 			<div class="header_text_left">
-				<a href="homepage.html"><span class="glyphicon glyphicon-home"></span></a>
+				<a href="homepage.html"><span class="home" style="		top: 33px;
+				float: left;
+				right: -13px;"></span></a>
 			</div>
 			<div class="header_text_right">
 				<span class="header_pic"><a href="modify.html" ><img  id="head"></a></span>
-				<a href="modify.html"><span>个人资料</span></a><a href="login.html"><span onclick="quit()" >退出登录</span></a>
+				<a href="modify.html"><span>Personal Information</span></a><a href="login.html"><span onclick="quit()" >Logout</span></a>
 			</div>
 		</div>
 	</div>
 	<div class="content_icon">
 		<ul class="content_icon_list zhineng">
-			<li><a href="real.html" id = "realData"><span>实时数据</span></a></li>
-			<li><a href="healthy.html" id="healthyData"><span>健康档案</span></a></li>
-			<li><a href="addProduct.html" id="addProduct"><span>添加更换设备</span></a></li>
-			<li><a href="deleteProduct.html" id ="deleteProduct"><span>删除设备</span></a></li>
+			<li><a href="real.html" id = "realData"><span>Real-time Data</span></a></li>
+			<li><a href="healthy.html" id="healthyData"><span>Health Archives</span></a></li>
+			<li><a href="addProduct.html" id="addProduct"><span>Add or Change device</span></a></li>
+			<li><a href="deleteProduct.html" id ="deleteProduct"><span>Delete device</span></a></li>
 		</ul>
 	</div>
 </div>

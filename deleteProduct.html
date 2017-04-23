@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Add Product</title>
 	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
-	<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
+
 	<script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
@@ -25,11 +25,8 @@
 				params:"token="+token
 			},
 			success: function (data) {
-				alert(data.Message);
-//
 			},
 			error: function (data) {
-				alert('fail');
 			}
 		});
 	}
@@ -178,21 +175,21 @@ $(document).ready(function(){
 			</div>
 		</div>
 		<ul>
-			<a href="login.html"><li onclick="quit()"  >退出登录</li></a>
-			<a onclick="js_method_real()"><li>实时数据</li></a>
-			<a onclick="js_method_healthy()"><li>健康档案</li></a>
-			<a href="addProduct.html"><li class="on">添加或更改设备</li></a>
-			<a onclick="js_method_delete()"><li>删除设备</li></a>
+			<a href="login.html"><li onclick="quit()"  >Logout</li></a>
+			<a onclick="js_method_real()"><li>Real-time Data</li></a>
+			<a onclick="js_method_healthy()"><li>Health Archives</li></a>
+			<a href="addProduct.html"><li >Add or Change device</li></a>
+			<a onclick="js_method_delete()"><li class="on">Delete device</li></a>
 		</ul>
 	</div>
 
 	<div class="right_show" style="overflow: hidden">
-		<h3>isleep</h3>
-		<a href="homepage.html"><span class="glyphicon glyphicon-home"></span></a>
+		<h4 class="titl">isleep</h4>
+		<a href="homepage.html"><span class="home"></span></a>
 		<div class="show_detail">
 			<div class="show_detail_data">
 				<div class="addpro">
-					<h4 style="font-weight: bold">删除设备</h4>
+					<h4 style="font-weight: bold">Delete device</h4>
 				</div>
 				<h4 class="addpro number" >现有智能床垫序列号</h4>
 				<!--<h4 class="addpro number dis">显示当前用户信息中该类设备SN</h4>-->

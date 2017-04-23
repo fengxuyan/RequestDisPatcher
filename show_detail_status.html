@@ -136,8 +136,8 @@
                 if(60<data.Data.heart<70){
                     $('.xl_line').css('background-image','url(./images/70.gif)');
                 }
-                $('.xl_line').append('<h2>'+data.Data.heart+'</h2><h4>次/分</h4>');
-                $('.hxl_line').append('<h2>'+data.Data.breath+'</h2><h4>次/分</h4>');
+                $('.xl_line').append('<h2>'+data.Data.heart+'</h2><h4>Times/Min</h4>');
+                $('.hxl_line').append('<h2>'+data.Data.breath+'</h2><h4>Times/Min</h4>');
 
 
 
@@ -173,9 +173,9 @@
 
                 /*
 
-                 根据实时数据不同 根据状态绘制拼接block_pic 的背景图
+                 根据Real-time Data不同 根据状态绘制拼接block_pic 的背景图
                  ajax请求返回状态 根据状态append div div对应着背景图  刷新当前页面 超出最外面的框就隐藏
-                 同时更改心率呼吸率
+                 同时更改Heart rateRespiration
 
                  */
 
@@ -263,29 +263,29 @@
             </div>
         </div>
         <ul>
-            <a href="login.html"><li onclick="quit()"  >退出登录</li></a>
-            <a ><li class="on">实时数据</li></a>
-            <a href="healthy.html"><li>健康档案</li></a>
-            <a href="addProduct.html"><li>添加或更改设备</li></a>
-            <a href="deleteProduct.html"><li>删除设备</li></a>
+            <a href="login.html"><li onclick="quit()"  >Logout</li></a>
+            <a ><li class="on">Real-time Data</li></a>
+            <a href="healthy.html"><li>Health Archives</li></a>
+            <a href="addProduct.html"><li>Add or Change device</li></a>
+            <a href="deleteProduct.html"><li>Delete device</li></a>
         </ul>
     </div>
     <div class="right_show">
         <h3>isleep</h3>
-        <a href="homepage.html"><span class="glyphicon glyphicon-home"></span></a>
+        <a href="homepage.html"><span class="home"></span></a>
         <div class="show_detail">
             <div class="show_detail_data">
                 <div class="data_table">
                     <div id="xl" class="left_heart_rate">
                         <div class="xl_pic">
-                            <h4>心率</h4>
+                            <h4>Heart rate</h4>
                         </div>
                         <div class="xl_line"></div>
                     </div>
                     <div class="centerdiv"></div>
                     <div id="hxl" class="right_breath_rate">
                         <div class="hxl_pic">
-                            <h4>呼吸率</h4>
+                            <h4>Respiration</h4>
                         </div>
                         <div class="hxl_line"></div>
                     </div>
@@ -366,7 +366,7 @@
     var month=myDate.getMonth()+1;
     //获取当前日
     var date=myDate.getDate();
-    var h=myDate.getHours();       //获取当前小时数(0-23)
+    var h=myDate.getHours();       //获取当前hour数(0-23)
     var m=myDate.getMinutes();     //获取当前分钟数(0-59)
     var s=myDate.getSeconds();
 
@@ -380,8 +380,8 @@
 <!--<body id="real">-->
 <!--<div id="real_info">-->
 <!--<h3 id="real_title">Real-time Data</h3>-->
-<!--<div id="xl"><h4>心率:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4><h4>/min</h4></div>-->
-<!--<div id="hxl"><h4>呼吸率:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4><h4>/min</h4></div>-->
+<!--<div id="xl"><h4>Heart rate:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4><h4>/min</h4></div>-->
+<!--<div id="hxl"><h4>Respiration:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4><h4>/min</h4></div>-->
 <!--<div id="zt">-->
 <!--<h4>状态:&nbsp;&nbsp;</h4>-->
 <!--<div><input type="checkbox" name="ztai" value="ztai" />在床</div>-->

@@ -14,7 +14,7 @@
     var config =  {
         path: '', //laydate所在路径
         skin: 'default', //初始化皮肤
-        format: 'MM/DD/YYYY', //日期格式
+        format: 'MM/DD/YY', //日期格式
         min: '1900-01-01 00:00:00', //最小日期
         max: '2017-12-31 23:59:59', //最大日期
         isv: false,
@@ -275,11 +275,11 @@
         if(value.replace(/\s/g, '') !== ''){
             if(!exp.test(value)){
                 Dates.elem[as.elemv] = '';
-                Dates.msg('日期不符合格式，请重新选择。');
+                Dates.msg('please choose again');
                 return 1;
             } else if(isvoid[0]){
                 Dates.elem[as.elemv] = '';
-                Dates.msg('日期不在有效期内，请重新选择。');
+                Dates.msg('please choose again');
                 return 1;
             } else {
                 isvoid.value = Dates.elem[as.elemv].match(exp).join();
@@ -377,8 +377,8 @@
         Dates.ymd = log.ymd;
 
         //锁定年月
-        as.year.value = Dates.ymd[0] + '年';
-        as.month.value = Dates.digit(Dates.ymd[1] + 1) + '月';
+        as.year.value = Dates.ymd[0] + ' ';
+        as.month.value = Dates.digit(Dates.ymd[1] + 1) + ' ';
 
         //定位月
         Dates.each(as.mms, function(i, elem){
@@ -442,9 +442,9 @@
         var S = Dates.query, str = '';
         Dates.each(new Array(14), function(i){
             if(i === 7) {
-                str += '<li '+ (parseInt(as.year.value) === YY ? 'class="'+ as[2] +'"' : '') +' y="'+ YY +'">'+ YY +'年</li>';
+                str += '<li '+ (parseInt(as.year.value) === YY ? 'class="'+ as[2] +'"' : '') +' y="'+ YY +'">'+ YY +' </li>';
             } else {
-                str += '<li y="'+ (YY-7+i) +'">'+ (YY-7+i) +'年</li>';
+                str += '<li y="'+ (YY-7+i) +'">'+ (YY-7+i) +' </li>';
             }
         });
         S('#laydate_ys').innerHTML = str;
@@ -598,7 +598,7 @@
                 +'<div class="laydate_yms" id="laydate_ms">'+ function(){
                     var str = '';
                     Dates.each(new Array(12), function(i){
-                        str += '<span m="'+ i +'">'+ Dates.digit(i+1) +'月</span>';
+                        str += '<span m="'+ i +'">'+ Dates.digit(i+1) +' </span>';
                     });
                     return str;
                 }() +'</div>'
@@ -616,8 +616,6 @@
                 +'</ul>'
                 +'<div class="laydate_time" id="laydate_time"></div>'
                 +'<div class="laydate_btn">'
-                +'<a id="laydate_clear">清空</a>'
-                +'<a id="laydate_today">今天</a>'
                 +'<a id="laydate_ok">确认</a>'
                 +'</div>'
                 +(config.isv ? '<a href="http://sentsin.com/layui/laydate/" class="laydate_v" target="_blank">laydate-v'+ laydate.v +'</a>' : '')
@@ -787,30 +785,30 @@
         });
 
         //清空
-        as.oclear = S('#laydate_clear');
-        Dates.on(as.oclear, 'click', function(){
-            Dates.elem[as.elemv] = '';
-            Dates.close();
-        });
+        // as.oclear = S('#laydate_clear');
+        // Dates.on(as.oclear, 'click', function(){
+        //     Dates.elem[as.elemv] = '';
+        //     Dates.close();
+        // });
 
         //今天
-        as.otoday = S('#laydate_today');
-        Dates.on(as.otoday, 'click', function(){
-            var now = new Date();
-            // 2016-09-23 18:20:54 修复选中今天choose方法得不到数据
-            // Dates.creation([now.getFullYear(), now.getMonth() + 1, now.getDate()]);
-
-            // 2016-09-26 10:49:25 修复选中今天 如果YYYY-MM-DD hh:mm:ss格式，获取当前的时分秒
-            var hms = Dates.hmsin;
-            var date = new Date();
-            // 获取当前时间小时
-            hms[0].value = date.getHours();
-            // 获取当前时间分钟
-            hms[1].value = date.getMinutes();
-            // 获取当前时间秒
-            hms[2].value = date.getSeconds();
-            Dates.creation([Dates.ymd[0], Dates.ymd[1]+1, Dates.ymd[2]]);
-        });
+        // as.otoday = S('#laydate_today');
+        // Dates.on(as.otoday, 'click', function(){
+        //     var now = new Date();
+        //     // 2016-09-23 18:20:54 修复选中今天choose方法得不到数据
+        //     // Dates.creation([now.getFullYear(), now.getMonth() + 1, now.getDate()]);
+        //
+        //     // 2016-09-26 10:49:25 修复选中今天 如果YYYY-MM-DD hh:mm:ss格式，获取当前的时分秒
+        //     var hms = Dates.hmsin;
+        //     var date = new Date();
+        //     // 获取当前时间hour
+        //     hms[0].value = date.getHours();
+        //     // 获取当前时间分钟
+        //     hms[1].value = date.getMinutes();
+        //     // 获取当前时间秒
+        //     hms[2].value = date.getSeconds();
+        //     Dates.creation([Dates.ymd[0], Dates.ymd[1]+1, Dates.ymd[2]]);
+        // });
 
         //确认
         as.ok = S('#laydate_ok');
@@ -823,7 +821,7 @@
         //选择时分秒
         log.times = S('#laydate_time');
         Dates.hmsin = log.hmsin = S('#laydate_hms input');
-        log.hmss = ['小时', '分钟', '秒数'];
+        log.hmss = ['hour', '分钟', '秒数'];
         log.hmsarr = [];
 
         //生成时分秒或警告信息

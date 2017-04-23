@@ -30,9 +30,25 @@
         .chooseTime{
             background:#C6BDB5 !important;
         }
+		li{
+
+			cursor: default;
+		}
     </style>
 	<script>
+		function changeheight() {
+			if($(".left_nav").height() > $(".right_show").height()){
+				$(".right_show").height($(".left_nav").height());
+				$('.holder').css('min-height',$(".left_nav").height());
+			}
+			else{
+				$(".left_nav").height($(".right_show").height());
+				$('.holder').css('min-height',$(".right_show").height());
+			}
 
+			console.log($(".left_nav").height());
+			console.log($(".right_show").height());
+		}
 		function getQueryString(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 			var r = window.location.search.substr(1).match(reg);
@@ -48,8 +64,8 @@
 					params:"token="+token
 				},
 				success: function (data) {
-					alert(data.Message);
-//
+					var txt = data.Message;
+					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
 				},
 				error: function (data) {
 
@@ -76,7 +92,7 @@
             var d=today.getDate();
             return m+"/"+d+"/"+h;
         }
-        // document.getElementById("changetime").value=today();
+
 
 
 
@@ -126,6 +142,14 @@
 							var date_fmt = date.format("yyyy-MM-dd");
 							$(".oneDayLists ul").append('<li> <span>' + date_fmt + '</span><span>' + sleeptime + '  h</span><span>' + item.score + '</span></li>');
 							bindListener();
+							if($(".left_nav").height() > $(".right_show").height()){
+								$(".right_show").height($(".left_nav").height()+30);
+								$('.holder').css('min-height',$(".left_nav").height());
+							}
+							else{
+								$(".left_nav").height($(".right_show").height()+100);
+								$('.holder').css('min-height',$(".right_show").height());
+							}
 						});
 					},
 					error: function (data) {
@@ -149,8 +173,18 @@
 							var date = new Date(parseInt(item.creatTime));
 							var date_fmt = date.format("yyyy-MM-dd");
 							$(".oneDayLists ul").append('<li> <span>' + date_fmt + '</span><span>' + sleeptime + '  h</span><span>' + item.score + '</span></li>');
+							if($(".left_nav").height() > $(".right_show").height()){
+								$(".right_show").height($(".left_nav").height()+30);
+								$('.holder').css('min-height',$(".left_nav").height());
+							}
+							else{
+								$(".left_nav").height($(".right_show").height()+100);
+								$('.holder').css('min-height',$(".right_show").height());
+							}
 							bindListener();
+
 						});
+
 					},
 					error: function (data) {
 						var txt = data.Message;
@@ -172,7 +206,7 @@
 
 			if(beginDate!=""&&endDate!=""&&d1 >=d2)
 			{
-				var txt="开始时间不能大于结束时间！";
+				var txt="Start time can not be greater than the end time!";
 				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 				return false;
 			}
@@ -198,7 +232,27 @@
 							var date_fmt=date.format("yyyy-MM-dd");
 							$(".daysLists ul").append('<li onclick=saveTime("'+date_fmt+'") id="'+date_fmt+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
 							//bindListeners();
+							if($(".left_nav").height() > $(".right_show").height()){
+								$(".right_show").height($(".left_nav").height()+30);
+								$('.holder').css('min-height',$(".left_nav").height());
+							}
+							else{
+								$(".left_nav").height($(".right_show").height()+100);
+								$('.holder').css('min-height',$(".right_show").height());
+							}
+
 						});
+						if($(".left_nav").height() > $(".right_show").height()){
+							$(".right_show").height($(".left_nav").height());
+							$('.holder').css('min-height',$(".left_nav").height());
+						}
+						else{
+							$(".left_nav").height($(".right_show").height());
+							$('.holder').css('min-height',$(".right_show").height());
+						}
+
+						console.log($(".left_nav").height());
+						console.log($(".right_show").height());
 
 					},
 					error: function (data) {
@@ -227,7 +281,26 @@
 							var date_fmt=date.format("yyyy-MM-dd");
 							$(".daysLists ul").append('<li onclick=saveTime("'+date_fmt+'") id="'+date_fmt+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
 							//bindListeners();
+							if($(".left_nav").height() > $(".right_show").height()){
+								$(".right_show").height($(".left_nav").height()+30);
+								$('.holder').css('min-height',$(".left_nav").height());
+							}
+							else{
+								$(".left_nav").height($(".right_show").height()+100);
+								$('.holder').css('min-height',$(".right_show").height());
+							}
 						});
+						if($(".left_nav").height() > $(".right_show").height()){
+							$(".right_show").height($(".left_nav").height());
+							$('.holder').css('min-height',$(".left_nav").height());
+						}
+						else{
+							$(".left_nav").height($(".right_show").height());
+							$('.holder').css('min-height',$(".right_show").height());
+						}
+
+						console.log($(".left_nav").height());
+						console.log($(".right_show").height());
 
 					},
 					error: function (data) {
@@ -394,6 +467,7 @@
 		//-------------------------------
 
         $(document).ready(function() {
+			document.getElementById("changetimer").value=today();
             document.getElementById("changetimesright").value=today();
             document.getElementById("changetimesleft").value=weekago();
             //清除cookie
@@ -476,6 +550,14 @@
                                 var date_fmt=date.format("yyyy-MM-dd");
                                 $(".oneDayLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
                                 bindListener();
+								if($(".left_nav").height() > $(".right_show").height()){
+									$(".right_show").height($(".left_nav").height()+30);
+									$('.holder').css('min-height',$(".left_nav").height());
+								}
+								else{
+									$(".left_nav").height($(".right_show").height()+100);
+									$('.holder').css('min-height',$(".right_show").height());
+								}
                             });
 
                         },
@@ -516,6 +598,14 @@
                                 var date_fmt=date.format("yyyy-MM-dd");
                                 $(".oneDayLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
                                 bindListener();
+								if($(".left_nav").height() > $(".right_show").height()){
+									$(".right_show").height($(".left_nav").height()+30);
+									$('.holder').css('min-height',$(".left_nav").height());
+								}
+								else{
+									$(".left_nav").height($(".right_show").height()+100);
+									$('.holder').css('min-height',$(".right_show").height());
+								}
                             });
 
                         },
@@ -545,6 +635,14 @@
                             var date = new Date(parseInt(item.date));
                             var date_fmt=date.format("yyyy-MM-dd");
                             $(".daysLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+							if($(".left_nav").height() > $(".right_show").height()){
+								$(".right_show").height($(".left_nav").height()+30);
+								$('.holder').css('min-height',$(".left_nav").height());
+							}
+							else{
+								$(".left_nav").height($(".right_show").height()+100);
+								$('.holder').css('min-height',$(".right_show").height());
+							}
 
                         });
 
@@ -570,9 +668,9 @@
                 $('#confirms').click(function () {
                     var chooseTimearray = new Array();
 
-                    /* $.each($('span:first-child','.chooseTime'), function(i, item) {
+                     $.each($('span:first-child','.chooseTime'), function(i, item) {
                      chooseTimearray.push(item.innerText);
-                     }); */
+                     });
                     //从cookie里面取出选择的时间
                     var starts = document.cookie.match(new RegExp("(^| )select_time1=([^;]*)(;|$)"));
                     var ends = document.cookie.match(new RegExp("(^| )select_time0=([^;]*)(;|$)"));
@@ -585,31 +683,37 @@
                         chooseTimearray.length = 2;
                     }
 
-                    if(chooseTimearray.length==1) {
-                        alert('请至少选择两个日期');
-                        return;
-                    }
+
+					if(chooseTimearray.length==1) {
+						var txt='Please select at least two items';
+						window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+						window.location.href='#';
+					}
                     if(chooseTimearray.length==0) {
                         var startTime=$("#changetimesleft").val();
                         var endTime=$("#changetimesright").val();
 
                         $.cookie('startTime', startTime, {expires: 1000*60*30, path: '/'});
                         $.cookie('endTime', endTime, {expires: 1000*60*30, path: '/'});
+						window.location.href='SleepAnalysis.html';
 
-                    }
-                    if(chooseTimearray.length>1){
+                    }else{
+
+						if(chooseTimearray.length>1){
 
 
-                        var start = starts[2].split("-");
-                        var end = ends[2].split("-");
+							var start = starts[2].split("-");
+							var end = ends[2].split("-");
 
-                        var startTime=start[1]+'/'+start[2]+'/'+start[0];
-                        var endTime=end[1]+'/'+end[2]+'/'+end[0];
-                        $.cookie('startTime', startTime, {expires: 1000*60*30, path: '/'});
-                        $.cookie('endTime', endTime, {expires: 1000*60*30, path: '/'});
-                    }
+							var startTime=start[1]+'/'+start[2]+'/'+start[0];
+							var endTime=end[1]+'/'+end[2]+'/'+end[0];
+							$.cookie('startTime', startTime, {expires: 1000*60*30, path: '/'});
+							$.cookie('endTime', endTime, {expires: 1000*60*30, path: '/'});
+						}
 //					window.location.href='sleepreport.html?time='+selecttime;
-                    window.location.href='SleepAnalysis.html';
+						window.location.href='SleepAnalysis.html';
+					}
+
                 })
             }
             else{
@@ -640,6 +744,14 @@
                                 var date_fmt=date.format("yyyy-MM-dd");
                                 $(".oneDayLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
                                 bindListener();
+								if($(".left_nav").height() > $(".right_show").height()){
+									$(".right_show").height($(".left_nav").height()+30);
+									$('.holder').css('min-height',$(".left_nav").height());
+								}
+								else{
+									$(".left_nav").height($(".right_show").height()+100);
+									$('.holder').css('min-height',$(".right_show").height());
+								}
                             });
 
                         },
@@ -679,6 +791,14 @@
                                 var date_fmt=date.format("yyyy-MM-dd");
                                 $(".oneDayLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
                                 bindListener();
+								if($(".left_nav").height() > $(".right_show").height()){
+									$(".right_show").height($(".left_nav").height()+30);
+									$('.holder').css('min-height',$(".left_nav").height());
+								}
+								else{
+									$(".left_nav").height($(".right_show").height()+100);
+									$('.holder').css('min-height',$(".right_show").height());
+								}
 
                             });
                         },
@@ -710,7 +830,14 @@
                             $(".daysLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
 
 
-
+							if($(".left_nav").height() > $(".right_show").height()){
+								$(".right_show").height($(".left_nav").height()+30);
+								$('.holder').css('min-height',$(".left_nav").height());
+							}
+							else{
+								$(".left_nav").height($(".right_show").height()+100);
+								$('.holder').css('min-height',$(".right_show").height());
+							}
 
                         });
 
@@ -758,7 +885,9 @@
                     }
 
                     if(chooseTimearray.length==1) {
-                        alert('请至少选择两个日期');
+						var txt='Please select at least two items';
+						window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+						window.location.href='#';
                     }
                     if(chooseTimearray.length==0) {
                         var startTime=$("#changetimesleft").val();
@@ -766,6 +895,7 @@
 
                         $.cookie('startTime', startTime, {expires: 1000*60*30, path: '/'});
                         $.cookie('endTime', endTime, {expires: 1000*60*30, path: '/'});
+						window.location.href='SleepAnalysis.html?&email='+otheremail;
 
                     }
                     if(chooseTimearray.length>1){
@@ -776,8 +906,9 @@
                         var endTime=end[1]+'/'+end[2]+'/'+end[0];
                         $.cookie('startTime', startTime, {expires: 1000*60*30, path: '/'});
                         $.cookie('endTime', endTime, {expires: 1000*60*30, path: '/'});
+						window.location.href='SleepAnalysis.html?&email='+otheremail;
                     }
-                    window.location.href='SleepAnalysis.html?&email='+otheremail;
+
                 })
 
             }
@@ -795,29 +926,29 @@
 			</div>
 		</div>
 		<ul>
-			<a href="login.html"><li onclick="quit()"  >退出登录</li></a>
-			<a href="real.html"><li>实时数据</li></a>
-			<a href="healthy.html"><li class="on">健康档案</li></a>
-			<a href="addProduct.html"><li>添加或更改设备</li></a>
-			<a href="deleteProduct.html"><li>删除设备</li></a>
+			<a href="login.html" ><li onclick="quit()"  class="pointer">Logout</li></a>
+			<a href="real.html"><li class="pointer">Real-time Data</li></a>
+			<a href="healthy.html"><li class="on" >Health Archives</li></a>
+			<a href="addProduct.html"><li class="pointer">Add or Change device</li></a>
+			<a href="deleteProduct.html"><li class="pointer">Delete device</li></a>
 		</ul>
 	</div>
 	<div class="right_show">
-		<h3>isleep</h3>
-		<a href="homepage.html"><span class="glyphicon glyphicon-home"></span></a>
+		<h4 class="titl">isleep</h4>
+		<a href="homepage.html"><span class="home"></span></a>
 		<div class="show_detail">
 			<div class="show_detail_data">
 				<div class="data_table search">
 					<ul class="search_list">
-						<li>查询单次睡眠</li>
-						<li>查询多次睡眠</li>
+						<li>One report</li>
+						<li>Multiple reports</li>
 					</ul>
 					<div class="one" >
 						<div class="reg_input reg_select1  search_time"  id="search_time">
-							<input id="changetimeyear" readonly="readonly" /><span>年</span>
-							<input id="changetimemonth" readonly="readonly"/><span>月</span>
+							<input id="changetimeyear" readonly="readonly" /><span>Y</span>
+							<input id="changetimemonth" readonly="readonly"/><span>M</span>
 							<!--<input id="changetime" name="day" onchange="change()" />-->
-							<input id="changetime" name="day" value=" " style="    cursor: pointer;" onchange="change()" /><span>日</span>
+							<input id="changetime" name="day" value=" " style="    cursor: pointer;" onchange="change()" /><span>D</span>
 						</div>
                         <input id="changetimer" name="day" value=""  style="    cursor: pointer;
     position: relative;
@@ -832,9 +963,9 @@
 
 						<div style="margin-top: -25px">
 							<ul class="search_list1 table">
-								<li>测试日期</li>
-								<li>睡眠时长</li>
-								<li>睡眠评分</li>
+								<li>Report date</li>
+								<li>Sleep time</li>
+								<li>Sleep score</li>
 							</ul>
 						</div>
 						<div class="bottomLine"></div>
@@ -842,7 +973,7 @@
 							<ul></ul>
 						</div>
 						<!--<input type="button" id='confirm' class=" time_confirm" value="确认">-->
-						<input type="button" id='confirm' class="submit_submit subSearch" value="单次查询">
+						<input type="button" id='confirm' class="submit_submit subSearch" value="Inquiry">
 					</div>
 
 					<div class="two">
@@ -857,16 +988,16 @@
 						</div>
 						<div>
 							<ul class="search_list1 table">
-								<li>测试日期</li>
-								<li>睡眠时长</li>
-								<li>睡眠评分</li>
+								<li>Report date</li>
+								<li>Sleep time</li>
+								<li>Sleep score</li>
 							</ul>
 						</div>
 						<div class="bottomLine"></div>
 						<div class="daysLists">
 							<ul></ul>
 						</div>
-						<input type="button" id='confirms' class="submit_submit subSearch" value="多次查询">
+						<input type="button" id='confirms' class="submit_submit subSearch" value="Inquiry">
 					</div>
 				</div>
 			</div>
@@ -917,6 +1048,14 @@
                             var date_fmt = date.format("yyyy-MM-dd");
                             $(".oneDayLists ul").append('<li> <span>' + date_fmt + '</span><span>' + sleeptime + '  h</span><span>' + item.score + '</span></li>');
                             bindListener();
+							if($(".left_nav").height() > $(".right_show").height()){
+								$(".right_show").height($(".left_nav").height()+30);
+								$('.holder').css('min-height',$(".left_nav").height());
+							}
+							else{
+								$(".left_nav").height($(".right_show").height()+100);
+								$('.holder').css('min-height',$(".right_show").height());
+							}
                         });
                     },
                     error: function (data) {
@@ -941,6 +1080,14 @@
                             var date_fmt = date.format("yyyy-MM-dd");
                             $(".oneDayLists ul").append('<li> <span>' + date_fmt + '</span><span>' + sleeptime + '  h</span><span>' + item.score + '</span></li>');
                             bindListener();
+							if($(".left_nav").height() > $(".right_show").height()){
+								$(".right_show").height($(".left_nav").height()+30);
+								$('.holder').css('min-height',$(".left_nav").height());
+							}
+							else{
+								$(".left_nav").height($(".right_show").height()+100);
+								$('.holder').css('min-height',$(".right_show").height());
+							}
                         });
                     },
                     error: function (data) {
@@ -996,6 +1143,14 @@
                                     var date = new Date(parseInt(item.creatTime));
                                     var date_fmt=date.format("yyyy-MM-dd");
                                     $(".daysLists ul").append('<li onclick=saveTime("'+date_fmt+'") id="'+date_fmt+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+									if($(".left_nav").height() > $(".right_show").height()){
+										$(".right_show").height($(".left_nav").height()+30);
+										$('.holder').css('min-height',$(".left_nav").height());
+									}
+									else{
+										$(".left_nav").height($(".right_show").height()+100);
+										$('.holder').css('min-height',$(".right_show").height());
+									}
                                     //bindListeners();
                                 });
 
@@ -1026,6 +1181,14 @@
                                     var date_fmt=date.format("yyyy-MM-dd");
                                     $(".daysLists ul").append('<li onclick=saveTime("'+date_fmt+'") id="'+date_fmt+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
                                     //bindListeners();
+									if($(".left_nav").height() > $(".right_show").height()){
+										$(".right_show").height($(".left_nav").height()+30);
+										$('.holder').css('min-height',$(".left_nav").height());
+									}
+									else{
+										$(".left_nav").height($(".right_show").height()+100);
+										$('.holder').css('min-height',$(".right_show").height());
+									}
                                 });
 
                             },

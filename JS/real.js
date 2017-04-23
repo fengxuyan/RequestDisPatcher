@@ -27,7 +27,7 @@ $(function () {
     var ajaxurl="http://101.37.100.209:9001/login/getConcernMe";
 
     /*
-        判断返回的心率的值 由此更改心率图
+        判断返回的Heart rate的值 由此更改Heart rate图
 
      */
 
@@ -50,11 +50,11 @@ $(function () {
 
 
     /*
-     根据实时数据不同 根据状态绘制拼接block_pic 的背景图
+     根据Real-time Data不同 根据状态绘制拼接block_pic 的背景图
 
      ajax请求返回状态 根据状态append div div对应着背景图  刷新当前页面 超出最外面的框就隐藏
 
-     同时更改心率呼吸率
+     同时更改Heart rateRespiration
 
      */
 

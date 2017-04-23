@@ -6,6 +6,10 @@
     <title>Forget Password</title>
     <link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
     <script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+    <script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
     <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
     <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
     <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
@@ -29,16 +33,17 @@
                     },
                     dataType:"json",
                     success:function(data){
-                        console.log(data);
+
 //                        window.location.href="/RequestDisPatcher/modifyPwd.html?email="+email;
 
                         if(data.Code==1){
-
+                            var txt=data.Message;
+                            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
 						window.location.href="/RequestDisPatcher/modifyPwd.html?email="+email;
 //                            window.location.href="/RequestDisPatcher/verifi.html";
                         }else{
-
-                            alert(data.Message);
+                            var txt=data.Message;
+                            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 
                         }
                     },
@@ -56,13 +61,13 @@
         <div class="header_scroll">
             <h2>isleep</h2>
         </div>
-        <div class="header_text">
+        <div class="header_text" style=" height: 52px;">
             <h2 class="title">Verify Code</h2>
         </div>
     </div>
     <div>
         <div class="foPwdTxt">
-            <h2 class="title Email">Enter received Verify Code</h2>
+            <h2 class="title Email">Enter received verify code</h2>
         </div>
         <div class="foPwdTxt">
             <h2 class="title Email">Verify code</h2>
@@ -70,7 +75,7 @@
         <div class="panel_input" style="border:2px solid #8A847F;    border-radius: 26px;height:49px !important;">
             <input type="text" placeholder="Verify code"  name="Verify_code" class="email" id="code" />
         </div>
-        <div class="foot_btn fo">
+        <div class="foot_btn fo" style="    margin-top: 60px;">
             <input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back">
             <input type="button" value="Submit" class="submit_submit" id="submit">
         </div>

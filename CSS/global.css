@@ -6,7 +6,7 @@
 a{
     text-decoration: none;
     color:#000;
-
+cursor: pointer;
 }
 body{
     /*background: #5D5D5D;*/
@@ -31,4 +31,5 @@ i{
 }
 input{
     border:0;
+    outline: none;
 }
