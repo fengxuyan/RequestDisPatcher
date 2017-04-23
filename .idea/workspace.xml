@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66f44ec5-6c7b-40d5-b804-3d24b0dadcd3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SleepAnalysis.html" afterPath="$PROJECT_DIR$/SleepAnalysis.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sleepreport.html" afterPath="$PROJECT_DIR$/sleepreport.html" />
     </list>
     <ignored path="RequestDisPatcher.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,11 +40,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SleepAnalysis.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SleepAnalysis.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SleepAnalysis.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="184" column="31" selection-start-line="184" selection-start-column="31" selection-end-line="184" selection-end-column="31" />
+            <state relative-caret-position="116">
+              <caret line="179" column="33" selection-start-line="179" selection-start-column="33" selection-end-line="179" selection-end-column="33" />
               <folding>
                 <element signature="e#6885#63537#0" expanded="false" />
                 <element signature="e#7300#7370#0" expanded="false" />
@@ -203,6 +203,27 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="sleepreport.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sleepreport.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="503">
+              <caret line="149" column="54" selection-start-line="149" selection-start-column="54" selection-end-line="149" selection-end-column="54" />
+              <folding>
+                <element signature="n#style#0;n#span#1;n#li#3;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#1;n#li#4;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#i#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#i#0;n#div#0;n#div#0;n#article#0;n#section#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#i#1;n#li#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#i#0;n#div#0;n#div#0;n#article#0;n#section#0;n#li#1;n#ul#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#i#0;n#div#0;n#div#0;n#article#0;n#section#0;n#li#2;n#ul#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#i#0;n#div#0;n#div#0;n#article#0;n#section#0;n#li#3;n#ul#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#8194#11229#0" expanded="false" />
+                <element signature="e#11701#14757#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="forget.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/forget.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -290,7 +311,6 @@
         <option value="$PROJECT_DIR$/CSS/global.css" />
         <option value="$PROJECT_DIR$/chuangdian.html" />
         <option value="$PROJECT_DIR$/productupgrade.html" />
-        <option value="$PROJECT_DIR$/sleepreport.html" />
         <option value="$PROJECT_DIR$/CSS/layout.css" />
         <option value="$PROJECT_DIR$/concern.html" />
         <option value="$PROJECT_DIR$/healthy.html" />
@@ -298,6 +318,7 @@
         <option value="$PROJECT_DIR$/real.html" />
         <option value="$PROJECT_DIR$/deleteProduct.html" />
         <option value="$PROJECT_DIR$/SleepAnalysis.html" />
+        <option value="$PROJECT_DIR$/sleepreport.html" />
       </list>
     </option>
   </component>
@@ -461,18 +482,18 @@
       <workItem from="1492137289537" duration="77863000" />
       <workItem from="1492562104883" duration="43431000" />
       <workItem from="1492650496699" duration="39197000" />
-      <workItem from="1492734718335" duration="82722000" />
+      <workItem from="1492734718335" duration="83409000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="376333000" />
+    <option name="totallyTimeSpent" value="377020000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29895833" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16197917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28620297" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -990,18 +1011,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sleepreport.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-11">
-          <caret line="110" column="36" selection-start-line="110" selection-start-column="8" selection-end-line="110" selection-end-column="36" />
-          <folding>
-            <element signature="n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="e#8107#11142#0" expanded="false" />
-            <element signature="e#11614#14670#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/login.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="785">
@@ -1012,8 +1021,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SleepAnalysis.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="184" column="31" selection-start-line="184" selection-start-column="31" selection-end-line="184" selection-end-column="31" />
+        <state relative-caret-position="116">
+          <caret line="179" column="33" selection-start-line="179" selection-start-column="33" selection-end-line="179" selection-end-column="33" />
           <folding>
             <element signature="e#6885#63537#0" expanded="false" />
             <element signature="e#7300#7370#0" expanded="false" />
@@ -1167,6 +1176,25 @@
             <element signature="e#94952#95051#0" expanded="false" />
             <element signature="e#95160#95171#0" expanded="false" />
             <element signature="e#95186#95285#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sleepreport.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="503">
+          <caret line="149" column="54" selection-start-line="149" selection-start-column="54" selection-end-line="149" selection-end-column="54" />
+          <folding>
+            <element signature="n#style#0;n#span#1;n#li#3;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#li#4;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#i#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#i#0;n#div#0;n#div#0;n#article#0;n#section#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#i#1;n#li#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#i#0;n#div#0;n#div#0;n#article#0;n#section#0;n#li#1;n#ul#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#i#0;n#div#0;n#div#0;n#article#0;n#section#0;n#li#2;n#ul#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#i#0;n#div#0;n#div#0;n#article#0;n#section#0;n#li#3;n#ul#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#8194#11229#0" expanded="false" />
+            <element signature="e#11701#14757#0" expanded="false" />
           </folding>
         </state>
       </provider>
