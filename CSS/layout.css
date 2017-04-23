@@ -1263,6 +1263,7 @@ input[type=checkbox]:checked::after {
     margin-bottom: -14px;
 }
 .search_list li,.search_list1 li{
+    font-size: 18px;
     float:left;
     width:50%;
     text-align: center;
