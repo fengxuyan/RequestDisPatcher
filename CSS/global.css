@@ -12,6 +12,10 @@ body{
     /*background: #5D5D5D;*/
     width:1024px;
     margin:  0 auto;
+    font-family: "微软雅黑",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
 }
 h2{
     text-align: center;
@@ -20,4 +24,11 @@ h2{
 ul li{
     list-style: none;
     /*cursor:default;*/
+}
+i{
+
+    font-style:normal;
+}
+input{
+    border:0;
 }

@@ -203,14 +203,16 @@ input:-webkit-autofill {
 
 
 .login_panel{
+    margin-left: 60px;
     width: 435px;
     /* height: 595px; */
     background: #fff;
     position: absolute;
-    /* top: 90px; */
+    top: 38px;
     /* left: 72px; */
-    padding-bottom: 100px;
+    padding-bottom: 75px;
     opacity: 0.8;
+    border-radius: 20px;
 }
 .login_panel .panel_text{
     margin: 0 auto;
@@ -259,7 +261,7 @@ input:-webkit-autofill {
 
 .panel_input.reg_input.mod_input input{
 
-    padding-left: 0px;
+    padding-left: 1px;
 
 }
 
@@ -348,7 +350,7 @@ input:-webkit-autofill {
     /*background: #EEEEEE;*/
     background: #fff;
     float:right;
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
 
     /*height: 100%;*/
@@ -408,7 +410,7 @@ input:-webkit-autofill {
 
 .reg_input.res input{
 
-    text-indent: 26px!important;
+    /*text-indent: 26px!important;*/
 
 }
 
@@ -492,7 +494,8 @@ input::-webkit-input-placeholder{
 #zt span{
     font-size: 14px;
     font-weight: normal;
-    margin-left: 4px;
+    margin-left: 5px;
+    margin-right: 20px;
 }
 .xl_pic:first-child{
     margin:0 auto;
@@ -529,10 +532,12 @@ input::-webkit-input-placeholder{
     /*background-image: url("../images/hxl.png") !important;*/
 }
 .left_heart_rate{
-    height:100%;
-    float: left;
-    width:290px;
-    background-repeat: no-repeat;
+    width: 390px;
+    /* height: 100%; */
+     float: left;
+    /* width: 290px; */
+    /* background-repeat: no-repeat; */
+    height: 215px;
 }
 .hxl_pic{
     margin:0 auto;
@@ -557,18 +562,138 @@ input::-webkit-input-placeholder{
     padding-left:90px;
 }
 .right_breath_rate{
-    height:100%;
-    float:right;
-    width: 290px;
-    background-repeat: no-repeat;
+    width: 190px;
+    /* height: 100%; */
+    float: right;
+    /* width: 290px; */
+    /* background-repeat: no-repeat; */
+    height: 215px;
+
 }
+
+
 .centerdiv {
+    /* border: 2px solid green; */
+    float: right;
+    width: 1px;
+    border-right: 1px solid #000;
+    /* padding-bottom: 105px; */
+    /* margin-top: -42px; */
+    /* margin-right: 195px; */
+    /* height: 43px; */
+    position: relative;
+    right: 195px;
+    padding-top: 154px;
+    top: 12px;
+}
+
+.heart_txt{
+    background-repeat: no-repeat;
+    background-image: url(../images/xl.png);
     float: left;
-    width:6px;
-    border-right: 2px solid #EEE;
-    padding-bottom: 230px; /*关键*/
-    /*margin-bottom: 333px; !*关键*!*/
-    margin-top: 33px; /*关键*/
+    width: 390px;
+    height: 100px;
+    line-height: 100px;
+
+    /* background-position: left; */
+    background-position: 35px 35px;
+
+}
+.heart_txt span{
+  display: inline-block;
+    font-size: 17px;
+    font-weight: bold;
+    padding-left: 80px;
+    text-align: center;
+
+}
+.heart_pic{
+    background-image: url(../images/60.gif);
+    width: 390px;
+    height: 120px;
+
+    margin-top: 70px;
+    background-size: 230px 82px;
+    background-repeat: no-repeat;
+    background-position: 35px;
+}
+.showHeartNumber{
+
+    width: 100px;
+    margin-top: 7px;
+    height: 90px;
+    float: right;
+
+}
+.showHeartNumber span:first-child{
+
+    display: inline-block;
+    line-height: 45px;
+    width: 100px;
+    text-align: center;
+    font-size: 27px;
+    height: 35px;
+}
+.showHeartNumber span:last-child{
+
+    width: 100px;
+    /* margin-top: 7px; */
+    height: 35px;
+    /* float: right; */
+    line-height: 35px;
+    display: inline-block;
+    text-align: center;
+
+}
+.showBreathNumber{
+
+    width: 190px;
+    margin-top: 7px;
+    height: 90px;
+    float: right;
+
+}
+.showBreathNumber span:last-child{
+
+    width: 190px;
+    /* margin-top: 7px; */
+    height: 35px;
+    /* float: right; */
+    line-height: 35px;
+    display: inline-block;
+    text-align: center;
+
+}
+
+.showBreathNumber span:first-child{
+    display: inline-block;
+    line-height:45px;
+    width: 190px;
+    text-align: center;
+    font-size: 27px;
+    height: 35px;
+}
+
+
+.breath_txt{
+    background-repeat: no-repeat;
+    background-image: url(../images/hxl.png);
+    float: left;
+    width: 195px;
+    height: 100px;
+    line-height: 100px;
+    /* background-position: left; */
+
+    background-position: 35px 35px;
+
+}
+.breath_txt span{
+    display: inline-block;
+    font-size: 17px;
+    font-weight: bold;
+    padding-left: 80px;
+    text-align: center;
+
 }
 .on{
     background:#8A847F;
@@ -645,6 +770,8 @@ input::-webkit-input-placeholder{
     padding-bottom: 10px;
     margin: 0 auto;
     width: 100%;
+    letter-spacing: 1px;
+    word-spacing: 9px;
 }
 .foot_btn{
     margin-top:100px;
@@ -654,7 +781,7 @@ input::-webkit-input-placeholder{
     font-size: 18px;
     overflow: hidden;
 
-    width: 604px;
+    width: 615px;
     margin-left: 73.406px;
     background-position-x: 95%;
 }
@@ -677,19 +804,19 @@ input::-webkit-input-placeholder{
     font-size: 18px;
     display: block;
     background: transparent;
-    width:579.188px;
+    width:610.188px;
     padding-left: 32px;
-    height: 45px;
+    height: 49px;
     -webkit-appearance: none; /*for chrome*/
     appearance:none;
     -moz-appearance:none;
 }
 .sex select{
     border-radius: 27px;
-    border:2px solid #000;
+    border: 2px solid #000;
     border-right: 0;
-    background: url(../images/changedate.png) no-repeat right ;
-    background-size: 43px 43px;
+    background: url(../images/changedate.png) no-repeat right;
+    background-size: 48px 48px;
 }
 .ymd{
     margin-top: 31px;
@@ -699,7 +826,7 @@ input::-webkit-input-placeholder{
     border-left: 2px solid #000;
     border-top-left-radius:25px;
     border-bottom-left-radius:25px;
-    width: 581.188px;
+    width: 610.188px;
     /*border-right: 2px solid #000;*/
     border-top-right-radius:25px;
     border-bottom-right-radius:25px;
@@ -917,14 +1044,14 @@ input::-webkit-input-placeholder{
 
 .show_detail_data.proupdate.detail_update .data_table input[type='button']{
     background: #8A847F;
-    width: 73px;
+    width: 62px;
     color: #fff;
-    border-radius: 20px;
-    height: 36px;
+    border-radius: 24px;
+    height: 30px;
     float: right;
-    margin-right: 73px;
+    margin-right: 72px;
     margin-top: 0px;
-    font-size: 14px;
+    font-size: 13px;
 }
 .show_detail_data.proupdate.detail_update .data_table span {
     color: #8A847F;
@@ -948,6 +1075,7 @@ input::-webkit-input-placeholder{
     line-height: 67px;
     border-bottom: 2px solid #ddd;
     margin:0 auto;
+    line-height: 318px;
 }
 .addpro h4{
     line-height: 60px;
@@ -985,7 +1113,7 @@ input::-webkit-input-placeholder{
     background-position: center;
     background-position: bottom;
     background-image: url("../images/time.png");
-    margin-top: 34px;
+    /*margin-top: 34px;*/
 }
 .time span:first-child{
 
@@ -1016,6 +1144,9 @@ input::-webkit-input-placeholder{
     height:60px;
 }
 .block_pic{
+    /*border-bottom: 1px solid #C6BDB5;*/
+    border-left: 1px solid #C6BDB5;
+    margin-left: 4px;
     height:116px;
     /*background-image: url("../images/onmove_block.png");*/
 }
@@ -1061,7 +1192,7 @@ input::-webkit-input-placeholder{
 }
 
 .status li:nth-child(2) {
-    background-image: url("../images/lixian.jpg") !important;
+    background-image: url("../images/lixian.png") !important;
     background-repeat: no-repeat;
     background-position: left;
     background-size: 43px 43px;
@@ -1124,6 +1255,7 @@ input[type=checkbox]:checked::after {
     width:50%;
     text-align: center;
     background: #EEEEEE;
+    cursor: default;
 }
 .search_time{
     width:590px;
@@ -1138,6 +1270,33 @@ input[type=checkbox]:checked::after {
     height:36px;
     /*margin-right: 68px;*/
     border:1px solid #333;
+
+
+}
+#Changetimeyear {
+    /* padding-left: 12px; */
+    height: 45px;
+    border: 0;
+    background: url(../images/changedate.png) no-repeat right;
+    text-align: center;
+    height: 49px;
+    float: left;
+    margin-left: 180px;
+    width: 74px;
+    padding-right: 48px;
+    margin-left: 175px;
+    background-size: 48px 48px;
+}
+#Changetimemonth{
+    height: 49px;
+    margin-left: 40px;
+    text-align: center;
+    border: 0;
+    background: url(../images/changedate.png) no-repeat right;
+    width: 31px;
+    padding-right: 63px;
+    padding-left: -2px;
+    background-size: 48px 48px;
 
 
 }
@@ -1192,18 +1351,19 @@ input[type=checkbox]:checked::after {
 
 }
 
+
 #yearOfBirth{
     float: right;
-    width: 109px;
-    height: 45px;
+    width: 74px;
+    height: 49px;
     border: 0;
     text-align: center;
     background: url(../images/changedate.png) no-repeat right;
     /* float: right; */
     /* margin-left: 9px; */
     padding-left: -34px;
-    padding-right: 63px;
-    background-size: 44px 44px;
+    padding-right: 40px;
+    background-size: 48px 48px;
 
 }
 
@@ -1214,6 +1374,7 @@ input[type=checkbox]:checked::after {
     left: -65px;
     height: 45px;
     line-height: 45px;
+    top: -2px;
 }
 .day123{
     position: relative;
@@ -1223,33 +1384,33 @@ input[type=checkbox]:checked::after {
     display: inline-block;
 }
 
-#Changetimeyear {
-    /* padding-left: 12px; */
-    height: 45px;
-    border: 0;
-    background: url(../images/changedate.png) no-repeat right;
-    text-align: center;
-    height: 45px;
-    float: left;
-    margin-left: 180px;
-    width: 149px;
-    padding-right: 48px;
-    margin-left: 130px;
-    background-size: 44px 44px;
-}
-#Changetimemonth{
-    height: 45px;
-    margin-left: 12px;
-    text-align: center;
-    border: 0;
-    background: url(../images/changedate.png) no-repeat right;
-    width: 115px;
-    padding-right: 67px;
-    padding-left: -2px;
-    background-size: 44px 44px;
+/*#Changetimeyear {*/
+    /*!* padding-left: 12px; *!*/
+    /*height: 45px;*/
+    /*border: 0;*/
+    /*background: url(../images/changedate.png) no-repeat right;*/
+    /*text-align: center;*/
+    /*height: 49px;*/
+    /*float: left;*/
+    /*margin-left: 180px;*/
+    /*width: 149px;*/
+    /*padding-right: 48px;*/
+    /*margin-left: -4px;*/
+    /*background-size: 48px 48px;*/
+/*}*/
+/*#Changetimemonth{*/
+    /*height: 49px;*/
+    /*margin-left: 12px;*/
+    /*text-align: center;*/
+    /*border: 0;*/
+    /*background: url(../images/changedate.png) no-repeat right;*/
+    /*width: 115px;*/
+    /*padding-right: 67px;*/
+    /*padding-left: -2px;*/
+    /*background-size: 48px 48px;*/
 
 
-}
+/*}*/
 
 .reg_input.reg_select1.ymd1.zhongwen span{
 
@@ -1332,7 +1493,7 @@ input[type=checkbox]:checked::after {
     margin:0 auto;
     background: #F8F8F8;
     border-bottom: 1px solid #ddd;
-    height: 450px;
+    min-height: 360px;
 
 }
 .oneDayLists li,.daysLists li{
@@ -1361,7 +1522,7 @@ input[type=checkbox]:checked::after {
 .subSearch{
     text-align: center;
     margin-right: 45%;
-    margin-top:23px;
+    margin-top:90px;
 }
 .report{
     width:590px;
@@ -1481,7 +1642,7 @@ input[type=checkbox]:checked::after {
 }
 
 .line{
-    height:370px;
+    height:415px;
     background:#F8F8F8;
 }
 .line ul{
@@ -1514,13 +1675,15 @@ input[type=checkbox]:checked::after {
     background: url(../images/healthy_line1_shang.png) no-repeat;
     z-index: 3;
     border-radius: 30px;
+    background-size: 49px 49px;
 }
 .line ul li i:last-child{
-    position:relative;
+    position: relative;
     left: 0px;
     top: 2px;
-    float:right;
-    background: url(../images/healthy_lin2_sleepdeep.png) no-repeat;
+    float: right;
+    background: url(../images/healthy_line1_shang.png) no-repeat;
+    background-size: 49px 49px;
 }
 /*清除ie的默认选择框样式清除，隐藏下拉箭头*/
 select::-ms-expand { display: none; }
@@ -1577,8 +1740,8 @@ article .title {
     display: inline-block;
     height: 24px;
     width: 37px;
-    line-height: 47px;
-    padding-left: 7px;
+    line-height: 49px;
+    padding-left: 9px;
     color: #000;
     font-weight: bold;
 }
@@ -1609,6 +1772,10 @@ article .title {
     width:65px;
     display: inline-block;
     padding-left: 18px;
+}
+.search_list.reportslist li{
+
+    cursor: default;
 }
 
 .reports_detail span i:last-child{
@@ -1745,7 +1912,7 @@ article .title {
     height: 25px;
     width:120px;
     color:#fff !important;
-    line-height: 25px;
+    line-height: 23px;
     font-weight: normal;
     text-decoration: none;
 }
@@ -1863,18 +2030,19 @@ article .title {
     height:118px;
 }
 .concern201 h4,.concern202 h4{
-    padding-bottom: 35px;
+    border-bottom: 2px solid #8A847F;
+    padding-bottom: 10px;
     margin-left: 73px;
-    width: 590px;
-    background: url(../images/bottom.png) no-repeat;
-    background-position: bottom;
+    width: 72px;
+    /* background: url(../images/bottom.png) no-repeat; */
+    /* background-position: bottom; */
 }
 
 .num{
     background: url(../images/concern2_messageNum.png) no-repeat !important;
     display: inline-block;
     height: 23px;
-    width: 23px;
+    width: 24px;
     vertical-align: middle;
     margin-left: 8px;
     background: url(../images/concern2_messageNum.png) no-repeat !important;
@@ -1909,7 +2077,7 @@ article .title {
     display: inline-block;
     float: right;
     top: -54px;
-    right: -140px;
+    right: -125px;
 }
 .cancel input{
     color: #fff;
@@ -1929,10 +2097,11 @@ article .title {
     width: 81px;
     height: 37px;
     background: #8A847F;
-    border-radius: 24px;
+    border-radius: 25px;
     display: block;
     /*float: right;*/
     margin-right: 37px;
+    border: 0;
 }
 .cancel  .submit_submit{
     margin-right: 22px;
@@ -1940,15 +2109,18 @@ article .title {
     width: 81px;
     height: 37px;
     background: #8A847F;
-    border-radius: 24px;
+    border-radius: 25px;
     display: block;
-    /*float: right;*/
+    /* float: right; */
     margin-left: -54px !important;
+    border: 0;
 }
 .select_picture{
     border-bottom: 2px solid #fff;
     width: 178px;
     margin: 0 auto;
-
+}
+.data_table.real_table{
+    height: 215px;
 
 }

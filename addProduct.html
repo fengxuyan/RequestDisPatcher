@@ -99,13 +99,86 @@ $(document).ready(function(){
 	});
 });
 
+	function js_method_healthy() {
+		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+		var info = JSON.parse(userInfo[2]);
+		var Info = info['userInfo'];
+		var first = Info.firstName;
+		var middle = Info.middleName;
+		var last = Info.lastName;
+		var gender = Info.gender;
+		var image = Info.image;
 
+		var device = Info.device;
+		if (device == null) {
+			$(this).css('cursor', 'default');
+			var txt = "请添加设备";
+			window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+//			return false;
+
+
+		} else {
+			location.href = "healthy.html";
+
+		}
+	}
+
+		function js_method_real() {
+			var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+			var info = JSON.parse(userInfo[2]);
+			var Info = info['userInfo'];
+			var first = Info.firstName;
+			var middle = Info.middleName;
+			var last = Info.lastName;
+			var gender = Info.gender;
+			var image=Info.image;
+
+			var device=Info.device;
+			if(device==null){
+				$(this).css('cursor','default');
+				var txt="请添加设备";
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+//			return false;
+
+
+			}else{
+				location.href = "real.html";
+
+			}
+
+	}
+
+
+	function js_method_delete() {
+		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+		var info = JSON.parse(userInfo[2]);
+		var Info = info['userInfo'];
+		var first = Info.firstName;
+		var middle = Info.middleName;
+		var last = Info.lastName;
+		var gender = Info.gender;
+		var image=Info.image;
+
+		var device=Info.device;
+		if(device==null){
+			$(this).css('cursor','default');
+			var txt="请添加设备";
+			window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+//			return false;
+
+
+		}else{
+			location.href = "deleteProduct.html";
+
+		}
+
+	}
 </script>
 
 </head>
 <body>
 <div class="holder">
-	<div class="left_nav">
+	<div class="left_nav" >
 		<div class="header_text">
 			<div class="header_text_right">
 				<span class="header_pic"><a href="modify.html" ><img src="Heads/default.jpg" id="head"></a></span>
@@ -113,13 +186,13 @@ $(document).ready(function(){
 		</div>
 		<ul>
 			<a href="login.html"><li onclick="quit()"  >退出登录</li></a>
-			<a href="real.html"><li>实时数据</li></a>
-			<a href="healthy.html"><li>健康档案</li></a>
-			<a href="addProduct.html"><li class="on">添加或更改设备</li></a>
-			<a href="deleteProduct.html"><li>删除设备</li></a>
+			<a onclick="js_method_real()" style="cursor:default"><li>实时数据</li></a>
+			<a onclick="js_method_healthy()" style="cursor:default"><li>健康档案</li></a>
+			<a href="addProduct.html" ><li class="on">添加或更改设备</li></a>
+			<a onclick="js_method_delete()" style="cursor:default"><li>删除设备</li></a>
 		</ul>
 	</div>
-	<div class="right_show">
+	<div class="right_show" style="overflow: hidden">
 		<h3>isleep</h3>
 		<a href="homepage.html"><span class="glyphicon glyphicon-home"></span></a>
 		<div class="show_detail">
@@ -128,41 +201,27 @@ $(document).ready(function(){
 					<h4>添加或更改设备</h4>
 				</div>
 				<div class="foPwdTxt">
-					<div class="panel_input">
+					<div class="panel_input" style="border: 2px solid #ddd;border-radius: 25px">
 						<input type="text" placeholder="手工输入SN" id="SN" value="" />
 					</div>
 				</div>
 				<!--<div class="sao">-->
 					<!--<a><img src="images/sao.png" /><span>扫一扫</span></a>-->
 				<!--</div>-->
-				<div class="foot_btn fo fo1">
-					<input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back" id="back">
-					<input type="button" value="Submit" class="submit_submit" id="add_product">
+				<div class="foot_btn fo" >
+					<input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back">
+					<input type="button" value="Submit" class="submit_submit" id="delete_product">
 				</div>
 			</div>
 		</div>
 	</div>
 	</div>
-	<script src="/RequestDisPatcher/JS/mine.js"></script>
+	<!--<script src="/RequestDisPatcher/JS/mine.js"></script>-->
 <script>
-	function quit() {
-//		$.ajax({
-//			type:"post",
-//			url:"/RequestDisPatcher/request/dispatcher.do",
-//			data: {
-//				url:"http://127.0.0.1:9001/login/logout",
-//				params:"token="+token
-//			},
-//			success: function (data) {
-//				alert(data.Message);
-////
-//			},
-//			error: function (data) {
-//				alert('fail');
-//			}
-//		});
-	}
-	$('.right_show').css("padding-bottom",60);
+
+		$('.right_show').css("height", $(window).height());
+		$('.left_nav').css("height", $(window).height());
+
 </script>
 </body>
 <!--<body id="add">-->

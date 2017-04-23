@@ -42,6 +42,10 @@ $(document).ready(function(){
 		});
 	});
 });
+	function goback() {
+//		location.href = "homepage.html";
+		history.go(-1);
+	}
 </script>
 </head>
 <body>
@@ -61,11 +65,11 @@ $(document).ready(function(){
 		<div class="foPwdTxt">
 			<h2 class="title Email">E-mail</h2>
 		</div>
-		<div class="panel_input">
+		<div class="panel_input" style="border:2px solid #8A847F;    border-radius: 26px;height:49px !important;">
 			<input type="text" placeholder="Email" name="Email" class="email" id="email" value="">
 		</div>
-		<div class="foot_btn fo">
-			<input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back">
+		<div class="foot_btn fo" style=" margin-top: 60px;">
+			<input type="button" name="Submit" onclick="goback()" value="Back" class="submit_back">
 			<input type="button" value="Submit" class="submit_submit" id="submit">
 		</div>
 	</div>

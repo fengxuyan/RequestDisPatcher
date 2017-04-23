@@ -98,7 +98,7 @@
 		<h3>isleep</h3>
 		<a href="homepage.html"><span class="glyphicon glyphicon-home"></span></a>
 		<div class="show_detail">
-			<div class="show_detail_data">
+			<div class="show_detail_data" style="    padding-top: 40px;">
 				<div class="data_table search">
 					<ul class="search_list report" >
 						<li class="clickC">查询单次睡眠</li>
@@ -377,11 +377,12 @@ if(data.Data[0].score!=0){
 			$('.report_detail h5').append('<span>'+timetoshow[0]+'月'+timetoshow[1]+'日'+'</span>');
 			var radialObj4 = $('#indicatorContainer4').radialIndicator({
 				barColor: {
-					0: '#FF0000',
-					33: '#FFFF00',
-					66: '#0066FF',
-					100: '#33CC33'
+					0: '#8A847F',
+					33: '#8A847F',
+					66: '#8A847F',
+					100: '#8A847F'
 				},
+				fontColor: '#000',
 				percentage: true
 			}).data('radialIndicator');
 			radialObj4.animate(data.Data[0].score);
