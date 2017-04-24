@@ -62,12 +62,28 @@ $(function () {
                 $('.concern2').hide();
                 // $('.concern_item1').hide();
                 //$('.oneDayLists').hide();
+                if($(".left_nav").height() > $(".right_show").height()){
+                    $(".right_show").height($(".left_nav").height());
+                    $('.holder').css('min-height',$(".left_nav").height());
+                }
+                else{
+                    $(".left_nav").height($(".right_show").height());
+                    $('.holder').css('min-height',$(".right_show").height());
+                }
 
             }
             if(index==1) {
                 $('.concern1').show();
                 $('.concern0').hide();
                 $('.concern2').hide();
+                if($(".left_nav").height() > $(".right_show").height()){
+                    $(".right_show").height($(".left_nav").height());
+                    $('.holder').css('min-height',$(".left_nav").height());
+                }
+                else{
+                    $(".left_nav").height($(".right_show").height());
+                    $('.holder').css('min-height',$(".right_show").height());
+                }
                 // $('.concern_item2').hide();
                 //$('.oneDayLists').hide();
             }
@@ -75,6 +91,14 @@ $(function () {
                 $('.concern2').show();
                 $('.concern0').hide();
                 $('.concern1').hide();
+                if($(".left_nav").height() > $(".right_show").height()){
+                    $(".right_show").height($(".left_nav").height());
+                    $('.holder').css('min-height',$(".left_nav").height());
+                }
+                else{
+                    $(".left_nav").height($(".right_show").height());
+                    $('.holder').css('min-height',$(".right_show").height());
+                }
                 // $('.concern_item1').hide();
             }
             //$(".concern_item0").hide();
@@ -108,10 +132,26 @@ $(function () {
             if(index==0){
                 $('.one').show();
                 $('.two').hide();
+                if($(".left_nav").height() > $(".right_show").height()){
+                    $(".right_show").height($(".left_nav").height());
+                    $('.holder').css('min-height',$(".left_nav").height());
+                }
+                else{
+                    $(".left_nav").height($(".right_show").height());
+                    $('.holder').css('min-height',$(".right_show").height());
+                }
             }
             if(index==1){
                 $('.one').hide();
                 $('.two').show();
+                if($(".left_nav").height() > $(".right_show").height()){
+                    $(".right_show").height($(".left_nav").height());
+                    $('.holder').css('min-height',$(".left_nav").height());
+                }
+                else{
+                    $(".left_nav").height($(".right_show").height());
+                    $('.holder').css('min-height',$(".right_show").height());
+                }
             }
             //$(".concern_item0").hide();
         });

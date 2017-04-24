@@ -130,7 +130,7 @@ function changeheight() {
                             $('.holder').css('min-height',$(".left_nav").height());
                         }
                         else{
-                            $(".left_nav").height($(".right_show").height()+100);
+                            $(".left_nav").height($(".right_show").height()+200);
                             $('.holder').css('min-height',$(".right_show").height());
                         }
 
@@ -443,6 +443,15 @@ function changeheight() {
     $('.right_show').css("min-height", $(window).height());
     $('.left_nav').css("min-height", $(window).height());
     $('.right_show').css("padding-bottom",60);
+
+    if($(".left_nav").height() > $(".right_show").height()){
+        $(".right_show").height($(".left_nav").height());
+        $('.holder').css('min-height',$(".left_nav").height());
+    }
+    else{
+        $(".left_nav").height($(".right_show").height());
+        $('.holder').css('min-height',$(".right_show").height());
+    }
 
 </script>
 
