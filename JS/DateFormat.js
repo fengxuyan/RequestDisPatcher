@@ -39,3 +39,14 @@ function MillisecondToDate(msd) {
     return time;
 
 }
+function engdate() {
+    var monthsInEng = ['Jan', 'Feb', 'Mar','Apr', 'May', 'June','July', 'Aug', 'Sept','Oct', 'Nov', 'Dec'];
+    var date = new Date();
+    console.log(
+        date.getDate() +
+        ' ' +
+        monthsInEng[date.getMonth()] +
+        ' ' +
+        date.getFullYear()
+    );
+}

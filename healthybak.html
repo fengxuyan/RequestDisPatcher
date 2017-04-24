@@ -330,9 +330,6 @@
 					break;
 				}
 			}
-
-
-
 			if(i==0){
 				document.cookie="select_time0="+time_str;
 				document.getElementById(time_str).style="background:#C6BDB5 !important;";
@@ -393,12 +390,7 @@
 			}
 
 			var time0_last =  document.cookie.match(new RegExp("(^| )select_time0=([^;]*)(;|$)"));
-
-
 			var time1_last = document.cookie.match(new RegExp("(^| )select_time1=([^;]*)(;|$)"));
-
-
-
 			if(time1_last[2]!=null && time1_last[2]!='' && time1_last[2]!=""){
 				var time0_last_real = new Date(time0_last[2]);
 				var time1_last_real = new Date(time1_last[2]);
@@ -443,7 +435,34 @@
 						}
 					}
 				}
+			}else{
+				var time_time;
+
+
+				var rowId = 'time0_last[2]',
+						view = document.getElementById(rowId),
+						//  将Element对象转换为JQuery对象
+						$view = $(view);
+//  毫无疑问，结果返回1
+//				alert($view.length)
+				console.log(view);
+				$view.css('border','2px solid red');
+
+				document.getElementById("time0_last[2]").style="background:#C6BDB5 !important;";
+				for(days = 1; days<15; days++){
+					time_time = addTime(time0_last[2],days);
+					if(document.getElementById("time_time")!=null){
+						document.getElementById("time_time").style="background:#F8F8F8 !important;";
+					}
+				}
+				for(days = -1; days>-15; days--){
+					time_time = addTime(time0_last[2],days);
+					if(document.getElementById("time_time")!=null){
+						document.getElementById("time_time").style="background:#F8F8F8 !important;";
+					}
+				}
 			}
+
 		}
 
 		//将time 加上days天返回

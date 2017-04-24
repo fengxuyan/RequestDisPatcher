@@ -50,13 +50,14 @@
         <div class="show_detail">
             <div class="show_detail_data">
                 <div class="data_table search">
-                    <ul class="search_list reportslist">
-                        <li>One report</li>
-                        <li >Multiple reports</li>
-                    </ul>
-                    <div class="reports">
+                    <!--<ul class="search_list reportslist">-->
+                        <!--<li>One report</li>-->
+                        <!--<li >Multiple reports</li>-->
+                    <!--</ul>-->
+                    <div class="reports" style="margin-top: -30px;">
                         <div class="reports_detail">
-                            <h4 class="" style="font-size: 21px">Data analysis</h4>
+                            <h4 class="" style=" font-size: 23px;padding-top: 0px;">Data analysis </h4>
+
                         </div>
                         <div class="statistics_table">
                             <p>Heart rate</p>
@@ -91,6 +92,10 @@
 
 </script>
 <script type="text/javascript">
+    var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+    if(userInfo==null){
+        window.location.href = "login.html";//location.href实现客户端页面的跳转
+    };
     $(document).ready(function(){
         var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
         var info = JSON.parse(userInfo[2]);
@@ -149,6 +154,28 @@
             }
         });
     }
+    function dateeng(dn) {
+        var dt = new Date();
+        var m=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Spt","Oct","Nov","Dec");
+        var w=new Array("Monday","Tuseday","Wednesday","Thursday","Friday","Saturday","Sunday");
+        var d=new Array("st","nd","rd","th");
+
+
+        var dns;
+        if(((dn)<1) ||((dn)>3)){
+            dns=d[3];
+        }
+        else
+        {
+            dns=d[(dn)-1];
+            if((dn==11)||(dn==12)){
+                dns=d[3];
+            }
+        }
+
+
+        return (dn+dns);
+    }
 </script>
 <script type="text/javascript">
 
@@ -199,12 +226,20 @@ if(otheremail!=null){
             params:"token="+token+"&startTime="+startTime+"&endTime="+endTime+"&email="+otheremail
         },
         success: function (data) {
-            console.log(data.Data);
+            var monthsInEng = ['Jan', 'Feb', 'Mar','Apr', 'May', 'June','July', 'Aug', 'Sept','Oct', 'Nov', 'Dec'];
+
+            var index=startTimetoarray[0];
+            var dayindex=startTimetoarray[1];
+
+            var a=dateeng(dayindex);
+
+            var index1=endTimetoarray[0];
+            var dayindex1=endTimetoarray[1];
+
+            var a1=dateeng(dayindex1);
 
 
-
-            $('.reports_detail').append('<p>Report date：'+startTimetoarray[0]+'月'+startTimetoarray[1]+'日'+'-'+endTimetoarray[0]+'月'+endTimetoarray[1]+'日'+'</p> <p>Total Times：'+data.Data.length+'次<span><i>Maximum Value</i><i>Average Value</i><i>Minimum Value</i></span></p>');
-
+            $('.reports_detail').append('<p>Report date：'+monthsInEng[index-1]+' '+a+'-'+monthsInEng[index1-1]+' ' +a1+'</p> <p>Total Times：'+data.Data.length+'<span><i>Maximum Value</i><i>Average Value</i><i>Minimum Value</i></span></p>');
             var map = new Array();//一维数组
             for (var i = 0; i < data.Data.length; i++) {
                 map.push(data.Data[i].avgHeart);//一维数组
@@ -1572,8 +1607,21 @@ if(otheremail!=null){
             console.log(data.Data);
 
 
+            var monthsInEng = ['Jan', 'Feb', 'Mar','Apr', 'May', 'June','July', 'Aug', 'Sept','Oct', 'Nov', 'Dec'];
 
-            $('.reports_detail').append('<p>Report date：'+startTimetoarray[0]+'月'+startTimetoarray[1]+'日'+'-'+endTimetoarray[0]+'月'+endTimetoarray[1]+'日'+'</p> <p>Total Times：'+data.Data.length+'次<span><i>Maximum Value</i><i>Average Value</i><i>Minimum Value</i></span></p>');
+            var index=startTimetoarray[0];
+            var dayindex=startTimetoarray[1];
+
+            var a=dateeng(dayindex);
+
+            var index1=endTimetoarray[0];
+            var dayindex1=endTimetoarray[1];
+
+            var a1=dateeng(dayindex1);
+
+
+
+            $('.reports_detail').append('<p>Report date：'+monthsInEng[index-1]+' '+a+'-'+monthsInEng[index1-1]+' ' +a1+'</p> <p>Total Times：'+data.Data.length+'<span><i>Maximum Value</i><i>Average Value</i><i>Minimum Value</i></span></p>');
 
             var map = new Array();//一维数组
             for (var i = 0; i < data.Data.length; i++) {

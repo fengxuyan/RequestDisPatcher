@@ -5,7 +5,7 @@
 	<title>Modify Information</title>
 	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
 	<script src="/RequestDisPatcher/JS/jquery-ui.js"></script>
-	<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
+	<!--<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">-->
 	<link rel="stylesheet" href="/RequestDisPatcher/CSS/jquery-ui.css">
 	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
 	<script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
@@ -26,6 +26,14 @@
 	<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
 	<!--<script src="/RequestDisPatcher/JS/birthday.js"></script>-->
 	<script type="text/javascript">
+		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+		if(userInfo==null){
+			window.location.href = "login.html";//location.href实现客户端页面的跳转
+		};
+		function goback() {
+			location.href='homepage.html';
+		}
+
 		$(document).ready(function() {
 			var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 			var info = JSON.parse(userInfo[2]);
@@ -74,15 +82,21 @@
 			$("#password").val(pwds[2]);
 			$("#repassword").val(pwds[2]);
 			$("#email").readOnly="readOnly";
+
+//			if(image==null){
+//				if(gender==1){
+//					$('#head').attr('src','Heads/header_man.png');
+//				}else if(gender==0){
+//					$('#head').attr('src','Heads/header_woman.png');
+//				}
+//			}else{
 			if(image==null){
-				if(gender==1){
-					$('#head').attr('src','Heads/header_man.png');
-				}else if(gender==0){
-					$('#head').attr('src','Heads/header_woman.png');
-				}
+				$('#head').attr('src','Heads/default.jpg');
+
 			}else{
 				$('#head').attr('src',image);
 			}
+//			}
 //			$("#yearOfBirth").datepicker();
 
 //			if($.cookie('head_pic')!=''){
@@ -92,68 +106,139 @@
 //			$.cookie('head_pic','', { expires: -1 });
 
 			$("#submit_submit").click(function(){
-				console.log($("#appDate").val());
+
+				console.log( $('#path').val());
+				if($('#path').val()==''){
+
+//					var flog = false;
 				var flog = checkFormmodify1();
-				if(flog!=false){
-					$.ajaxFileUpload({
-						type:"POST",
-						url:"/RequestDisPatcher/request/upload.do",
-						async:false,
-						secureuri:false,
-						fileElementId:"upload",//file标签的id
-						dataType: "json",//返回数据的类型
-						data:{
-							url:"http://101.37.100.209:9001/login/modify",
-							params:"firstName="+$('#firstName').val()+"&password="+$('#password').val()+"&middleName="+$('#middleName').val()+"&lastName="+$('#lastName').val()+"&birth="+$("#appDate").val()+"&gender="+$('#gender').val()+"&mphone="+$('#phone').val()+"&address="+$('#address').val()+"&email="+$('#email').val()+'&head='+$.cookie('head_pic'),
-							token:token_t.substring(1,token_t.length-1)
-						},//一同上传的数据
-						success: function (data) {
-							var txt=data.Message;
-							window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
+					if(flog!=false){
+						console.log('===0');
+						$.ajaxFileUpload({
+							type:"POST",
+							url:"/RequestDisPatcher/request/upload.do",
+							async:false,
+							secureuri:false,
+							fileElementId:"upload",//file标签的id
+							dataType: "json",//返回数据的类型
+							data:{
+								url:"http://101.37.100.209:9001/login/modify",
+								params:"firstName="+$('#firstName').val()+"&password="+$('#password').val()+"&middleName="+$('#middleName').val()+"&lastName="+$('#lastName').val()+"&birth="+$("#appDate").val()+"&gender="+$('#gender').val()+"&mphone="+$('#phone').val()+"&address="+$('#address').val()+"&email="+$('#email').val(),
+								token:token_t.substring(1,token_t.length-1)
+							},//一同上传的数据
+							success: function (data) {
 
-							$.ajax({
-								type:"POST",
-								url:"/RequestDisPatcher/request/dispatcher.do",
-								data:{
-									url:"http://127.0.0.1:9001/login/login",
-									Email:$('#Email').val(),
-									params:"email="+$('#email').val()+"&password="+$('#password').val()
-								},
-								dataType:"json",
-								success:function(data){
-									if(data.Code==1){
-										var txt=data.Message;
-										window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success ,{
-											onOk:function() {
-												document.cookie="userData="+JSON.stringify(data.Data);
-												document.cookie="dluEmail="+$('#email').val();
-												document.cookie="dlumima="+$('#password').val();
-												document.cookie="token="+JSON.stringify(data.Data.token);
+								console.log(data);
+								$.ajax({
+									type:"POST",
+									url:"/RequestDisPatcher/request/dispatcher.do",
+									data:{
+										url:"http://127.0.0.1:9001/login/login",
+										Email:$('#Email').val(),
+										params:"email="+$('#email').val()+"&password="+$('#password').val()
+									},
+									dataType:"json",
+									success:function(data){
+										if(data.Code==1){
+											var txt=data.Message;
+											window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success ,{
+												onOk:function() {
+													document.cookie="userData="+JSON.stringify(data.Data);
+													document.cookie="dluEmail="+$('#email').val();
+													document.cookie="dlumima="+$('#password').val();
+													document.cookie="token="+JSON.stringify(data.Data.token);
 //										document.cookie="image="+JSON.stringify(data.Data['userInfo'].image);
-												window.location.href="modify.html";
-											}})
+													window.location.href="modify.html";
+												}})
 
-									}else{
+										}else{
 
-									}
+										}
 //							window.location.href="homepage.html";
-								},
-								error:function(data,Code){
-									console.log(data);
-									console.log(Code);
-									alert("Unkonw Error.Please Try Again!");
-								}
-							});
-						},
-						error: function (data, status, e) {
-							var txt=data.Message;
-							window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
-						}
-					});
+									},
+									error:function(data,Code){
+										console.log(data);
+										console.log(Code);
+										alert("Unkonw Error.Please Try Again!");
+									}
+								});
+							},
+							error: function (data, status, e) {
+								var txt=data.Message;
+								window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
+							}
+						});
 
 
 
+					}
+				}else{
+
+//					var flog = false;
+				var flog = checkFormmodify1();
+					if(flog!=false){
+						console.log('!=0');
+						$.ajaxFileUpload({
+							type:"POST",
+							url:"/RequestDisPatcher/request/upload.do",
+							async:false,
+							secureuri:false,
+							fileElementId:"upload",//file标签的id
+							dataType: "json",//返回数据的类型
+							data:{
+								url:"http://101.37.100.209:9001/login/modify",
+								params:"firstName="+$('#firstName').val()+"&password="+$('#password').val()+"&middleName="+$('#middleName').val()+"&lastName="+$('#lastName').val()+"&birth="+$("#appDate").val()+"&gender="+$('#gender').val()+"&mphone="+$('#phone').val()+"&address="+$('#address').val()+"&email="+$('#email').val()+'&head='+$('#path').val(),
+								token:token_t.substring(1,token_t.length-1)
+							},//一同上传的数据
+							success: function (data) {
+
+								console.log(data);
+								$.ajax({
+									type:"POST",
+									url:"/RequestDisPatcher/request/dispatcher.do",
+									data:{
+										url:"http://127.0.0.1:9001/login/login",
+										Email:$('#Email').val(),
+										params:"email="+$('#email').val()+"&password="+$('#password').val()
+									},
+									dataType:"json",
+									success:function(data){
+										if(data.Code==1){
+											var txt=data.Message;
+											window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success ,{
+												onOk:function() {
+													document.cookie="userData="+JSON.stringify(data.Data);
+													document.cookie="dluEmail="+$('#email').val();
+													document.cookie="dlumima="+$('#password').val();
+													document.cookie="token="+JSON.stringify(data.Data.token);
+//										document.cookie="image="+JSON.stringify(data.Data['userInfo'].image);
+													window.location.href="modify.html";
+												}})
+
+										}else{
+
+										}
+//							window.location.href="homepage.html";
+									},
+									error:function(data,Code){
+										console.log(data);
+										console.log(Code);
+										alert("Unkonw Error.Please Try Again!");
+									}
+								});
+							},
+							error: function (data, status, e) {
+								var txt=data.Message;
+								window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
+							}
+						});
+
+
+
+					}
 				}
+
+
 			});
 		});
 	</script>
@@ -176,7 +261,8 @@
 					$.cookie('head_pic', null);
 
 					$.cookie('head_pic', path, {expires: 1000*60*10, path: '/'});
-
+					console.log(path);
+					console.log($.cookie('head_pic'));
 					document.getElementById("head").innerHTML = "";
 					document.getElementById("head").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='scale',src=\"" + path + "\")";//使用滤镜效果
 				}
@@ -186,15 +272,18 @@
 					$.cookie('head_pic', null);
 					$.cookie('head_pic', path, {expires: 1000*60*10, path: '/'});
 
-
+					console.log($.cookie('head_pic'));
+					console.log(path);
 					$('#head').attr('src',path);
 				}
 			}
+			$('#path').val(path);
 		}
 	</script>
 
 </head>
 <body>
+
 
 <div class="holder reg_container">
 
@@ -225,8 +314,8 @@
 		</ul>
 	</div>
 	<div class="right_show">
-		<h3>Modify</h3>
-		<span onclick="javascript:history.back(-1);" class="glyphicon icon-caret-right"></span>
+		<h3 sstyle="font-size: 20px;">Modify</h3>
+		<span onclick="goback()" class="glyphicon icon-caret-right"></span>
 		<div class="show_detail register">
 			<form name="re_form" onsubmit="return checkForm()">
 				<div class="form_txt"></div>
@@ -255,8 +344,8 @@
 				</div>
 
 				<span class="bir_txt">Gender *</span>
-				<div class="reg_input reg_select sex mod_input mod_sex" style="cursor: pointer">
-					<select style="outline:none !important;"  id="gender" name ="gender" style="cursor: pointer">
+				<div class="reg_input reg_select sex mod_input mod_sex" style="cursor: pointer;width: 588.188px;    ">
+					<select style="outline:none !important;"  id="gender" name ="gender" style="cursor: pointer;">
 						<option value="1" >Male</option>
 						<option value="0" >Female</option>
 					</select>
@@ -294,6 +383,7 @@
 
 		</div>
 	</div>
+	<input type="text" id="path" style="visibility: hidden"/>
 </div>
 <script>
 	!function(){

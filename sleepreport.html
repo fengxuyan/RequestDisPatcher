@@ -113,25 +113,25 @@
 		<div class="show_detail">
 			<div class="show_detail_data" style="    padding-top: 40px;">
 				<div class="data_table search">
-					<ul class="search_list report" >
-						<li class="clickC">One report</li>
-						<li>Multiple reports</li>
-					</ul>
+					<!--<ul class="search_list report" >-->
+						<!--<li class="clickC">One report</li>-->
+						<!--<li>Multiple reports</li>-->
+					<!--</ul>-->
 					<div class="report">
 						<div class="report_detail">
-							<h4 class="">Tracking report </h4>
-							<h5>Tracking date：</h5>
+							<h4 class="" style=" font-size: 23px;padding-top: 0px;">Tracking report </h4>
+							<h5 style="display: block; padding-bottom: 31px; padding-top: 18px; font-size: 13px; ">Tracking date：</h5>
 							<div class="circle">
 								<ul>
-									<li><span class="showxl"></span><span style="font-size: 11px">Times/Min</span><span>Average Heart Rate</span></li>
-									<li><span class="showhxl"></span><span style="font-size: 11px">Times/Min</span><span>Average Respiration</span></li>
+									<li><span class="showxl" style="    font-size: 20px;"></span><span style="font-size: 11px">bpm</span><span>Average Heart Rate</span></li>
+									<li><span class="showhxl"  style="    font-size: 20px;"></span><span style="font-size: 11px">bpm</span><span>Average Respiration</span></li>
 									<li>
 										<div id="indicatorContainer4">
 										</div>
 										<span class="pf">Sleep score</span>
 									</li>
-									<li><span class="showfscs"></span><span style="font-size: 11px">Times</span><span>Sleep-turning times</span></li>
-									<li><span class="showqycs"></span><span style="font-size: 11px;">Times</span><span>Bed exits</span></li>
+									<li><span class="showfscs"  style="    font-size: 20px;"></span><span style="font-size: 11px">Times</span><span>Sleep-turning times</span></li>
+									<li><span class="showqycs"  style="    font-size: 20px;"></span><span style="font-size: 11px;">Times</span><span>Bed exits</span></li>
 								</ul>
 							</div>
 							<div class="line">
@@ -185,13 +185,11 @@
 										<section id="sample-pb3">
 											<article>
 												<div class="number-pb">
-													<div class="number-pb-shown"><i class="icon_sleepright"><span style="    top: 8px;left: 0px;
-    text-align: center;    color: #fff;">Sleep time</span></i></div>
+													<div class="number-pb-shown"><i class="icon_sleepright"><span style="  top: 15px;left: 1px;text-align: center;    color: #fff;">Total</span></i></div>
 													<!--<div class="number-pb-num">总长</div>-->
 												</div>
 											</article>
 										</section>
-
 									</li>
 								</ul>
 							</div>
@@ -204,6 +202,7 @@
 	</div>
 </div>
 <script>
+
 	function quit() {
 		$.ajax({
 			type:"post",
@@ -227,6 +226,29 @@
 		var r = window.location.search.substr(1).match(reg);
 		if (r != null) return unescape(r[2]);
 		return null;
+	}
+	// dateeng(月份,日期)
+	function dateeng(dn) {
+		var dt = new Date();
+		var m=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Spt","Oct","Nov","Dec");
+		var w=new Array("Monday","Tuseday","Wednesday","Thursday","Friday","Saturday","Sunday");
+		var d=new Array("st","nd","rd","th");
+
+
+		var dns;
+		if(((dn)<1) ||((dn)>3)){
+			dns=d[3];
+		}
+		else
+		{
+			dns=d[(dn)-1];
+			if((dn==11)||(dn==12)){
+				dns=d[3];
+			}
+		}
+
+
+		return (dn+dns);
 	}
 
 	$(".right_show").css("border-bottom", '1px solid #ddd');
@@ -276,8 +298,15 @@ if(otheremail==null){
 				params: "token=" + token + "&time=" + time
 			},
 			success: function (data) {
-				console.log(data);
-				$('.report_detail h5').append('<span>'+timetoshow[0]+'月'+timetoshow[1]+'日'+'</span>');
+
+				var monthsInEng = ['Jan', 'Feb', 'Mar','Apr', 'May', 'June','July', 'Aug', 'Sept','Oct', 'Nov', 'Dec'];
+
+				var index=timetoshow[0];
+				var dayindex=timetoshow[1];
+
+				var a=dateeng(dayindex);
+
+				$('.report_detail h5').append('<span>'+monthsInEng[index-1]+' '+a+'</span>');
 				var radialObj4 = $('#indicatorContainer4').radialIndicator({
 					barColor: {
 						0: '#8A847F',
@@ -400,8 +429,14 @@ if(data.Data[0].score!=0){
 			params: "token=" + token + "&time=" + time+"&email=" + otheremail
 		},
 		success: function (data) {
-			console.log(data);
-			$('.report_detail h5').append('<span>'+timetoshow[0]+'月'+timetoshow[1]+'日'+'</span>');
+			var monthsInEng = ['Jan', 'Feb', 'Mar','Apr', 'May', 'June','July', 'Aug', 'Sept','Oct', 'Nov', 'Dec'];
+
+			var index=timetoshow[0];
+			var dayindex=timetoshow[1];
+
+			var a=dateeng(dayindex);
+
+			$('.report_detail h5').append('<span>'+monthsInEng[index-1]+' '+a+'</span>');
 			var radialObj4 = $('#indicatorContainer4').radialIndicator({
 				barColor: {
 					0: '#8A847F',

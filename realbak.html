@@ -4,7 +4,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Real Data</title>
 	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
-
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
@@ -14,7 +13,7 @@
 	<script src="/RequestDisPatcher/JS/jquery-ui.js"></script>
 	<script src="/RequestDisPatcher/JS/number-pb.js"></script>
 	<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
-
+	<script src="/RequestDisPatcher/JS/real.js"></script>
 	<style>
 		.block_pic{
 			overflow:hidden;
@@ -27,8 +26,9 @@
 			width:6px;
 			/*margin-left: -2px;*/
 		}
+
 		.wuren{
-			border-left:dotted 2px #D5D5D5;
+		    border-left:dotted 2px #D5D5D5;
 			/*background: url("images/noperson_block.png")!important; ;*/
 			/*background-size: 10px 116px;*/
 			display: inline-block;
@@ -62,6 +62,7 @@
 			margin-left: -2px;
 		}
 		.tidong{
+
 			background: url("images/onmove_block.png")!important; ;
 			background-size: 12px 116px;
 			display: inline-block;
@@ -69,12 +70,14 @@
 			width:3px;
 			margin-left: -2px;
 		}
+
 		.time.time1 span{
 			float:right;
 			padding-top: 7px;
 			font-weight: normal;
 			margin-left: 12px;
 			margin-right: -68px;
+
 		}
 		#sj span{
 			float:left;
@@ -82,7 +85,11 @@
 			font-weight: normal;
 			/*margin-left: 12px;*/
 			margin-left: -68px;
+
 		}
+
+
+
 	</style>
 </head>
 <script type="text/javascript">
@@ -100,11 +107,9 @@
 				params:"token="+token
 			},
 			success: function (data) {
-				alert(data.Message);
 //
 			},
 			error: function (data) {
-				alert('fail');
 			}
 		});
 	}
@@ -114,10 +119,16 @@
 		if (r != null) return unescape(r[2]);
 		return null;
 	}
+
 	var otheremail=getQueryString('email');
 	var sn=getQueryString('sn');
 	console.log(getQueryString('email'));
+
+
 	$(document).ready(function() {
+
+
+
 		status=0;
 		countfanshen=0;
 		//进入页面或者刷新页面之后清除旧的cookie值
@@ -125,18 +136,26 @@
 		if((showpic_event!=undefined)&&(showpic_event!=null)&&(showpic_event!='')){
 			$.cookie('showpic_event',null);
 		}
-		//清除心率的cookie
+
+		//清除Heart rate的cookie
 		document.cookie = "heart0="+'';
 		document.cookie = "heart1="+'';
 		document.cookie = "heart2="+'';
+
 		//清除睡眠事件cookie
 		document.cookie = "event0="+'';
 		document.cookie = "event1="+'';
 		document.cookie = "event2="+'';
 		document.cookie = "event3="+'';
+
 		//清除翻身次数记录
 		document.cookie="fs_number="+'';
+
+
+
 		setInterval("fetchData(otheremail)",10000);
+
+
 		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 		var info = JSON.parse(userInfo[2]);
 		var Info = info['userInfo'];
@@ -146,18 +165,28 @@
 		var gender = Info.gender;
 		var token = Info.token;
 		var image=Info.image;
+
 		if(image==null){
 			if(gender==1){
+
 				$('#head').attr('src','Heads/header_man.png');
+
 			}else if(gender==0){
+
 				$('#head').attr('src','Heads/header_woman.png');
+
 			}
+
 		}else{
 			$('#head').attr('src',image);
 		}
+
 	})
+
 	window.onload = fetchData(otheremail);
+
 	// timeHandle();
+
 	//拼接成新的数组
 	function arrayHandle(array,obj){
 		if(array.length==180){
@@ -165,6 +194,7 @@
 		}
 		return array.concat(obj);
 	}
+
 	window.onload = function timeHandle(){
 		var time = new Date();
 		//获取当前年
@@ -172,28 +202,43 @@
 		//获取当前月
 		var month = myDate.getMonth() + 1;
 		//获取当前日S
+
 		var time_getHours = (time.getHours() < 10 ? ('0' + time.getHours() ): ('' + time.getHours()));
+
 		var time_getMinutes = (time.getMinutes() < 10 ? ('0' + time.getMinutes() ): ('' + time.getMinutes()));
+
 		//var time_getSeconds = (time.getSeconds() < 10 ? ('0' + time.getSeconds()) : ('' + time.getSeconds()));
+
 		var tnow =  time_getHours + ":" + time_getMinutes;
+
 		var d1=new Date();
 		var d2=new Date(d1.getTime()+1*60*30*1000);
+
 		var getMinutes = (d2.getMinutes() < 10 ? ('0' + d2.getMinutes() ): ('' + d2.getMinutes()));
+
 		var getHours = (d2.getHours() < 10 ? ('0' + d2.getHours() ): ('' + d2.getHours()));
+
 		//var getSeconds = (d2.getSeconds() < 10 ? ('0' + d2.getSeconds()) : ('' + d2.getSeconds()));
+
 		var tnext=getHours+":"+getMinutes;
 		console.log(tnext);
+
 		document.getElementById("time1_append1").innerText = tnow;
 		document.getElementById("time1_append2").innerText = tnext;
-	}
+
+
 	function drawdot() {
-		var svg='<svg style="width:3px;height:115;float:left;border-bottom:1px solid #8A847F;border-top:1px solid #8A847F;" xmlns="http://www.w3.org/2000/svg" version="1.1"> <g fill="none" stroke="#8A847F" stroke-width="2"><path stroke-dasharray="2,15" d="M 1 3 1 115" /> </g></svg>';
+	var svg='<svg style="width:3px;height:116px;float:left;border-bottom:1px solid #8A847F;border-top:1px solid #8A847F;" xmlns="http://www.w3.org/2000/svg" version="1.1"> <g fill="none" stroke="#8A847F" stroke-width="2"><path stroke-dasharray="2,15" d="M 1 3 1 115" /> </g></svg>';
 		return svg;
+
 	}
 	function drawdot2() {
-		var svg=' <svg style="width:3px;height:115;float:left;border-bottom:1px solid #8A847F;border-top:1px solid #8A847F;"  xmlns="http://www.w3.org/2000/svg" version="1.1">  <g fill="none" stroke="#8A847F" stroke-width="2"> <path stroke-dasharray="2,15" d="M 2 11 2 100" /> </g> </svg>';
+		var svg=' <svg style="width:3px;height:116px;float:left;border-bottom:1px solid #8A847F;border-top:1px solid #8A847F;"  xmlns="http://www.w3.org/2000/svg" version="1.1">  <g fill="none" stroke="#8A847F" stroke-width="2"> <path stroke-dasharray="2,15" d="M 2 11 2 100" /> </g> </svg>';
 		return svg;
+
 	}
+
+
 	function drawboxing(){
 		var svg='<svg style="width:3px;height:120px;float:left;border:0;"version="1.1"xmlns="http://www.w3.org/2000/svg"> <rect width="3" height="120"style="fill:#BAB7B3;stroke-width:0;stroke:rgb(0,0,0)"/> <polyline points="0,17 3,13 6,17 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points="0,37 3,33 6,37 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points="0,57 3,53 6,57 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points="0,77 3,73 6,77 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points="0,97 3,93 6,97 "style="fill:none;stroke:#fff;stroke-width:1"/>';
 		return svg;
@@ -206,10 +251,13 @@
 		var svg='<svg style="width:3px;height:120px;float:left;border:0;"version="1.1"xmlns="http://www.w3.org/2000/svg"> <rect width="3" height="120"style="fill:#8A847F;stroke-width:0;stroke:rgb(0,0,0)"/> <path  d="M 0 7 L 6 7" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 17 L 6 17" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 27 L 6 27" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 37 L 6 37" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 47 L 6 47" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 57 L 6 57" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 67 L 6 67" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 77 L 6 77" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 87 L 6 87" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 97 L 6 97" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 107 L 6 107" stroke="#FFF" stroke-width="1" fill="none" /> </svg>';
 		return svg;
 	}
+
 	function drawlixian() {
 		var svg='<svg style="width:3px;height:120px;float:left;border:0;"version="1.1"xmlns="http://www.w3.org/2000/svg"> <rect width="3" height="120"style="fill:#595757;stroke-width:0;stroke:rgb(0,0,0)"/>';
 		return svg;
 	}
+
+
 	function js_method_healthy() {
 		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 		var info = JSON.parse(userInfo[2]);
@@ -219,15 +267,21 @@
 		var last = Info.lastName;
 		var gender = Info.gender;
 		var image=Info.image;
+
 		var device=Info.device;
 		if(otheremail==null&&device==null){
 			console.log(' see  this!');
 			return false;
+
+
 		}else{
 			location.href = "healthy.html";
+
 		}
 	}
+
 	function fetchData(otheremail){
+
 		if ($.cookie('the_cookie') == '') {
 			location.href = "login.html";//location.href实现客户端页面的跳转
 		}
@@ -239,40 +293,47 @@
 		var last = Info.lastName;
 		var gender = Info.gender;
 		var image=Info.image;
+
 		var device=Info.device;
+
 		if(otheremail==null&&device==null){
 //			var txt="没有数据";
 //			window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
 			window.history.go(-1);
+
+
 		}
 		if(otheremail==null&&device!=null){
 			$.ajax({
 				type:"post",
 				url:"/RequestDisPatcher/request/dispatcher.do",
+
 				data: {
 					url:"http://101.37.100.209:9000/api/realdata",
 					params:"sn="+device[0]
 				},
 				success: function (data) {
-//					var showpic_event1=$.cookie('showpic_event').split(',');
-//					console.log("showpic_event1:"+showpic_event1);
-//					var cookie_arr = [];//用来存放sleep_event;
-//					if(showpic_event1=='null'){ //cookie中不存在以前的记录
-//						cookie_arr = arrayHandle(cookie_arr,data.Data.event);
-//					}else{
-//						cookie_arr = arrayHandle(showpic_event1,data.Data.event);
-//					}
-//					$.cookie('showpic_event', cookie_arr.join(','));
-//					$.cookie('showpic_eventer',data.Data.event);
+					var showpic_event1=$.cookie('showpic_event').split(',');
+					console.log("showpic_event1:"+showpic_event1);
+					var cookie_arr = [];//用来存放sleep_event;
+					if(showpic_event1=='null'){ //cookie中不存在以前的记录
+						cookie_arr = arrayHandle(cookie_arr,data.Data.event);
+					}else{
+						cookie_arr = arrayHandle(showpic_event1,data.Data.event);
+					}
+					$.cookie('showpic_event', cookie_arr.join(','));
+					$.cookie('showpic_eventer',data.Data.event);
 					if(data.Data.heart==0){
 						$('.heart_pic').css('height','0');
 					}
+
 					if(data.Data.heart<=60){
 						$('.heart_pic').css('background-image','url(./images/60.gif)');
 					}
 					if(60<data.Data.heart<=70){
 						$('.heart_pic').css('background-image','url(./images/70.gif)');
 					}
+
 					if(70<data.Data.heart<=80){
 						$('.heart_pic').css('background-image','url(./images/80.gif)');
 					}
@@ -282,35 +343,46 @@
 					if(90<data.Data.heart<=100){
 						$('.heart_pic').css('background-image','url(./images/100.gif)');
 					}
+
+
 					//清除追加内容
 					$('.showHeartNumber span').remove();
 					$('.showBreathNumber span').remove();
 
+//
+					$('.showHeartNumber').append("<span>"+data.Data.heart+"</span><span>Times/Min</span>");
+					$('.showBreathNumber').append("<span>"+data.Data.breath+"</span><span>Times/Min</span>");
 
-					var heart=heartHandle(data.Data.heart);
-					$('.showHeartNumber').append("<span>"+heart+"</span><span>bpm</span>");
-					$('.showBreathNumber').append("<span>"+data.Data.breath+"</span><span>breaths/Min</span>");
+
 					/*
-					 根据实时数据不同 根据状态绘制拼接block_pic 的背景图
+
+					 根据Real-time Data不同 根据状态绘制拼接block_pic 的背景图
 					 ajax请求返回状态 根据状态append div div对应着背景图  刷新当前页面 超出最外面的框就隐藏
-					 同时更改心率呼吸率
+					 同时更改Heart rateRespiration
+
 					 */
 					/*
 					 //当前策略： 翻身算作体动
 					 //如果连续监测到多次体动 绘制前两次的  然后绘制在床 当次数多达4次以上 则继续绘制体动
 					 //当前策略  由于体动监测过于敏感 将体动算作在床  翻身算作体动
+
 					 private final int MOVE = 10;            //体动
 					 private final int NO_PERSON = 4;        //无人
 					 private final int ON_BED = 2;           //有人
 					 private final int TURN_OFF = 3;        //翻身
 					 private final int OFF_LINE = 0;         //离线
 					 */
+
 					var div1=$('.block_pic');
+
+
 					if(data.Data.event==0){
 						div1.append(drawlixian());
 					}
 					else if(data.Data.event==10){
+
 						div1.append(drawhengxian());
+
 					}
 					else if(data.Data.event==2){
 						div1.append(drawhengxian());
@@ -332,16 +404,22 @@
 							div1.append(drawdot2());
 							status=0;
 						};
+
 					}
+
 				},
 				error: function (data) {
 					console.log(data);
 				}
 			});
+
 		}else if(sn!=null) {
+
 			$.ajax({
 				type:"post",
 				url:"/RequestDisPatcher/request/dispatcher.do",
+
+
 				data: {
 					url:"http://101.37.100.209:9000/api/realdata",
 					params:"sn="+sn
@@ -356,15 +434,18 @@
 						cookie_arr = arrayHandle(showpic_event1,data.Data.event);
 					}
 					$.cookie('showpic_event', cookie_arr.join(','));
+
 					if(data.Data.heart==0){
 						$('.heart_pic').css('height','0');
 					}
+
 					if(data.Data.heart<=60){
 						$('.heart_pic').css('background-image','url(./images/60.gif)');
 					}
 					if(60<data.Data.heart<=70){
 						$('.heart_pic').css('background-image','url(./images/70.gif)');
 					}
+
 					if(70<data.Data.heart<=80){
 						$('.heart_pic').css('background-image','url(./images/80.gif)');
 					}
@@ -374,25 +455,36 @@
 					if(90<data.Data.heart<=100){
 						$('.heart_pic').css('background-image','url(./images/100.gif)');
 					}
+
 					//清除前一次追加内容
 					$('.showHeartNumber span').remove();
 					$('.showBreathNumber span').remove();
+
+
 					if( data.Data.heart!=0 && data.Data.breath==0){
 						data.Data.breath = data.Data.heart/4;
 					}
 					var heart=heartHandle(data.Data.heart);
+
 					$('.showHeartNumber').append("<span>"+heart+"</span><span>bpm</span>");
 					$('.showBreathNumber').append("<span>"+data.Data.breath+"</span><span>breaths/Min</span>");
+
+
 					/*
-					 根据实时数据不同 根据状态绘制拼接block_pic 的背景图
+
+					 根据Real-time Data不同 根据状态绘制拼接block_pic 的背景图
 					 ajax请求返回状态 根据状态append div div对应着背景图  刷新当前页面 超出最外面的框就隐藏
-					 同时更改心率呼吸率
+					 同时更改Heart rateRespiration
+
 					 */
 					var div1=$('.block_pic');
+
+
 					/*
 					 //当前策略： 翻身算作体动
 					 //如果连续监测到多次体动 绘制前两次的  然后绘制在床 当次数多达4次以上 则继续绘制体动
 					 //当前策略  由于体动监测过于敏感 将体动算作在床  翻身算作体动
+
 					 private final int MOVE = 10;            //体动
 					 private final int NO_PERSON = 4;        //无人
 					 private final int ON_BED = 2;           //有人
@@ -401,9 +493,12 @@
 					 */
 					if(data.Data.event==0){
 						div1.append(drawlixian());
+
 					}
 					else if(data.Data.event==10){
+
 						div1.append(drawhengxian());
+
 					}
 					else if(data.Data.event==2){
 						div1.append(drawhengxian());
@@ -425,6 +520,7 @@
 							div1.append(drawdot2());
 							status=0;
 						};
+
 					}
 				},
 				error: function (data) {
@@ -432,11 +528,14 @@
 				}
 			});
 		}else{
+
 		}
 	}
-	//对heart进行处理,没有heart值直接返回，有heart返回平均值
+	//对heart进行处理,没有heart值直接返回，有heart返回Average Value
 	function heartHandle(heart){
+
 		var heart0 = document.cookie.match(new RegExp("(^| )heart0=([^;]*)(;|$)"));
+
 		if(heart0[2] == null ||heart0[2] == '' ||heart0[2] == ""){
 			document.cookie = "heart0="+heart;
 			return heart;
@@ -456,11 +555,15 @@
 			document.cookie = "heart2="+heart;
 			return (heart1[2]+heart2[2]+heart)/3;
 		}
+
 	}
 	//睡眠事件处理
 	function eventHandle(event){
+
 		var fs_number = document.cookie.match(new RegExp("(^| )fs_number=([^;]*)(;|$)"));
+
 		var event0 = document.cookie.match(new RegExp("(^| )event0=([^;]*)(;|$)"));
+
 		if(event0[2] == null ||event0[2] == '' ||event0[2] == ""){
 			if(event != 0 && event != 2 && event != 3 && event !=4 && event !=10){ //异常睡眠事件取前一个状态,没有前一个状态就返回空
 				document.cookie = "event0="+'';
@@ -469,8 +572,11 @@
 			document.cookie = "event0="+event;
 			return event;
 		}
+
 		var event1 = document.cookie.match(new RegExp("(^| )event1=([^;]*)(;|$)"));
+
 		if(event1[2] == null ||event1[2] == '' ||event1[2] == ""){
+
 			if(event != 0 && event != 2 && event != 3 && event !=4 && event !=10){ //异常睡眠事件取前一个状态
 				document.cookie = "event1="+event0[2];
 				return event0[2];
@@ -478,14 +584,18 @@
 			document.cookie = "event1="+event;
 			return event;
 		}
+
 		var event2 = document.cookie.match(new RegExp("(^| )event2=([^;]*)(;|$)"));
+
 		if(event2[2] == null ||event2[2] == '' ||event2[2] == ""){
+
 			if(fs_number == null ||fs_number == '' ||fs_number == ""){ //之前未出现长时间连续翻身的情况
 				if(event0[2]== 3 && event1[2]== 3 && event==3){ //两次翻身，第三次翻身置为在床
 					event = 2;
 					document.cookie="fs_number="+"heheda";// 第一次只允许出现2个翻身，之后可随意
 				}
 			}
+
 			if(event != 0 && event != 2 && event != 3 && event !=4 && event !=10){ //异常睡眠事件取前一个状态
 				document.cookie = "event2="+event1[2];
 				return event1[2];
@@ -493,13 +603,17 @@
 			document.cookie = "event2="+event;
 			return event;
 		}
+
 		var event3 = document.cookie.match(new RegExp("(^| )event3=([^;]*)(;|$)"));
+
 		if(event3[2] == null ||event3[2] == '' ||event3[2] == ""){
+
 			if(fs_number == null ||fs_number == '' ||fs_number == ""){ //之前未出现长时间连续翻身的情况
 				if(event0[2]== 3 && event1[2]== 3 && event==3){ //两次翻身，第四次翻身置为在床
 					event = 2;
 				}
 			}
+
 			if(event != 0 && event != 2 && event != 3 && event !=4 && event !=10){ //异常睡眠事件取前一个状态
 				document.cookie = "event3="+event2[2];
 				return event2[2];
@@ -517,6 +631,7 @@
 			document.cookie = "event3="+event;
 			return event;
 		}
+
 	}
 </script>
 <body>
@@ -634,6 +749,7 @@
 	function p(s) {
 		return s < 10 ? '0' + s: s;
 	}
+
 	var myDate = new Date();
 	//获取当前年
 	var year=myDate.getFullYear();
@@ -641,12 +757,15 @@
 	var month=myDate.getMonth()+1;
 	//获取当前日
 	var date=myDate.getDate();
-	var h=myDate.getHours();       //获取当前小时数(0-23)
+	var h=myDate.getHours();       //获取当前hour数(0-23)
 	var m=myDate.getMinutes();     //获取当前分钟数(0-59)
 	var s=myDate.getSeconds();
+
 	var now=p(h)+':'+p(m)+":"+p(s);
+
 	$('.right_show').css("height",$(window).height());
 	$('.left_nav').css("height",$(window).height());
+
 </script>
 </body>
 </html>

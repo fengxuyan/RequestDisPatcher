@@ -499,13 +499,14 @@ input::-webkit-input-placeholder{
     width:0;
     height:0;
     border:0;
+    opacity: 0;
 }
 
 #zt span{
     font-size: 14px;
     font-weight: normal;
-    margin-left: 5px;
-    margin-right: 15px;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 .xl_pic:first-child{
     margin:0 auto;
@@ -610,15 +611,15 @@ input::-webkit-input-placeholder{
 
 }
 .heart_txt span{
-  display: inline-block;
-    font-size: 17px;
-    font-weight: bold;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: normal;
     padding-left: 80px;
     text-align: center;
 
 }
 .heart_pic{
-    background-image: url(../images/60.gif);
+    /*background-image: url(../images/60.gif);*/
     width: 390px;
     height: 120px;
 
@@ -699,8 +700,8 @@ input::-webkit-input-placeholder{
 }
 .breath_txt span{
     display: inline-block;
-    font-size: 17px;
-    font-weight: bold;
+    font-size: 18px;
+    font-weight: normal;
     padding-left: 80px;
     text-align: center;
 
@@ -827,6 +828,13 @@ input::-webkit-input-placeholder{
     border-right: 0;
     background: url(../images/changedate.png) no-repeat right;
     background-size: 48px 48px;
+
+}
+.sex.mod_input.mod_sex select{
+    background-size: 45px 45px !important;
+    background-position: 54px 2px!important;
+    background-position-x: 536px!important;
+    cursor: pointer;
 }
 .ymd{
     margin-top: 31px;
@@ -917,7 +925,8 @@ input::-webkit-input-placeholder{
     width: 209px;
     display: inline-block;
     float: right;
-    margin-right: 44px;
+    margin-right: 34px;
+
 }
 
 
@@ -986,8 +995,8 @@ input::-webkit-input-placeholder{
 
 
 .concern_list span{
-    font-weight: 600;
-    font-size: 16px;
+    font-weight: bold;
+    font-size: 18px;
 }
 .foPwdTxt{
     margin-top: 55px;
@@ -1054,7 +1063,7 @@ input::-webkit-input-placeholder{
 
 .show_detail_data.proupdate.detail_update .data_table input[type='button']{
     background: #8A847F;
-    width: 62px;
+    width: 86px;
     color: #fff;
     border-radius: 24px;
     height: 30px;
@@ -1062,11 +1071,21 @@ input::-webkit-input-placeholder{
     margin-right: 72px;
     margin-top: 0px;
     font-size: 13px;
+    height: 35px;
+    text-align: center;
+    /* line-height: 23px; */
+    margin-bottom: 6px;
+    padding-bottom: 0px;
+    text-align: center;
+    position: relative;
+    top: 19px;
 }
 .show_detail_data.proupdate.detail_update .data_table span {
     color: #8A847F;
     font-size: 16px;
     padding-left: 25px;
+    font-weight: normal;
+
 }
 .show_detail_data.proupdate.detail_update h4:not(:first-child){
     height: 65px;
@@ -1163,13 +1182,14 @@ input::-webkit-input-placeholder{
     /*background-image: url("../images/onmove_block.png");*/
 }
 .itmes{
-    margin-left: 40px;
+    /*margin-left: 40px;*/
 }
 .status li:first-child {
-    width:30%;
+    width:16%;
     background-image: url("../images/status.png") !important;
     background-repeat: no-repeat;
     background-position: left;
+    padding-right: 10px;
 }
 .status li  span{
     height: 60px;
@@ -1269,6 +1289,7 @@ input[type=checkbox]:checked::after {
     text-align: center;
     background: #EEEEEE;
     cursor: default;
+    font-weight: bold;
 }
 .search_time{
     width:590px;
@@ -1336,6 +1357,15 @@ input[type=checkbox]:checked::after {
 
 }
 #changetimesright{
+     border-right: 0px solid #000!important;
+     border-top-right-radius: 0px!important;
+     border-bottom-right-radius: 0px !important;
+     border-top: 0px solid #000!important;
+     border-bottom: 0px solid #000!important;
+     border-left: 0px solid #000!important;
+     border-top-left-radius:0px!important;
+     border-bottom-left-radius: 0px!important;
+    border:0;
     letter-spacing: 3px;
     text-align: center;
     border-radius: 25px;
@@ -1350,6 +1380,16 @@ input[type=checkbox]:checked::after {
 
 }
 #changetimesleft{
+    border-right: 0px solid #000!important;
+    border-top-right-radius: 0px!important;
+    border-bottom-right-radius: 0px !important;
+    border-top: 0px solid #000!important;
+    border-bottom: 0px solid #000!important;
+    border-left: 0px solid #000!important;
+    border-top-left-radius:0px!important;
+    border-bottom-left-radius: 0px!important;
+    border:0;
+    border:0;
     letter-spacing: 3px;
     text-align: center;
     border-radius: 25px;
@@ -1787,7 +1827,7 @@ article .title {
 
     background: url(../images/healthy_reports_average.png) no-repeat;
     background-position: left;
-    width:114px;
+    width:102px;
     display: inline-block;
     padding-left: 18px;
 }
