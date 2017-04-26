@@ -4,7 +4,7 @@
     <base href="<%=basePath%>">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Forget Password</title>
-    <link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">-->
     <script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
     <script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
 
@@ -37,12 +37,11 @@
 //                        window.location.href="/RequestDisPatcher/modifyPwd.html?email="+email;
 
                         if(data.Code==1){
-                            var txt=data.Message;
-                            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
+
 						window.location.href="/RequestDisPatcher/modifyPwd.html?email="+email;
 //                            window.location.href="/RequestDisPatcher/verifi.html";
-                        }else{
-                            var txt=data.Message;
+                        }else if(data.Code==1006){
+                            var txt='Verification failed';
                             window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 
                         }
@@ -61,7 +60,7 @@
         <div class="header_scroll">
             <h2>isleep</h2>
         </div>
-        <div class="header_text" style=" height: 52px;">
+        <div class="header_text" style="    height: 78px;">
             <h2 class="title">Verify Code</h2>
         </div>
     </div>

@@ -28,11 +28,14 @@
             height	:300px;
         }
         .chooseTime{
-            background:#8A847F !important;
+            background:#979695 !important;
         }
 		li{
 
 			cursor: default;
+		}
+		.chooseTime1{
+			background:#979695 !important;
 		}
     </style>
 	<script>
@@ -40,44 +43,13 @@
 		if(userInfo==null){
 			window.location.href = "login.html";//location.href实现客户端页面的跳转
 		};
-
-		function changeheight() {
-			if($(".left_nav").height() > $(".right_show").height()){
-				$(".right_show").height($(".left_nav").height());
-				$('.holder').css('min-height',$(".left_nav").height());
-			}
-			else{
-				$(".left_nav").height($(".right_show").height());
-				$('.holder').css('min-height',$(".right_show").height());
-			}
-
-			console.log($(".left_nav").height());
-			console.log($(".right_show").height());
-		}
 		function getQueryString(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 			var r = window.location.search.substr(1).match(reg);
 			if (r != null) return unescape(r[2]);
 			return null;
 		}
-		function quit() {
-			$.ajax({
-				type:"post",
-				url:"/RequestDisPatcher/request/dispatcher.do",
-				data: {
-					url:"http://127.0.0.1:9001/login/logout",
-					params:"token="+token
-				},
-				success: function (data) {
-					var txt = data.Message;
-					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-				},
-				error: function (data) {
 
-				}
-			});
-		}
-		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 		var info = JSON.parse(userInfo[2]);
 		var token = info.token;
 		var otheremail=getQueryString('email');
@@ -87,7 +59,7 @@
             var h=today.getFullYear();
             var m=today.getMonth()+1;
             var d=today.getDate();
-            return m+"/"+d+"/"+h;
+			return h+"/"+m+"/"+d;
         }
 
         function weekago(){
@@ -95,7 +67,7 @@
             var h=today.getFullYear();
             var m=today.getMonth()+1;
             var d=today.getDate();
-            return m+"/"+d+"/"+h;
+            return h+"/"+m+"/"+d;
         }
 
 
@@ -104,19 +76,9 @@
 		function bindListener(){
 			$(".oneDayLists ul li").unbind().each(function(index,item){
 				$(item).on("click",function(event){
-					$(this).toggleClass('chooseTime');
+					$(this).toggleClass('chooseTime1');
 
-					$(this).siblings().removeClass('chooseTime');
-
-					$target=$(event.target);
-					var selecttime=$('span:first-child',this).text();
-					var selecttimeTo=selecttime.split('-');
-					var selecttimeTomonth=selecttimeTo[1];
-					var selecttimeToyear=selecttimeTo[0];
-					var selecttimeToday=selecttimeTo[2];
-					var selectOneTime=selecttimeTomonth+'/'+selecttimeToday+'/'+selecttimeToyear;
-
-//					window.location.href='sleepreport.html?time='+selectOneTime;
+					$(this).siblings().removeClass('chooseTime1');
 				});
 			});
 		}
@@ -235,7 +197,7 @@
 							var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
 							var date = new Date(parseInt(item.creatTime));
 							var date_fmt=date.format("yyyy-MM-dd");
-							$(".daysLists ul").append('<li onclick=saveTime("'+date_fmt+'") id="'+date_fmt+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+							$(".daysLists ul").append('<li > <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
 							//bindListeners();
 							if($(".left_nav").height() > $(".right_show").height()){
 								$(".right_show").height($(".left_nav").height()+30);
@@ -335,11 +297,11 @@
 
 			if(i==0){
 				document.cookie="select_time0="+time_str;
-				document.getElementById(time_str).style="background:#C6BDB5 !important;";
+				document.getElementById(time_str).style="background:#979695 !important;";
 			}else if(i==1){
 				if(time[0][2]!=time_str){
 					document.cookie="select_time1="+time_str;
-					document.getElementById(time_str).style="background:#C6BDB5 !important;";
+					document.getElementById(time_str).style="background:#979695 !important;";
 				}else{
 					document.cookie="select_time0="+"";
 					document.getElementById(time_str).style="background:#F8F8F8 !important;";
@@ -364,27 +326,27 @@
 						if(time0_real.getTime()<time_real.getTime()){
 							document.cookie="select_time0="+time_str;
 							document.getElementById(time0[2]).style="background:#F8F8F8 !important;";
-							document.getElementById(time1[2]).style="background:#C6BDB5 !important;";
-							document.getElementById(time_str).style="background:#C6BDB5 !important;";
+							document.getElementById(time1[2]).style="background:#979695 !important;";
+							document.getElementById(time_str).style="background:#979695 !important;";
 						}else{
 							document.cookie="select_time1="+time_str;
-							document.getElementById(time0[2]).style="background:#C6BDB5 !important;";
+							document.getElementById(time0[2]).style="background:#979695 !important;";
 							document.getElementById(time1[2]).style="background:#F8F8F8 !important;";
-							document.getElementById(time_str).style="background:#C6BDB5 !important;";
+							document.getElementById(time_str).style="background:#979695 !important;";
 						}
 					}else if(time0_real.getTime() < time1_real.getTime()){
 						if(time1_real.getTime()<time_real.getTime()){
 							document.cookie="select_time0="+time_str;
 							document.cookie="select_time1="+time0[2];
-							document.getElementById(time0[2]).style="background:#C6BDB5 !important;";
+							document.getElementById(time0[2]).style="background:#979695 !important;";
 							document.getElementById(time1[2]).style="background:#F8F8F8 !important;";
-							document.getElementById(time_str).style="background:#C6BDB5 !important;";
+							document.getElementById(time_str).style="background:#979695 !important;";
 						}else {
 							document.cookie="select_time0="+time1[2];
 							document.cookie="select_time1="+time_str;
 							document.getElementById(time0[2]).style="background:#F8F8F8 !important;";
-							document.getElementById(time1[2]).style="background:#C6BDB5 !important;";
-							document.getElementById(time_str).style="background:#C6BDB5 !important;";
+							document.getElementById(time1[2]).style="background:#979695 !important;";
+							document.getElementById(time_str).style="background:#979695 !important;";
 						}
 					}else{
 						document.cookie="select_time1="+'';
@@ -409,7 +371,7 @@
 					var time_time;
 					var days = 0;
 					while(time1_last[2] != (time_time = addTime(time0_last[2],days++))){
-						document.getElementById(time_time).style="background:#C6BDB5 !important;";
+						document.getElementById(time_time).style="background:#979695 !important;";
 					}
 					for(days = 1; days<15; days++){
 						time_time = addTime(time1_last[2],days);
@@ -428,7 +390,7 @@
 					var time_time;
 					var days = 0;
 					while(time0_last[2] != (time_time = addTime(time1_last[2],days++))){
-						document.getElementById(time_time).style="background:#C6BDB5 !important;";
+						document.getElementById(time_time).style="background:#979695  !important;";
 					}
 					for(days = 1; days<15; days++){
 						time_time = addTime(time0_last[2],days);
@@ -459,6 +421,41 @@
 
 			return years+'-'+months+'-'+days;
 		}
+		function quit() {
+			var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+			$.ajax({
+				type:"post",
+				url:"/RequestDisPatcher/request/dispatcher.do",
+				data: {
+					url:"http://127.0.0.1:9001/login/logout",
+					params:"token="+token
+				},
+				success: function (data) {
+					userInfo='';
+
+//
+				},
+				error: function (data) {
+					var txt=data.Message;
+					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
+				}
+			});
+		}
+
+		function bindListeners(){
+
+
+			$(".daysLists ul li").unbind().each(function(index,item){
+				$(item).on("click",function(event){
+					$(this).toggleClass('chooseTime');
+//					window.location.href='sleepreport.html?time='+selectOneTime;
+
+				});
+
+
+			});
+
+		}
 
 
 		//-------------------------------
@@ -467,6 +464,8 @@
 			document.getElementById("changetimer").value=today();
             document.getElementById("changetimesright").value=today();
             document.getElementById("changetimesleft").value=weekago();
+
+
             //清除cookie
             for(i =0;i<3;i++){
                 document.cookie="select_time"+i+"="+"";
@@ -522,15 +521,20 @@
             }else{
                 var day=day;
             };
+			var time=month+'/'+day+'/'+year;
+
             var remember_one_selectime =  document.cookie.match(new RegExp("(^| )remember_one_selectime=([^;]*)(;|$)"));
 //			console.log(remember_one_selectime[2]);
 
-            var time=month+'/'+day+'/'+year;
+
 
             if(otheremail==null){
 //页面加载后单次查询列表显示
                 if(remember_one_selectime!=null){
+					console.log(remember_one_selectime[2]);
                     var txttoarray=remember_one_selectime[2].split('/');
+
+					console.log(txttoarray);
 
                     document.getElementById("changetimeyear").value=txttoarray[2];
                     document.getElementById("changetimemonth").value=txttoarray[0];
@@ -548,7 +552,7 @@
                                 var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
                                 var date = new Date(parseInt(item.creatTime));
                                 var date_fmt=date.format("yyyy-MM-dd");
-                                $(".oneDayLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
+                                $(".oneDayLists ul").append('<li data-name="'+item.creatTime+'"> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
                                 bindListener();
 								if($(".left_nav").height() > $(".right_show").height()){
 									$(".right_show").height($(".left_nav").height()+30);
@@ -591,7 +595,7 @@
                                 var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
                                 var date = new Date(parseInt(item.creatTime));
                                 var date_fmt=date.format("yyyy-MM-dd");
-                                $(".oneDayLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
+                                $(".oneDayLists ul").append('<li data-name="'+item.creatTime+'"> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
                                 bindListener();
 								if($(".left_nav").height() > $(".right_show").height()){
 									$(".right_show").height($(".left_nav").height()+30);
@@ -617,28 +621,42 @@
 				var remember_one_changetimesleft =  document.cookie.match(new RegExp("(^| )remember_one_changetimesleft=([^;]*)(;|$)"));
 				var remember_one_changetimesright =  document.cookie.match(new RegExp("(^| )remember_one_changetimesright=([^;]*)(;|$)"));
 
+
+
 				if(remember_one_changetimesleft!=null) {
-					var txttoarrayleft=remember_one_changetimesleft[2];
-					var txttoarrayright=remember_one_changetimesright[2];
-					$('#changetimesright').val(txttoarrayright);
-					$('#changetimesleft').val(txttoarrayleft);
+					var txttoarrayleft=remember_one_changetimesleft[2].split('/');;
+					var txttoarrayright=remember_one_changetimesright[2].split('/');;
+
+
+
+					var laydatefomcatleft=txttoarrayleft[1]+'/'+txttoarrayleft[2]+'/'+txttoarrayleft[0];
+
+
+					var laydatefomcatright=txttoarrayright[1]+'/'+txttoarrayright[2]+'/'+txttoarrayright[0];
+
+					$('#changetimesright').val(remember_one_changetimesright[2]);
+					$('#changetimesleft').val(remember_one_changetimesleft[2]);
+
 
 					$.ajax({
 						type: "post",
 						url: "/RequestDisPatcher/request/dispatcher.do",
 						data: {
 							url: "http://101.37.100.209:9002/device/getData",
-							params: "token=" + token+"&endTime="+txttoarrayright+"&startTime="+txttoarrayleft
+							params: "token=" + token+"&endTime="+laydatefomcatright+"&startTime="+laydatefomcatleft
 						},
 						success: function (data) {
 							console.log(data);
 							$(".daysLists ul li").remove();
+							var bakgroundli="style='background: #979695'";
 							$.each(data.Data, function(i, item) {
 
 								var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
 								var date = new Date(parseInt(item.creatTime));
 								var date_fmt=date.format("yyyy-MM-dd");
-								$(".daysLists ul").append('<li onclick=saveTime("'+date_fmt+'") id="'+date_fmt+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+								$(".daysLists ul").append('<li  data-name="'+item.creatTime+'" class="chooseTime" > <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+
+								bindListeners();
 								if($(".left_nav").height() > $(".right_show").height()){
 									$(".right_show").height($(".left_nav").height()+30);
 									$('.holder').css('min-height',$(".left_nav").height());
@@ -647,9 +665,7 @@
 									$(".left_nav").height($(".right_show").height()+100);
 									$('.holder').css('min-height',$(".right_show").height());
 								}
-								//bindListeners();
 							});
-
 						},
 						error: function (data) {
 							var txt=data.Message;
@@ -660,20 +676,40 @@
 
 				}else{
 
+					var txttoarrayleft=weekago().split('/');
+					var txttoarrayright=today().split('/');
+
+
+
+					var laydatefomcatleft=txttoarrayleft[1]+'/'+txttoarrayleft[2]+'/'+txttoarrayleft[0];
+
+
+					var laydatefomcatright=txttoarrayright[1]+'/'+txttoarrayright[2]+'/'+txttoarrayright[0];
+
+					$('#changetimesright').val(today());
+					$('#changetimesleft').val(weekago());
+
+					console.log(laydatefomcatright);
+
 					$.ajax({
 						type: "post",
 						url: "/RequestDisPatcher/request/dispatcher.do",
 						data: {
 							url: "http://101.37.100.209:9002/device/getData",
-							params: "token=" + token+"&endTime="+weekago()+"&startTime="+today()
+							params: "token=" + token+"&endTime="+laydatefomcatright+"&startTime="+laydatefomcatleft
 						},
 						success: function (data) {
+							console.log(data);
 							$(".daysLists ul li").remove();
+							var bakgroundli="style='background: #979695'";
 							$.each(data.Data, function(i, item) {
+
 								var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
 								var date = new Date(parseInt(item.creatTime));
 								var date_fmt=date.format("yyyy-MM-dd");
-								$(".daysLists ul").append('<li onclick=saveTime("'+date_fmt+'") id="'+date_fmt+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+								$(".daysLists ul").append('<li  data-name="'+item.creatTime+'" class="chooseTime" > <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+
+								bindListeners();
 								if($(".left_nav").height() > $(".right_show").height()){
 									$(".right_show").height($(".left_nav").height()+30);
 									$('.holder').css('min-height',$(".left_nav").height());
@@ -682,9 +718,7 @@
 									$(".left_nav").height($(".right_show").height()+100);
 									$('.holder').css('min-height',$(".right_show").height());
 								}
-								//bindListeners();
 							});
-
 						},
 						error: function (data) {
 							var txt=data.Message;
@@ -696,65 +730,48 @@
 				}
 
                 $('#confirm').click(function () {
-                    var chooseTime=$('span:first-child','.chooseTime').text();
-                    if(chooseTime!='') {
-                        var chooseTime0 = chooseTime.split('-');
+
+					var chooseonetimetirng='';
+					$(".oneDayLists .chooseTime1").each(function() {
+						chooseonetimetirng += $(this).data('name');
+					})
+					console.log(chooseonetimetirng);
+
+                    var chooseTime1=$('span:first-child','.chooseTime1').text();
+					document.cookie="chooseonetimetirng="+chooseonetimetirng;
+
+                    if(chooseTime1!='') {
+                        var chooseTime0 = chooseTime1.split('-');
                         var selecttime = chooseTime0[1] + '/' + chooseTime0[2] + '/' + chooseTime0[0];
                     }
-                    if(chooseTime==''){
-                        var selecttime=$('#changetimemonth').val()+'/'+$('#changetime').val()+'/'+$('#changetimeyear').val();
+                    if(chooseTime1==''){
+						var selecttime=$('#changetimemonth').val()+'/'+$('#changetime').val()+'/'+$('#changetimeyear').val();
                     }
+
                     window.location.href='sleepreport.html?time='+selecttime;
-                })
+                });
                 $('#confirms').click(function () {
-                    var chooseTimearray = new Array();
+					var choosetimesstirng='';
+							$(".chooseTime").each(function() {
+								choosetimesstirng+=$(this).data('name')+',';
+							});
+					document.cookie="remember_one_chooselists="+choosetimesstirng;
+					var remember_one_chooselists = document.cookie.match(new RegExp("(^| )remember_one_chooselists=([^;]*)(;|$)"));
+					console.log(remember_one_chooselists[2]);
 
-//                     $.each($('span:first-child','.chooseTime'), function(i, item) {
-//                     chooseTimearray.push(item.innerText);
-//                     });
-                    //从cookie里面取出选择的时间
-                    var starts = document.cookie.match(new RegExp("(^| )select_time1=([^;]*)(;|$)"));
-                    var ends = document.cookie.match(new RegExp("(^| )select_time0=([^;]*)(;|$)"));
+if($(".chooseTime").length<2){
 
+	var txt='Select one period from the list';
+	window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 
-                    if((starts[2]==null || starts[2] =='' ||starts[2] =="") && (ends[2]==null || ends[2] =='' ||ends[2] =="")){
-                        chooseTimearray.length = 0;
-                    }else if ((starts[2]==null || starts[2] =='' ||starts[2] =="") || (ends[2]==null || ends[2] =='' ||ends[2] =="")){
-                        chooseTimearray.length = 1;
-                    }else{
-                        chooseTimearray.length = 2;
-                    }
+}else{
+	window.location.href='SleepAnalysis.html';
+}
+					//从cookie里面取出选择的时间
 
-
-					if(chooseTimearray.length==1) {
-						var txt='Please select at least two items';
-						window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-//						window.location.href='#';
-					}
-                    if(chooseTimearray.length==0) {
-                        var startTime=$("#changetimesleft").val();
-                        var endTime=$("#changetimesright").val();
-
-                        $.cookie('startTime', startTime, {expires: 1000*60*30, path: '/'});
-                        $.cookie('endTime', endTime, {expires: 1000*60*30, path: '/'});
-						window.location.href='SleepAnalysis.html';
-
-                    }else{
-
-						if(chooseTimearray.length>1){
-
-
-							var start = starts[2].split("-");
-							var end = ends[2].split("-");
-
-							var startTime=start[1]+'/'+start[2]+'/'+start[0];
-							var endTime=end[1]+'/'+end[2]+'/'+end[0];
-							$.cookie('startTime', startTime, {expires: 1000*60*30, path: '/'});
-							$.cookie('endTime', endTime, {expires: 1000*60*30, path: '/'});
-						}
 //					window.location.href='sleepreport.html?time='+selecttime;
-						window.location.href='SleepAnalysis.html';
-					}
+//						window.location.href='SleepAnalysis.html';
+
 
                 })
             }
@@ -783,7 +800,7 @@
                                 var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
                                 var date = new Date(parseInt(item.creatTime));
                                 var date_fmt=date.format("yyyy-MM-dd");
-                                $(".oneDayLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
+                                $(".oneDayLists ul").append('<li data-name="'+item.creatTime+'"> <span>'+date_fmt+'</span><span>'+sleeptime+'  h</span><span>'+item.score+'</span></li>');
                                 bindListener();
 								if($(".left_nav").height() > $(".right_show").height()){
 									$(".right_show").height($(".left_nav").height()+30);
@@ -830,7 +847,7 @@
                                 var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
                                 var date = new Date(parseInt(item.creatTime));
                                 var date_fmt=date.format("yyyy-MM-dd");
-                                $(".oneDayLists ul").append('<li> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+                                $(".oneDayLists ul").append('<li data-name="'+item.creatTime+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
                                 bindListener();
 								if($(".left_nav").height() > $(".right_show").height()){
 									$(".right_show").height($(".left_nav").height()+30);
@@ -875,11 +892,13 @@
 						},
 						success: function (data) {
 							$(".daysLists ul li").remove();
+							var bakgroundli="style='background: #979695'";
 							$.each(data.Data, function(i, item) {
 								var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
 								var date = new Date(parseInt(item.creatTime));
 								var date_fmt=date.format("yyyy-MM-dd");
-								$(".daysLists ul").append('<li onclick=saveTime("'+date_fmt+'") id="'+date_fmt+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+								$(".daysLists ul").append('<li  data-name="'+item.creatTime+'" class="chooseTime" > <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+								bindListeners();
 								if($(".left_nav").height() > $(".right_show").height()){
 									$(".right_show").height($(".left_nav").height()+30);
 									$('.holder').css('min-height',$(".left_nav").height());
@@ -888,7 +907,6 @@
 									$(".left_nav").height($(".right_show").height()+100);
 									$('.holder').css('min-height',$(".right_show").height());
 								}
-								//bindListeners();
 							});
 
 						},
@@ -910,11 +928,13 @@
 						},
 						success: function (data) {
 							$(".daysLists ul li").remove();
+							var bakgroundli="style='background: #979695'";
 							$.each(data.Data, function(i, item) {
 								var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
 								var date = new Date(parseInt(item.creatTime));
 								var date_fmt=date.format("yyyy-MM-dd");
-								$(".daysLists ul").append('<li onclick=saveTime("'+date_fmt+'") id="'+date_fmt+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+								$(".daysLists ul").append('<li  data-name="'+item.creatTime+'" class="chooseTime" > <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+								bindListeners();
 								if($(".left_nav").height() > $(".right_show").height()){
 									$(".right_show").height($(".left_nav").height()+30);
 									$('.holder').css('min-height',$(".left_nav").height());
@@ -936,66 +956,47 @@
 				}
 
 
-                $('#confirm').click(function () {
-                    var chooseTime=$('span:first-child','.chooseTime').text();
-                    if(chooseTime!='') {
-                        var chooseTime0 = chooseTime.split('-');
-                        var selecttime = chooseTime0[1] + '/' + chooseTime0[2] + '/' + chooseTime0[0];
-                    }
-                    if(chooseTime==''){
-                        var selecttime=$('#changetimemonth').val()+'/'+$('#changetime').val()+'/'+$('#changetimeyear').val();
-                    }
-                    window.location.href='sleepreport.html?time='+selecttime+'&otheremail='+otheremail;
+				$('#confirm').click(function () {
+
+					var chooseothertimestirng='';
+					$(".oneDayLists .chooseTime1").each(function() {
+						chooseothertimestirng += $(this).data('name');
+					})
 
 
-                })
+					var chooseTime1=$('span:first-child','.chooseTime1').text();
+					document.cookie="chooseothertimestirng="+chooseothertimestirng;
+
+					if(chooseTime1!='') {
+						var chooseTime0 = chooseTime1.split('-');
+						var selecttime = chooseTime0[1] + '/' + chooseTime0[2] + '/' + chooseTime0[0];
+					}
+					if(chooseTime1==''){
+						var selecttime=$('#changetimemonth').val()+'/'+$('#changetime').val()+'/'+$('#changetimeyear').val();
+					}
+
+					window.location.href='sleepreport.html?time='+selecttime+'&otheremail='+otheremail;
+				})
+
 
 
                 $('#confirms').click(function () {
+					var choosetimesstirng='';
+					$(".chooseTime").each(function() {
+						choosetimesstirng+=$(this).data('name')+',';
+					});
+					document.cookie="remember_other_chooselists="+choosetimesstirng;
 
 
-                    var chooseTimearray=new Array();
+					if($(".chooseTime").length<2){
 
-                    /* $.each($('span:first-child','.chooseTime'), function(i, item) {
-                     chooseTimearray.push(item.innerText);
-                     }); */
+						var txt='Select one period from the list';
+						window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 
-                    //从cookie里面取出选择的时间
-                    var starts = document.cookie.match(new RegExp("(^| )select_time1=([^;]*)(;|$)"));
-                    var ends = document.cookie.match(new RegExp("(^| )select_time0=([^;]*)(;|$)"));
-
-                    if((starts[2]==null || starts[2] =='' ||starts[2] =="") && (ends[2]==null || ends[2] =='' ||ends[2] =="")){
-                        chooseTimearray.length = 0;
-                    }else if ((starts[2]==null || starts[2] =='' ||starts[2] =="") || (ends[2]==null || ends[2] =='' ||ends[2] =="")){
-                        chooseTimearray.length = 1;
-                    }else{
-                        chooseTimearray.length = 2;
-                    }
-
-                    if(chooseTimearray.length==1) {
-						var txt='Please select at least two items';
-						window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-						window.location.href='#';
-                    }
-                    if(chooseTimearray.length==0) {
-                        var startTime=$("#changetimesleft").val();
-                        var endTime=$("#changetimesright").val();
-
-                        $.cookie('startTime', startTime, {expires: 1000*60*30, path: '/'});
-                        $.cookie('endTime', endTime, {expires: 1000*60*30, path: '/'});
+					}else{
 						window.location.href='SleepAnalysis.html?&email='+otheremail;
+					}
 
-                    }
-                    if(chooseTimearray.length>1){
-                        var start = starts[2].split("-");
-                        var end = ends[2].split("-");
-
-                        var startTime=start[1]+'/'+start[2]+'/'+ start[0];
-                        var endTime=end[1]+'/'+end[2]+'/'+end[0];
-                        $.cookie('startTime', startTime, {expires: 1000*60*30, path: '/'});
-                        $.cookie('endTime', endTime, {expires: 1000*60*30, path: '/'});
-						window.location.href='SleepAnalysis.html?&email='+otheremail;
-                    }
 
                 })
 
@@ -1008,7 +1009,8 @@
 <body>
 <div class="holder rep bag ">
 	<div class="left_nav">
-		<div class="header_text">
+		<div class="header_text" style="    position: relative;
+    top: -47px;">
 			<div class="header_text_right">
 				<span class="header_pic"><a href="modify.html" ><img src="" id="head"></a></span>
 			</div>
@@ -1017,7 +1019,7 @@
 			<a href="login.html" ><li onclick="quit()"  class="pointer">Logout</li></a>
 			<a href="real.html"><li class="pointer">Real-time Data</li></a>
 			<a href="healthy.html"><li class="on" >Health Archives</li></a>
-			<a href="addProduct.html"><li class="pointer">Add or Change device</li></a>
+			<a href="addProduct.html"><li class="pointer">Add device</li></a>
 			<a href="deleteProduct.html"><li class="pointer">Delete device</li></a>
 		</ul>
 	</div>
@@ -1036,7 +1038,7 @@
 							<input id="changetimeyear" readonly="readonly" /><span>Y</span>
 							<input id="changetimemonth" readonly="readonly"/><span>M</span>
 							<!--<input id="changetime" name="day" onchange="change()" />-->
-							<input id="changetime" name="day" value=" " style="    cursor: pointer;" onchange="change()" /><span>D</span>
+							<input id="changetime" name="day" value=" " style="    cursor: pointer;" /><span>D</span>
 						</div>
                         <input id="changetimer" name="day" value=""  style="    cursor: pointer;
     position: relative;
@@ -1096,6 +1098,32 @@
 <script>
 	$('.right_show').css("padding-bottom",60);
 
+	function show() {
+
+
+
+		$(".chooseTime").unbind().each(function(index,item){
+			$(item).on("click",function(event){
+				$(this).toggleClass('chooseTime');
+//					window.location.href='sleepreport.html?time='+selectOneTime;
+
+			});
+
+
+		});
+
+
+		var choosetimesstirng='';
+		$(".chooseTime").each(function(item) {
+//		console.log($(this).data('name'));
+			choosetimesstirng+=item.data('name')+',';
+		});
+		console.log(choosetimesstirng);
+//		$(this).toggleClass('chooseTime');
+
+
+	}
+
     !function(){
 
         laydate.skin('yahui');//切换皮肤，请查看skins下面皮肤库
@@ -1108,20 +1136,21 @@
             console.log(selecttime);
             var txttoarray=datas.split('/');
 
-            document.getElementById("changetimeyear").value=txttoarray[2];
-            document.getElementById("changetimemonth").value=txttoarray[0];
-            document.getElementById("changetime").value=txttoarray[1];
+            document.getElementById("changetimeyear").value=txttoarray[0];
+            document.getElementById("changetimemonth").value=txttoarray[1];
+            document.getElementById("changetime").value=txttoarray[2];
+			var laydatetimefomcat=txttoarray[1]+'/'+txttoarray[2]+'/'+txttoarray[0];
 //				$("#yearOfBirth").find("option:selected").text('123');
             $(".oneDayLists ul li").remove();
 
             if(otheremail==null) {
-                document.cookie="remember_one_selectime="+$('#changetimer').val();
+                document.cookie="remember_one_selectime="+laydatetimefomcat;
                 $.ajax({
                     type: "post",
                     url: "/RequestDisPatcher/request/dispatcher.do",
                     data: {
                         url: "http://101.37.100.209:9002/device/getInfo",
-                        params: "token=" + token + "&time=" + $('#changetimer').val()
+                        params: "token=" + token + "&time=" + laydatetimefomcat
                     },
                     success: function (data) {
 
@@ -1153,13 +1182,13 @@
 
                 });
             }else{
-                document.cookie="remember_one_other_selectime="+$('#changetimer').val();
+                document.cookie="remember_one_other_selectime="+laydatetimefomcat;
                 $.ajax({
                     type: "post",
                     url: "/RequestDisPatcher/request/dispatcher.do",
                     data: {
                         url: "http://101.37.100.209:9002/device/getOtherInfo",
-                        params: "token=" + token + "&time=" + $('#changetimer').val()+ "&email=" + otheremail
+                        params: "token=" + token + "&time=" + laydatetimefomcat+ "&email=" + otheremail
                     },
                     success: function (data) {
                         $.each(data.Data, function (i, item) {
@@ -1191,7 +1220,7 @@
 
     }();
 
-            !function(){
+    !function(){
 
                 laydate.skin('yahui');//切换皮肤，请查看skins下面皮肤库
 
@@ -1199,108 +1228,145 @@
                     var startTime=$('#changetimesleft').val();
                     var endTime=$('#changetimesright').val();
 
-                    var beginDate=$("#startTime").val();
-                    var endDate=$("#endTime").val();
-                    var d1 = new Date(startTime.replace(/\-/g, "\/"));
-                    var d2 = new Date(endTime.replace(/\-/g, "\/"));
+
+
+					var txttoarrayleft=startTime.split('/');
+					var txttoarrayright=endTime.split('/');
+
+
+
+					var laydatefomcatleft=txttoarrayleft[1]+'/'+txttoarrayleft[2]+'/'+txttoarrayleft[0];
+
+
+					var laydatefomcatright=txttoarrayright[1]+'/'+txttoarrayright[2]+'/'+txttoarrayright[0];
 
 
 
 
 
-                    if(beginDate!=""&&endDate!=""&&d1 >=d2)
-                    {
-                        var txt="开始时间不能大于结束时间！";
-                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
-                        return false;
-                    }
 
 
-                    if(otheremail==null){
+					var timestamp2 = Date.parse(new Date(startTime));
+					timestamp2 = timestamp2 / 1000;
 
-						document.cookie="remember_one_changetimesleft="+$('#changetimesleft').val();
-						document.cookie="remember_one_changetimesright="+$('#changetimesright').val();
+					var timestamp3 = Date.parse(new Date(endTime));
+					timestamp3 = timestamp3 / 1000;
 
-						var timeleft=$('#changetimesleft').val();
-						var timeright=$('#changetimesright').val();
-
-
-                        $.ajax({
-                            type: "post",
-                            url: "/RequestDisPatcher/request/dispatcher.do",
-                            data: {
-                                url: "http://101.37.100.209:9002/device/getData",
-                                params: "token=" + token+"&endTime="+endTime+"&startTime="+startTime
-                            },
-                            success: function (data) {
-                                console.log(data);
-                                $(".daysLists ul li").remove();
-                                $.each(data.Data, function(i, item) {
-
-                                    var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
-                                    var date = new Date(parseInt(item.creatTime));
-                                    var date_fmt=date.format("yyyy-MM-dd");
-                                    $(".daysLists ul").append('<li onclick=saveTime("'+date_fmt+'") id="'+date_fmt+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
-									if($(".left_nav").height() > $(".right_show").height()){
-										$(".right_show").height($(".left_nav").height()+30);
-										$('.holder').css('min-height',$(".left_nav").height());
-									}
-									else{
-										$(".left_nav").height($(".right_show").height()+100);
-										$('.holder').css('min-height',$(".right_show").height());
-									}
-                                    //bindListeners();
-                                });
-
-                            },
-                            error: function (data) {
-                                var txt=data.Message;
-                                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-                            }
-
-                        });
-
-                    }else{
-
-						document.cookie="remember_other_changetimesleft="+$('#changetimesleft').val();
-						document.cookie="remember_other_changetimesright="+$('#changetimesright').val();
-                        $.ajax({
-                            type: "post",
-                            url: "/RequestDisPatcher/request/dispatcher.do",
-                            data: {
-                                url: "http://101.37.100.209:9002/device/getOtherData",
-                                params: "token=" + token+"&endTime="+endTime+"&startTime="+startTime+"&email="+otheremail
-                            },
-                            success: function (data) {
-                                console.log(data);
-                                $(".daysLists ul li").remove();
-                                $.each(data.Data, function(i, item) {
-
-                                    var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
-                                    var date = new Date(parseInt(item.creatTime));
-                                    var date_fmt=date.format("yyyy-MM-dd");
-                                    $(".daysLists ul").append('<li onclick=saveTime("'+date_fmt+'") id="'+date_fmt+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
-                                    //bindListeners();
-									if($(".left_nav").height() > $(".right_show").height()){
-										$(".right_show").height($(".left_nav").height()+30);
-										$('.holder').css('min-height',$(".left_nav").height());
-									}
-									else{
-										$(".left_nav").height($(".right_show").height()+100);
-										$('.holder').css('min-height',$(".right_show").height());
-									}
-                                });
-
-                            },
-                            error: function (data) {
-                                var txt=data.Message;
-                                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-                            }
-
-                        });
+					var nowlength=Date.parse(new Date(timestamp3))-Date.parse(new Date(timestamp2));
 
 
-                    }
+
+					var limit=30*3*24*60*60;
+					var beginDate=$("#startTime").val();
+					var endDate=$("#endTime").val();
+					var d1 = new Date(startTime.replace(/\-/g, "\/"));
+					var d2 = new Date(endTime.replace(/\-/g, "\/"));
+
+					if(beginDate!=""&&endDate!=""&&d1 >=d2)
+					{
+						var txt="Start time can not be greater than the end time！";
+						window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+						return false;
+					}
+
+
+					if(Math.round(nowlength)>Math.round(limit)){
+
+						var txt="Please select a date within three months";
+						window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+
+					}else{
+
+
+						if(otheremail==null){
+
+							document.cookie="remember_one_changetimesleft="+$('#changetimesleft').val();
+							document.cookie="remember_one_changetimesright="+$('#changetimesright').val();
+
+							var timeleft=$('#changetimesleft').val();
+							var timeright=$('#changetimesright').val();
+
+
+							$.ajax({
+								type: "post",
+								url: "/RequestDisPatcher/request/dispatcher.do",
+								data: {
+									url: "http://101.37.100.209:9002/device/getData",
+									params: "token=" + token+"&endTime="+laydatefomcatright+"&startTime="+laydatefomcatleft
+								},
+								success: function (data) {
+									console.log(data);
+									$(".daysLists ul li").remove();
+									var bakgroundli="style='background: #979695'";
+									$.each(data.Data, function(i, item) {
+
+										var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
+										var date = new Date(parseInt(item.creatTime));
+										var date_fmt=date.format("yyyy-MM-dd");
+										$(".daysLists ul").append('<li  data-name="'+item.creatTime+'" class="chooseTime" > <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+
+										bindListeners();
+										if($(".left_nav").height() > $(".right_show").height()){
+											$(".right_show").height($(".left_nav").height()+30);
+											$('.holder').css('min-height',$(".left_nav").height());
+										}
+										else{
+											$(".left_nav").height($(".right_show").height()+100);
+											$('.holder').css('min-height',$(".right_show").height());
+										}
+									});
+								},
+								error: function (data) {
+									var txt=data.Message;
+									window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+								}
+
+							});
+
+						}else{
+
+							document.cookie="remember_other_changetimesleft="+$('#changetimesleft').val();
+							document.cookie="remember_other_changetimesright="+$('#changetimesright').val();
+							$.ajax({
+								type: "post",
+								url: "/RequestDisPatcher/request/dispatcher.do",
+								data: {
+									url: "http://101.37.100.209:9002/device/getOtherData",
+									params: "token=" + token+"&endTime="+laydatefomcatright+"&startTime="+laydatefomcatleft+"&email="+otheremail
+								},
+								success: function (data) {
+									console.log(data);
+									$(".daysLists ul li").remove();
+									var bakgroundli="style='background: #979695'";
+									$.each(data.Data, function(i, item) {
+
+										var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
+										var date = new Date(parseInt(item.creatTime));
+										var date_fmt=date.format("yyyy-MM-dd");
+										$(".daysLists ul").append('<li  data-name="'+item.creatTime+'" class="chooseTime" > <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+
+										bindListeners();
+										if($(".left_nav").height() > $(".right_show").height()){
+											$(".right_show").height($(".left_nav").height()+30);
+											$('.holder').css('min-height',$(".left_nav").height());
+										}
+										else{
+											$(".left_nav").height($(".right_show").height()+100);
+											$('.holder').css('min-height',$(".right_show").height());
+										}
+									});
+								},
+								error: function (data) {
+									var txt=data.Message;
+									window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+								}
+
+							});
+
+
+						}
+					}
+
 
                 }});//绑定元素
 
@@ -1308,97 +1374,159 @@
 
     !function(){
 
+
         laydate.skin('yahui');//切换皮肤，请查看skins下面皮肤库
 
         laydate({elem: '#changetimesright',format: 'MM/DD/YYYY',choose: function(datas){ //选择日期完毕的回调
 
-            var startTime=$('#changetimesleft').val();
-            var endTime=$('#changetimesright').val();
+			var startTime=$('#changetimesleft').val();
+			var endTime=$('#changetimesright').val();
+
+
+
+			var txttoarrayleft=startTime.split('/');
+			var txttoarrayright=endTime.split('/');
+
+
+
+			var laydatefomcatleft=txttoarrayleft[1]+'/'+txttoarrayleft[2]+'/'+txttoarrayleft[0];
+
+
+			var laydatefomcatright=txttoarrayright[1]+'/'+txttoarrayright[2]+'/'+txttoarrayright[0];
 
             var beginDate=$("#startTime").val();
             var endDate=$("#endTime").val();
             var d1 = new Date(startTime.replace(/\-/g, "\/"));
             var d2 = new Date(endTime.replace(/\-/g, "\/"));
 
-			document.cookie="remember_other_changetimesleft="+$('#changetimesleft').val();
-			document.cookie="remember_other_changetimesright="+$('#changetimesright').val();
-
-            if(beginDate!=""&&endDate!=""&&d1 >=d2)
-            {
-                var txt="开始时间不能大于结束时间！";
-                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
-                return false;
-            }
 
 
-            if(otheremail==null){
 
-				document.cookie="remember_one_changetimesleft="+$('#changetimesleft').val();
-				document.cookie="remember_one_changetimesright="+$('#changetimesright').val();
+			var chooseTimearray = new Array();
 
-                $.ajax({
-                    type: "post",
-                    url: "/RequestDisPatcher/request/dispatcher.do",
-                    data: {
-                        url: "http://101.37.100.209:9002/device/getData",
-                        params: "token=" + token+"&endTime="+endTime+"&startTime="+startTime
-                    },
-                    success: function (data) {
-                        console.log(data);
-                        $(".daysLists ul li").remove();
-                        $.each(data.Data, function(i, item) {
 
-                            var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
-                            var date = new Date(parseInt(item.creatTime));
-                            var date_fmt=date.format("yyyy-MM-dd");
-                            $(".daysLists ul").append('<li onclick=saveTime("'+date_fmt+'") id="'+date_fmt+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
-                            //bindListeners();
-                        });
+			var timestamp2 = Date.parse(new Date(startTime));
+			timestamp2 = timestamp2 / 1000;
 
-                    },
-                    error: function (data) {
-                        var txt=data.Message;
-                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-                    }
+			var timestamp3 = Date.parse(new Date(endTime));
+			timestamp3 = timestamp3 / 1000;
 
-                });
+			var nowlength=Date.parse(new Date(timestamp3))-Date.parse(new Date(timestamp2));
 
-            }else{
+			if(beginDate!=""&&endDate!=""&&d1 >=d2)
+			{
+				var txt="Start time can not be greater than the end time！";
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+				return false;
+			}
+
+
+			var limit=30*3*24*60*60;
+
+
+			if(Math.round(nowlength)>Math.round(limit)){
+
+				var txt="Please select a date within three months";
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+
+			}
+			else{
 				document.cookie="remember_other_changetimesleft="+$('#changetimesleft').val();
 				document.cookie="remember_other_changetimesright="+$('#changetimesright').val();
-                $.ajax({
-                    type: "post",
-                    url: "/RequestDisPatcher/request/dispatcher.do",
-                    data: {
-                        url: "http://101.37.100.209:9002/device/getOtherData",
-                        params: "token=" + token+"&endTime="+endTime+"&startTime="+startTime+"&email="+otheremail
-                    },
-                    success: function (data) {
-                        console.log(data);
-                        $(".daysLists ul li").remove();
-                        $.each(data.Data, function(i, item) {
 
-                            var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
-                            var date = new Date(parseInt(item.creatTime));
-                            var date_fmt=date.format("yyyy-MM-dd");
-                            $(".daysLists ul").append('<li onclick=saveTime("'+date_fmt+'") id="'+date_fmt+'"> <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
-                            //bindListeners();
-                        });
-
-                    },
-                    error: function (data) {
-                        var txt=data.Message;
-                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-                    }
-
-                });
+				if(otheremail==null){
 
 
-            }
+
+					document.cookie="remember_one_changetimesleft="+$('#changetimesleft').val();
+					document.cookie="remember_one_changetimesright="+$('#changetimesright').val();
+
+					$.ajax({
+						type: "post",
+						url: "/RequestDisPatcher/request/dispatcher.do",
+						data: {
+							url: "http://101.37.100.209:9002/device/getData",
+							params: "token=" + token+"&endTime="+laydatefomcatright+"&startTime="+laydatefomcatleft
+						},
+						success: function (data) {
+							console.log(data);
+							$(".daysLists ul li").remove();
+							 var bakgroundli="style='background: #979695'";
+							$.each(data.Data, function(i, item) {
+
+								var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
+								var date = new Date(parseInt(item.creatTime));
+								var date_fmt=date.format("yyyy-MM-dd");
+								$(".daysLists ul").append('<li  data-name="'+item.creatTime+'" class="chooseTime" > <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+
+								bindListeners();
+								if($(".left_nav").height() > $(".right_show").height()){
+									$(".right_show").height($(".left_nav").height()+30);
+									$('.holder').css('min-height',$(".left_nav").height());
+								}
+								else{
+									$(".left_nav").height($(".right_show").height()+100);
+									$('.holder').css('min-height',$(".right_show").height());
+								}
+							});
+						},
+						error: function (data) {
+							var txt=data.Message;
+							window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+						}
+
+					});
+
+				}else{
+					document.cookie="remember_other_changetimesleft="+$('#changetimesleft').val();
+					document.cookie="remember_other_changetimesright="+$('#changetimesright').val();
+					$.ajax({
+						type: "post",
+						url: "/RequestDisPatcher/request/dispatcher.do",
+						data: {
+							url: "http://101.37.100.209:9002/device/getOtherData",
+							params: "token=" + token+"&endTime="+laydatefomcatright+"&startTime="+laydatefomcatleft+"&email="+otheremail
+						},
+						success: function (data) {
+							console.log(data);
+							$(".daysLists ul li").remove();
+							var bakgroundli="style='background: #979695'";
+							$.each(data.Data, function(i, item) {
+
+								var sleeptime = ((item.lightSleepTime + item.deepSleepTime) / (60 * 60)).toFixed(1);
+								var date = new Date(parseInt(item.creatTime));
+								var date_fmt=date.format("yyyy-MM-dd");
+								$(".daysLists ul").append('<li  data-name="'+item.creatTime+'" class="chooseTime" > <span>'+date_fmt+'</span><span>'+sleeptime+' h</span><span>'+item.score+'</span></li>');
+
+								bindListeners();
+								if($(".left_nav").height() > $(".right_show").height()){
+									$(".right_show").height($(".left_nav").height()+30);
+									$('.holder').css('min-height',$(".left_nav").height());
+								}
+								else{
+									$(".left_nav").height($(".right_show").height()+100);
+									$('.holder').css('min-height',$(".right_show").height());
+								}
+							});
+						},
+						error: function (data) {
+							var txt=data.Message;
+							window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+						}
+
+					});
+
+
+
+				}
+			}
+
+
 
         }});//绑定元素
 
     }();
+
 
 </script>
 </body>

@@ -16,6 +16,7 @@
 
 <script type="text/javascript">
 	function quit() {
+		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 		$.ajax({
 			type:"post",
 			url:"/RequestDisPatcher/request/dispatcher.do",
@@ -24,8 +25,13 @@
 				params:"token="+token
 			},
 			success: function (data) {
+				userInfo='';
+
+//
 			},
 			error: function (data) {
+				var txt=data.Message;
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
 			}
 		});
 	}
@@ -90,11 +96,29 @@ $(document).ready(function(){
 			params:"token="+token+"&sn_all="+$("#SN").val()
 		},
 		dataType:"json",
-		success:function(data){
-				var txt=data.Message;
+//			1001、sn不存在，1002已经绑定成功，1009同一类型的设备重复绑定，1、绑定成功，0绑定失败
+		success:function(data) {
+
+			if (data.Code == 1001) {
+				var txt = 'SN is empty';
 				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
-//			window.location.href="homepage.html";
-				},
+			}else if(data.Code == 1002){
+					var txt = 'Operate successfully';
+					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+			}else if(data.Code == 1009){
+				var txt = 'Bound the same type devices';
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+			}else if(data.Code == 1){
+
+				var txt = 'Bound successfully';
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+			}else if(data.Code == 0){
+
+				var txt = 'Bound failed';
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+			}
+
+		},
 		error:function(data){
 			var txt="Unkonw Error.Please Try Again!";
 			window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
@@ -116,7 +140,7 @@ $(document).ready(function(){
 		var device = Info.device;
 		if (device == null) {
 			$(this).css('cursor', 'default');
-			var txt = "请添加设备";
+			var txt = "Not found your device";
 			window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 //			return false;
 
@@ -140,7 +164,7 @@ $(document).ready(function(){
 			var device=Info.device;
 			if(device==null){
 				$(this).css('cursor','default');
-				var txt="请添加设备";
+				var txt="Not found your device";
 				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 //			return false;
 
@@ -166,7 +190,7 @@ $(document).ready(function(){
 		var device=Info.device;
 		if(device==null){
 			$(this).css('cursor','default');
-			var txt="请添加设备";
+			var txt="Not found your device";
 			window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 //			return false;
 
@@ -192,7 +216,7 @@ $(document).ready(function(){
 			<a href="login.html"><li onclick="quit()"  >Logout</li></a>
 			<a onclick="js_method_real()" ><li>Real-time Data</li></a>
 			<a onclick="js_method_healthy()"><li>Health Archives</li></a>
-			<a href="addProduct.html" ><li class="on">Add or Change device</li></a>
+			<a href="addProduct.html" ><li class="on">Add device</li></a>
 			<a onclick="js_method_delete()"><li>Delete device</li></a>
 		</ul>
 	</div>
@@ -202,7 +226,7 @@ $(document).ready(function(){
 		<div class="show_detail">
 			<div class="show_detail_data">
 				<div class="addpro">
-					<h4 style="    font-weight: bold; font-size: 18px;">Add or Change device</h4>
+					<h4 style="    font-weight: bold; font-size: 18px;">Add device</h4>
 				</div>
 				<div class="foPwdTxt">
 					<div class="panel_input" >
@@ -214,7 +238,7 @@ $(document).ready(function(){
 				<!--</div>-->
 				<div class="foot_btn fo" >
 					<input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back">
-					<input type="button" value="Submit" class="submit_submit" id="delete_product">
+					<input type="button" value="Submit" class="submit_submit" id="add_product">
 				</div>
 			</div>
 		</div>

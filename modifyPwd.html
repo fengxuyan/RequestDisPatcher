@@ -4,7 +4,7 @@
     <base href="<%=basePath%>">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Forget Password</title>
-    <link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">-->
     <script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
     <script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
 
@@ -57,8 +57,11 @@
                                         window.location.href="/RequestDisPatcher/login.html";
                                     }}
                                 );
-                            }else{
+                            }else if(data.Code==3005) {
+                                var txt="Server Error";
+                                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
                             }
+
                         },
                         error:function(){
                             var txt="Unkonw Error.Please Try Again!";
@@ -81,7 +84,7 @@
         <div class="header_scroll">
             <h2>isleep</h2>
         </div>
-        <div class="header_text" STYLE="height: 52px;">
+        <div class="header_text" style="height: 78px;">
             <h2 class="title">Reset Password</h2>
         </div>
     </div>

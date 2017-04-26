@@ -29,6 +29,7 @@
             var applyConcern;
             var gender = Info.gender;
 
+
             var  image=Info.image;
 
             if(image==null){
@@ -45,21 +46,12 @@
             }else{
                 $('#head').attr('src',image);
             }
-function changeheight() {
-    if($(".left_nav").height() > $(".right_show").height()){
-        $(".right_show").height($(".left_nav").height());
-        $('.holder').css('min-height',$(".left_nav").height());
-    }
-    else{
-        $(".left_nav").height($(".right_show").height());
-        $('.holder').css('min-height',$(".right_show").height());
-    }
-}
             function cancelconcernMe() {
                 $(".concern2 .concern202 .concern_item2").unbind().each(function(index,item){
                             $('.itme1_rabish',item).on("click",function(event) {
+                                var name=$('.name',item)[0].innerText;
                                 var email=$('.email',item)[0].innerText;
-                                var txt=  "确认取消此人关注?";
+                                var txt=  "No longer be cared by "+name+'?';
                                 window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm,{
                                     onOk:function(){
                                         $(item).remove();
@@ -80,24 +72,30 @@ function changeheight() {
                                         })
 
                                     }});
-
                             })
                         }
                 )
-
-
             }
 
 
             function bindListener(){
                 $('.concern_item1  .clickLi ').siblings().hide();
+
                 $(".clickLi").unbind().each(function(index,item){
 
                     $(item).on("click",function(event){
+
+
                         $target=$(event.target);
+
+                        var name1=$('.name',this).text();
+
                         var email=$('span:last-child',this).text();
+
                         $('.itme1_rabish',this).bind('click',function(){
-                            var txt='确认取消关注此人？';
+//                            console.log( $(this).parents('.name').text());
+//                            console.log( $(this).parents('.clickLi').text());
+                            var txt='No longer care '+name1+'?';
                             window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm,{
                                 onOk:function(){
                                     $(item).parents('.concern_item1').remove();
@@ -123,8 +121,9 @@ function changeheight() {
 
                                 }});
                         });
-
+                        $('i',this).toggleClass('itme1_arrow').toggleClass('itme2_arrow');
                         $(this).siblings().toggle('item1_product_list');
+
                         if($(".left_nav").height() > $(".right_show").height()){
                             $(".right_show").height($(".left_nav").height()+30);
                             $('.holder').css('min-height',$(".left_nav").height());
@@ -227,7 +226,25 @@ function changeheight() {
                         $('.concern_list li:last-child  i span').text(num);
                     };
                     $.each(data.Data, function(i, item) {
-                        $(".concern2 .concern201").append('<ul class="concern_item2"><div class="detail_pic"> <div class="header_pic"> <i class="itme1_arrow"></i> <img src="'+item.image+'" id="head">  <span class="name">'+item.firstName+'</span> <span class="email">'+item.email+'</span> </div> <div class="cancel" style=" right: -40px;"> <input type="button" value="Approve" name="yes" class="submit_submit" style="    height: 35px;"><input type="button" name="no"  value="Refuse" class="submit_back" style="    height: 35px;">  </div> </div> </ul>');
+                        if(item.image==null){
+                            if(item.gender==1){
+                                item.image='/RequestDisPatcher/Heads/header_man.png';
+                            }else if(item.gender==0){
+                                item.image='/RequestDisPatcher/Heads/header_woman.png';
+                            }
+                        }else{
+                            item.image=item.image;
+                        }
+
+                        $(".concern2 .concern201").append('<ul class="concern_item2"><div class="detail_pic"> <div class="header_pic"> <i class="itme1_arrow"></i> <img src="'+item.image+'" id="head">  <span class="name">'+item.name+'</span> <span class="email">'+item.email+'</span> </div> <div class="cancel" style=" right: -40px;"> <input type="button" value="Approve" name="yes" class="submit_submit" style="cursor:pointer;width:50px;height: 30px;margin-top:12px;"><input type="button" name="no"  value="Refuse" class="submit_back" style="cursor:pointer;width:50px;height: 30px;margin-top:12px;">  </div> </div> </ul>');
+                        if($(".left_nav").height() > $(".right_show").height()){
+                            $(".right_show").height($(".left_nav").height()+30);
+                            $('.holder').css('min-height',$(".left_nav").height());
+                        }
+                        else{
+                            $(".left_nav").height($(".right_show").height()+90);
+                            $('.holder').css('min-height',$(".right_show").height());
+                        }
                     });
                     yesORno(num);
 
@@ -249,9 +266,24 @@ function changeheight() {
                     console.log(data);
 //                    $('.concern_item2').empty();
                     $.each(data.Data, function(i, item) {
+                        if(item.image==null){
+                            if(item.gender==1){
+                                item.image='/RequestDisPatcher/Heads/header_man.png';
+                            }else if(item.gender==0){
+                                item.image='/RequestDisPatcher/Heads/header_woman.png';
+                            }
+                        };
                         $(".concern2 .concern202").append('<ul class="concern_item2"> <div class="detail_pic"> <div class="header_pic"> <i class="itme1_arrow"></i>  <img src="'+item.image+'" id="head"> <span class="name">'+item.name+'</span> <span class="email">'+item.email+'</span> </div><i class="itme1_rabish"></i> </div> </ul>');
                     });
                     cancelconcernMe();
+                    if($(".left_nav").height() > $(".right_show").height()){
+                        $(".right_show").height($(".left_nav").height()+30);
+                        $('.holder').css('min-height',$(".left_nav").height());
+                    }
+                    else{
+                        $(".left_nav").height($(".right_show").height()+100);
+                        $('.holder').css('min-height',$(".right_show").height());
+                    }
 
                 },
                 error: function (data) {
@@ -267,8 +299,17 @@ function changeheight() {
                     params:"token="+token
                 },
                 success: function (data) {
+                    console.log(data);
 //                    $('.concern_item1').empty();
                     $.each(data.Data, function(i, item) {
+
+                        if(item.image==null){
+                                if(item.gender==1){
+                                   item.image='/RequestDisPatcher/Heads/header_man.png';
+                                }else if(item.gender==0){
+                                    item.image='/RequestDisPatcher/Heads/header_woman.png';
+                                }
+                        };
 
                         var sn=item.device;
                         if(sn!=null){
@@ -282,6 +323,14 @@ function changeheight() {
 
                             $(".concern1").append('<ul class="concern_item1"> <div class="detail_pic"> <li class="clickLi"> <div class="header_pic"> <i class="itme1_arrow" ></i>  <img src="' + item.image + '" id="head">  <span class="name">' + item.name + '</span> <span class="email">' + item.email + '</span> </div> <i class="itme1_rabish"></i> </li> <li> <div class="item1_product_list"> <ul> <li><span >Smart mattress pad</span> <a href="#" style="background:#cdc8c3">Real-time Data</a> <a href="#" style="background:#cdc8c3">Health Archives</a> </li> <li><span >Smart Pillow</span> <a href="#" style="background:#cdc8c3" title="No Device.Can not View!">Real-time Data</a> <a href="#" style="background:#cdc8c3" title="No Device.Can not View!">Health Archives</a> </li> <li><span >Smart Bracele</span> <a href="#" style="background:#cdc8c3" title="No Device.Can not View!">Real-time Data</a> <a href="#" style="background:#cdc8c3" title="No Device.Can not View!">Health Archives</a> </li> </ul> </div> </li> </div> </ul>');
 
+                        }
+                        if($(".left_nav").height() > $(".right_show").height()){
+                            $(".right_show").height($(".left_nav").height()+30);
+                            $('.holder').css('min-height',$(".left_nav").height());
+                        }
+                        else{
+                            $(".left_nav").height($(".right_show").height()+100);
+                            $('.holder').css('min-height',$(".right_show").height());
                         }
 
 
@@ -310,6 +359,7 @@ function changeheight() {
              } */
 
             function quit() {
+                var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
                 $.ajax({
                     type:"post",
                     url:"/RequestDisPatcher/request/dispatcher.do",
@@ -318,8 +368,8 @@ function changeheight() {
                         params:"token="+token
                     },
                     success: function (data) {
-                        var txt=data.Message;
-                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
+                        userInfo='';
+
 //
                     },
                     error: function (data) {
@@ -335,7 +385,8 @@ function changeheight() {
 <body>
 <div class="holder">
     <div class="left_nav concern">
-        <div class="header_text" style="line-height: 0px;">
+        <div class="header_text" style="    position: relative;
+    top: -46px;">
             <div class="header_text_right">
                 <span class="header_pic"><a href="modify.html" ><img src="Heads/default.jpg" id="head"></a></span>
             </div>
@@ -361,15 +412,15 @@ function changeheight() {
                     <div class="left" >
                         <div class="panel_input item0_input">
                             <input type="email" style="    border: 2px solid #DFDDDB;" class="" id="apply_txt"/>
-                            <input type="button" class="search_btn" id="search_btn" >
+                            <input type="button" style="cursor: pointer" class="search_btn" id="search_btn" >
                             <!--<img src="images/search.png" class="search_pic"/>-->
                         </div>
                     </div>
                 </div>
                 <div class="concern1"></div>
                 <div class="concern2">
-                    <div class="concern201"><h4>Approve the Request</h4> </div>
-                    <div class="concern202"><h4>Care me</h4> </div>
+                    <div class="concern201"><h4>Approve The Request</h4> </div>
+                    <div class="concern202"><h4>Already Care Me</h4> </div>
                 </div>
             </div>
         </div>
@@ -400,10 +451,26 @@ function changeheight() {
                         },
                         dataType:"json",
                         success:function(data) {
+                            console.log(data);
+                            $('.concern_item0').remove();
                             if(data.Code==1){
                                 $(".concern_item0").remove();
-
+                                if(data.Data.image==null){
+                                    if( data.Data.gender==1){
+                                        data.Data.image='/RequestDisPatcher/Heads/header_man.png';
+                                    }else if( data.Data.gender==0){
+                                        data.Data.image='/RequestDisPatcher/Heads/header_woman.png';
+                                    }
+                                };
                                 $(".concern0").append(' <ul class="concern_item0"> <div  class="concern_someone_detail"> <div class="detail_pic"> <span class="header_pic"><img src="' + data.Data.image + '" id="head">  <p class="appl_name">' + data.Data.name + '</p> <p class="appl_email">' + data.Data.email + '</p> </span> <div class="detail_btn"> <input type="button" name="Submit" onclick="remove()" value="Cancel" class="submit_back"> <input type="button" value="Submit" id="submit_submit" class="submit_submit"> </div> </div> </div> </ul> ');
+                                if($(".left_nav").height() > $(".right_show").height()){
+                                    $(".right_show").height($(".left_nav").height()+30);
+                                    $('.holder').css('min-height',$(".left_nav").height());
+                                }
+                                else{
+                                    $(".left_nav").height($(".right_show").height()+100);
+                                    $('.holder').css('min-height',$(".right_show").height());
+                                }
 
 
                                 $("#submit_submit").click(function () {
@@ -426,7 +493,25 @@ function changeheight() {
                                         }
                                     })
                                 });
+                            }else if(data.Code==2){
+
+                                var txt="No User Data";
+                                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+                            }else if(data.Code==1001){
+
+                                var txt="User does not exist";
+                                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+                            }else if(data.Code==1002){
+
+                                var txt="Has applied for attention";
+                                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+                            }else if(data.Code==1003){
+
+                                var txt="Can not be concerned about yourself";
+                                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
                             }
+
+
                         },
                         error: function (jqXHR, textStatus, errorThrown,Code) {
                             var txt="Unkonw Error.Please Try Again!";

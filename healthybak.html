@@ -121,6 +121,27 @@
 			});
 		}
 
+
+		function bindListeners(){
+			$(".choose ul li").unbind().each(function(index,item){
+				$(item).on("click",function(event){
+					$(this).toggleClass('chooseTime');
+
+					$(this).siblings().removeClass('chooseTime');
+
+					$target=$(event.target);
+					var selecttime=$('span:first-child',this).text();
+					var selecttimeTo=selecttime.split('-');
+					var selecttimeTomonth=selecttimeTo[1];
+					var selecttimeToyear=selecttimeTo[0];
+					var selecttimeToday=selecttimeTo[2];
+					var selectOneTime=selecttimeTomonth+'/'+selecttimeToday+'/'+selecttimeToyear;
+
+//					window.location.href='sleepreport.html?time='+selectOneTime;
+				});
+			});
+		}
+
 		function change() {
 
 			$(".oneDayLists ul li").remove();
@@ -1036,7 +1057,7 @@
 			<a href="login.html" ><li onclick="quit()"  class="pointer">Logout</li></a>
 			<a href="real.html"><li class="pointer">Real-time Data</li></a>
 			<a href="healthy.html"><li class="on" >Health Archives</li></a>
-			<a href="addProduct.html"><li class="pointer">Add or Change device</li></a>
+			<a href="addProduct.html"><li class="pointer">Add device</li></a>
 			<a href="deleteProduct.html"><li class="pointer">Delete device</li></a>
 		</ul>
 	</div>

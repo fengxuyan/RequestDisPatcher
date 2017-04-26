@@ -18,6 +18,7 @@
 	<style>
 		.block_pic{
 			overflow:hidden;
+			width: 591px;
 		}
 		.lixian{
 			background:#000;
@@ -92,19 +93,22 @@
 	}
 	setTimeout('myrefresh()',1000*60*30); //指定1秒刷新一次
 	function quit() {
+		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 		$.ajax({
 			type:"post",
 			url:"/RequestDisPatcher/request/dispatcher.do",
 			data: {
-				url:"http://101.37.100.209:9001/login/logout",
+				url:"http://127.0.0.1:9001/login/logout",
 				params:"token="+token
 			},
 			success: function (data) {
-				alert(data.Message);
+				userInfo='';
+
 //
 			},
 			error: function (data) {
-				alert('fail');
+				var txt=data.Message;
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
 			}
 		});
 	}
@@ -191,19 +195,19 @@
 		return svg;
 	}
 	function drawdot2() {
-		var svg=' <svg style="width:3px;height:115;float:left;border-bottom:1px solid #8A847F;border-top:1px solid #8A847F;"  xmlns="http://www.w3.org/2000/svg" version="1.1">  <g fill="none" stroke="#8A847F" stroke-width="2"> <path stroke-dasharray="2,15" d="M 2 11 2 100" /> </g> </svg>';
+		var svg=' <svg style="width:3px;height:115px;float:left;border-bottom:1px solid #8A847F;border-top:1px solid #8A847F;"  xmlns="http://www.w3.org/2000/svg" version="1.1">  <g fill="none" stroke="#8A847F" stroke-width="2"> <path stroke-dasharray="2,15" d="M 2 11 2 100" /> </g> </svg>';
 		return svg;
 	}
 	function drawboxing(){
-		var svg='<svg style="width:3px;height:120px;float:left;border:0;"version="1.1"xmlns="http://www.w3.org/2000/svg"> <rect width="3" height="120"style="fill:#BAB7B3;stroke-width:0;stroke:rgb(0,0,0)"/> <polyline points="0,17 3,13 6,17 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points="0,37 3,33 6,37 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points="0,57 3,53 6,57 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points="0,77 3,73 6,77 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points="0,97 3,93 6,97 "style="fill:none;stroke:#fff;stroke-width:1"/>';
+		var svg='<svg style="width:3px;height:120px;float:left;border:0;"version="1.1"xmlns="http://www.w3.org/2000/svg"> <rect width="3" height="120"style="fill:#BAB7B3;stroke-width:0;stroke:rgb(0,0,0)"/> <polyline points="0,20 3,17 6,20 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points="0,40 3,37 6,40 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points="0,60 3,57 6,60 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points="0,80 3,77 6,80 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points="0,100 3,97 6,100 "style="fill:none;stroke:#fff;stroke-width:1"/>';
 		return svg;
 	}
 	function drawboxing2(){
-		var svg='<svg style="width:3px;height:120px;float:left;border:0;"version="1.1"xmlns="http://www.w3.org/2000/svg"> <rect width="3" height="120"style="fill:#BAB7B3;stroke-width:0;stroke:rgb(0,0,0)"/> <polyline points="0,13 3,17 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points=" 0,33 3,37 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points=" 0,53 3,57 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points=" 0,73 3,77 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points="0,93 3,97 "style="fill:none;stroke:#fff;stroke-width:1"/>';
+		var svg='<svg style="width:3px;height:120px;float:left;border:0;"version="1.1"xmlns="http://www.w3.org/2000/svg"> <rect width="3" height="120"style="fill:#BAB7B3;stroke-width:0;stroke:rgb(0,0,0)"/> <polyline points="0,17 3,20 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points=" 0,37 3,40 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points=" 0,57 3,60 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points=" 0,77 3,80 "style="fill:none;stroke:#fff;stroke-width:1"/> <polyline points="0,97 3,100 "style="fill:none;stroke:#fff;stroke-width:1"/>';
 		return svg;
 	}
 	function drawhengxian() {
-		var svg='<svg style="width:3px;height:120px;float:left;border:0;"version="1.1"xmlns="http://www.w3.org/2000/svg"> <rect width="3" height="120"style="fill:#8A847F;stroke-width:0;stroke:rgb(0,0,0)"/> <path  d="M 0 7 L 6 7" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 17 L 6 17" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 27 L 6 27" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 37 L 6 37" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 47 L 6 47" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 57 L 6 57" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 67 L 6 67" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 77 L 6 77" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 87 L 6 87" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 97 L 6 97" stroke="#FFF" stroke-width="1" fill="none" /> <path  d="M 0 107 L 6 107" stroke="#FFF" stroke-width="1" fill="none" /> </svg>';
+		var svg='<svg style="width:3px;height:120px;float:left;border:0;"version="1.1"xmlns="http://www.w3.org/2000/svg"> <rect width="3" height="120"style="fill:#8A847F;stroke-width:0;stroke:rgb(0,0,0)"/>  <path  d="M 0 20 L 6 20" stroke="#FFF" stroke-width="1" fill="none" />  <path  d="M 0 40 L 6 40" stroke="#FFF" stroke-width="1" fill="none" />  <path  d="M 0 60 L 6 60" stroke="#FFF" stroke-width="1" fill="none" />  <path  d="M 0 80 L 6 80" stroke="#FFF" stroke-width="1" fill="none" />  <path  d="M 0 100 L 6 100" stroke="#FFF" stroke-width="1" fill="none" />  </svg>';
 		return svg;
 	}
 	function drawlixian() {
@@ -264,30 +268,54 @@
 //					}
 //					$.cookie('showpic_event', cookie_arr.join(','));
 //					$.cookie('showpic_eventer',data.Data.event);
+
+					console.log(data.Data.heart);
+
 					if(data.Data.heart==0){
-						$('.heart_pic').css('height','0');
+
+						$('.heart_pic').css('height','0px');
+//						$('.heart_pic').css('background-image','url(images/600.gif) ');
 					}
-					if(data.Data.heart<=60){
-						$('.heart_pic').css('background-image','url(./images/60.gif)');
+					if(0<data.Data.heart&&data.Data.heart<=60){
+						$('.heart_pic').css('height','120px');
+
+						$('.heart_pic').css('background-image','url(images/60.gif) ');
 					}
-					if(60<data.Data.heart<=70){
-						$('.heart_pic').css('background-image','url(./images/70.gif)');
+					if(60<data.Data.heart&&data.Data.heart<=70){
+
+						$('.heart_pic').css('height','120px');
+						$('.heart_pic').css('background-image','url(images/70.gif) ');
 					}
-					if(70<data.Data.heart<=80){
-						$('.heart_pic').css('background-image','url(./images/80.gif)');
+					if(70<data.Data.heart&&data.Data.heart<=80){
+
+						$('.heart_pic').css('height','120px');
+						$('.heart_pic').css('background-image','url(images/80.gif) ');
 					}
-					if(80<data.Data.heart<=90){
-						$('.heart_pic').css('background-image','url(./images/90.gif)');
+					if(80<data.Data.heart&&data.Data.heart<=90){
+
+						$('.heart_pic').css('height','120px');
+						$('.heart_pic').css('background-image','url(images/90.gif) ');
 					}
-					if(90<data.Data.heart<=100){
-						$('.heart_pic').css('background-image','url(./images/100.gif)');
+					if(90<data.Data.heart&&data.Data.heart<=100){
+						$('.heart_pic').css('height','120px');
+						$('.heart_pic').css('background-image','url(images/100.gif) ');
 					}
+					if(100<data.Data.heart&&data.Data.heart){
+
+						$('.heart_pic').css('height','120px');
+						$('.heart_pic').css('background-image','url(images/100.gif) ');
+					}
+
 					//清除追加内容
 					$('.showHeartNumber span').remove();
 					$('.showBreathNumber span').remove();
 
+					if( data.Data.heart!=0 && data.Data.breath==0){
+						data.Data.breath = data.Data.heart/4;
+					}
 
 					var heart=heartHandle(data.Data.heart);
+
 					$('.showHeartNumber').append("<span>"+heart+"</span><span>bpm</span>");
 					$('.showBreathNumber').append("<span>"+data.Data.breath+"</span><span>breaths/Min</span>");
 					/*
@@ -356,23 +384,41 @@
 						cookie_arr = arrayHandle(showpic_event1,data.Data.event);
 					}
 					$.cookie('showpic_event', cookie_arr.join(','));
+
+					console.log(data.Data.heart);
 					if(data.Data.heart==0){
-						$('.heart_pic').css('height','0');
+
+						$('.heart_pic').css('height','0px');
+//						$('.heart_pic').css('background-image','url(images/600.gif) ');
 					}
-					if(data.Data.heart<=60){
-						$('.heart_pic').css('background-image','url(./images/60.gif)');
+					if(0<data.Data.heart&&data.Data.heart<=60){
+						$('.heart_pic').css('height','120px');
+
+						$('.heart_pic').css('background-image','url(images/60.gif) ');
 					}
-					if(60<data.Data.heart<=70){
-						$('.heart_pic').css('background-image','url(./images/70.gif)');
+					if(60<data.Data.heart&&data.Data.heart<=70){
+
+						$('.heart_pic').css('height','120px');
+						$('.heart_pic').css('background-image','url(images/70.gif) ');
 					}
-					if(70<data.Data.heart<=80){
-						$('.heart_pic').css('background-image','url(./images/80.gif)');
+					if(70<data.Data.heart&&data.Data.heart<=80){
+
+						$('.heart_pic').css('height','120px');
+						$('.heart_pic').css('background-image','url(images/80.gif) ');
 					}
-					if(80<data.Data.heart<=90){
-						$('.heart_pic').css('background-image','url(./images/90.gif)');
+					if(80<data.Data.heart&&data.Data.heart<=90){
+
+						$('.heart_pic').css('height','120px');
+						$('.heart_pic').css('background-image','url(images/90.gif) ');
 					}
-					if(90<data.Data.heart<=100){
-						$('.heart_pic').css('background-image','url(./images/100.gif)');
+					if(90<data.Data.heart&&data.Data.heart<=100){
+						$('.heart_pic').css('height','120px');
+						$('.heart_pic').css('background-image','url(images/100.gif) ');
+					}
+					if(100<data.Data.heart&&data.Data.heart){
+
+						$('.heart_pic').css('height','120px');
+						$('.heart_pic').css('background-image','url(images/100.gif) ');
 					}
 					//清除前一次追加内容
 					$('.showHeartNumber span').remove();
@@ -381,7 +427,7 @@
 						data.Data.breath = data.Data.heart/4;
 					}
 					var heart=heartHandle(data.Data.heart);
-					$('.showHeartNumber').append("<span>"+heart+"</span><span>bpm</span>");
+					$('.showHeartNumber').append("<span>"+data.Data.heart+"</span><span>bpm</span>");
 					$('.showBreathNumber').append("<span>"+data.Data.breath+"</span><span>breaths/Min</span>");
 					/*
 					 根据实时数据不同 根据状态绘制拼接block_pic 的背景图
@@ -531,7 +577,7 @@
 			<a href="login.html"><li onclick="quit()"  >Logout</li></a>
 			<a ><li class="on">Real-time Data</li></a>
 			<a onclick="js_method_healthy()"><li>Health Archives</li></a>
-			<a href="addProduct.html"><li>Add or Change device</li></a>
+			<a href="addProduct.html"><li>Add device</li></a>
 			<a href="deleteProduct.html"><li>Delete device</li></a>
 		</ul>
 	</div>

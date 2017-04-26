@@ -38,6 +38,21 @@
 
 			var image=Info.image;
 
+			if(image=='null'){
+				if(gender==1){
+
+					$('#head').attr('src','Heads/header_man.png');
+
+				}else if(gender==0){
+
+					$('#head').attr('src','Heads/header_woman.png');
+
+				}
+
+			}else{
+				$('#head').attr('src',image);
+			}
+
 			//未绑定设备
 			if(device == null || device.length == 0){
 				document.getElementById("realData").style = "background-image:url('/RequestDisPatcher/images/real.png')";
@@ -91,7 +106,7 @@
 		<ul class="content_icon_list zhineng">
 			<li><a href="real.html" id = "realData"><span>Real-time Data</span></a></li>
 			<li><a href="healthy.html" id="healthyData"><span>Health Archives</span></a></li>
-			<li><a href="addProduct.html" id="addProduct"><span>Add or Change device</span></a></li>
+			<li><a href="addProduct.html" id="addProduct"><span>Add device</span></a></li>
 			<li><a href="deleteProduct.html" id ="deleteProduct"><span>Delete device</span></a></li>
 		</ul>
 	</div>

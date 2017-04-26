@@ -22,90 +22,52 @@
 	<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
 	<script type="text/javascript">
 
-
-
-		function PreviewImage(imgFile) {
-			var filextension = imgFile.value.substring(imgFile.value.lastIndexOf("."), imgFile.value.length);
-			filextension = filextension.toLowerCase();
-			if ((filextension != '.jpg') && (filextension != '.gif')  && (filextension != '.jpeg') && (filextension != '.png') && (filextension != '.bmp')) {
-				var txt="The image is invalid, please select again";
-				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
-				imgFile.focus();
-			}
-			else {
-				var path;
-				if (document.all)//IE
-				{
-					imgFile.select();
-					path = document.selection.createRange().text;
-
-					$.cookie('head_pic', path, {expires: 1000*60*30, path: '/'});
-
-					document.getElementById("head").innerHTML = "";
-					document.getElementById("head").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='scale',src=\"" + path + "\")";//使用滤镜效果
-				}
-				else//FF
-				{
-					path = window.URL.createObjectURL(imgFile.files[0]);
-					$.cookie('head_pic', path, {expires: 1000*60*30, path: '/'});
-					$('#head').attr('src',path);
-				}
-			}
-		}
 		$(document).ready(function(){
-
-			var txttoarray1=$('#yearOfBirthr').val().split('/');
-
-//			document.getElementById("Changetimeyear").value=txttoarray1[2];
-//			document.getElementById("Changetimemonth").value=txttoarray1[0];
-//			document.getElementById("yearOfBirth").value=txttoarray1[1];
-
-			document.getElementById("Changetimeyear").value='';
-			document.getElementById("Changetimemonth").value='';
-			document.getElementById("yearOfBirth").value='';
-
-//
-//			$('#yearOfBirth').val('01/01/1980');
 			$("#submit_submit").click(function(){
+
+				var choosebirth=$('#yearOfBirth').val();
+				var birthday=choosebirth.split('/');
+				var subbirthday=birthday[1]+'/'+birthday[2]+'/'+birthday[0];
+				console.log(subbirthday);
+
 				var flog = checkForm1();
 				if(flog!=false){
 
-					$.ajaxFileUpload({
-						type:"POST",
-						url:"/RequestDisPatcher/request/upload.do",
-						async:false,
-						secureuri:false,
-						fileElementId:"upload",//file标签的id
-						dataType: "json",//返回数据的类型
-						data:{
-							url:"http://127.0.0.1:9001/login/register",
-							params:"firstName="+$('#firstName').val()+"&password="+$('#password').val()+"&middleName="+$('#middleName').val()+"&lastName="+$('#lastName').val()+"&birth="+$('#yearOfBirthr').val()+"&gender="+$('#gender').val()+"&mphone="+$('#phone').val()+"&address="+$('#address').val()+"&email="+$('#email').val()
-						},//一同上传的数据
-						success: function (data) {
-							if(data.Code==1000){
-								var txt="Email or Password Error";
-								window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
-								return false;
-							}else if(data.Code==1001){
-								var txt="The email address does not exist";
-								window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
-								return false;
+					$.ajax({
+								type: "post",
+								dataType: "json",//返回数据的类型
+								url: "/RequestDisPatcher/request/dispatcher.do",
+								data:{
+									url:"http://127.0.0.1:9001/login/register",
+									params:"firstName="+$('#firstName').val()+"&password="+$('#password').val()+"&middleName="+$('#middleName').val()+"&lastName="+$('#lastName').val()+"&birth="+subbirthday+"&gender="+$('#gender').val()+"&mphone="+$('#phone').val()+"&address="+$('#address').val()+"&email="+$('#email').val()
+								},//一同上传的数据
+								success: function (data) {
+									if(data.Code==0){
+										var txt="Server  error";
+										window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+										return false;
+									}else if(data.Code==1005){
+										var txt="Server  error";
+										window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+										return false;
 
-							}else if(data.Code==1002){
-								var txt="The email address has been  registered";
-								window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
-								return false;
-
+									}else if(data.Code==1002){
+										var txt="The email address has been  registered";
+										window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+										return false;
+									}else if(data.Code==1){
+										var txt='Registration successfully';
+										window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success ,{
+											onOk:function() {
+												document.cookie="dluEmail="+$('#email').val();
+												document.cookie="dlumima="+$('#password').val();
+												window.location.href="/RequestDisPatcher/login.html";
+											}})
+									}
+								}
 							}
-							document.cookie="dluEmail="+$('#email').val();
-							document.cookie="dlumima="+$('#password').val();
-							window.location.href="/RequestDisPatcher/login.html";
-						},
-						error: function (data, status, e) {
 
-						}
-					});
-
+				)
 				}
 			});
 		});
@@ -138,6 +100,14 @@
 				return false;
 
 			};
+
+			if($("#Changetimeyear").val()==''){
+				var txt="Please input birthday";
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+				return false;
+
+			}
+
 			var x3= $('#gender').val();
 			if(x3=='')
 			{
@@ -215,7 +185,7 @@
 	<div class="left_nav reg_nav" >
 		<div class="header_text">
 			<div class="header_text_right">
-					<span class="header_pic"><img src="Heads/default.jpg" id="head"></span>
+				<span class="header_pic"><img src="Heads/default.jpg" id="head"></span>
 			</div>
 
 		</div>
@@ -238,11 +208,11 @@
 	</div>
 	<div class="right_show">
 		<h3 style="font-size: 20px;">Register</h3>
-		<span onclick="goback()" class="glyphicon icon-caret-right"></span>
+		<span onclick="goback()" style="cursor:pointer" class="glyphicon icon-caret-right"></span>
 		<div class="show_detail register">
 			<form name="re_form">
 				<div class="form_txt">
-					<p>Attention:The message with * must be filled out!</p>
+					<p>Attention: The message with * must be filled out!</p>
 				</div>
 				<div class="panel_input reg_input res check">
 					<input type="text" placeholder="First Name *" id="firstName" value="" />
@@ -254,23 +224,13 @@
 					<input type="text" placeholder="Last Name *" id="lastName" value="" />
 				</div>
 				<span class="bir_txt btext">Birthday *</span>
-				<div class="reg_input  res reg_select ymd check search_timeres"  id="">
-					<input id="Changetimeyear" readonly="readonly"  /><span> </span>
-					<input id="Changetimemonth" readonly="readonly" /><span> </span>
-					<input id="yearOfBirth"  type="text" >
-					<span class="day123"> </span>
+				<div class="reg_input  res reg_select ymd check "  style="margin-bottom: 77px" id="">
+					<!--<input id="Changetimeyear" readonly="readonly"  /><span> </span>-->
+					<!--<input id="Changetimemonth" readonly="readonly" /><span> </span>-->
+					<input id="yearOfBirth"  type="text"  value="1980/01/01" style="width: 100% !important;cursor: pointer"/>
+					<!--<input id="yearOfBirth"  style="    text-align: center;-->
+					<!--<span class="day123"> </span>-->
 				</div>
-				<input id="yearOfBirthr"  type="text" value="01/01/1980" style="
-				    cursor: pointer;
-    position: relative;
-    opacity: 0;
-    top: -82px;
-    right: -555px;
-    width: 121px;
-    height: 35px;
-
-
-" />
 				<div class="reg_input  res reg_select sex " style="    margin-top: -35px;
 ">
 					<select style="outline:none !important; cursor: pointer;"  id="gender" name ="gender" onchange="changepic()">
@@ -301,19 +261,16 @@
 				</div>
 
 				<label class="checkService">
-					<input type="checkbox" id="checkService" checked="checked">I agree to the <a href="UserService.jsp" target="_blank">Terms of Service</a>
+					<input type="checkbox" id="checkService" checked="checked">I agree to the Terms of Service
 				</label>
 				<div class="foot_btn">
 					<input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back">
 					<input type="button" value="Submit" id="submit_submit" onclick="return checkForm();" class="submit_submit">
 				</div>
+
 			</form>
 		</div>
 	</div>
-
-
-
-
 
 	<script type="text/javascript">
 
@@ -321,19 +278,7 @@
 
 			laydate.skin('yahui');//切换皮肤，请查看skins下面皮肤库
 
-			laydate({elem: '#yearOfBirthr',format: 'MM/DD/YYYY',choose: function(datas){ //选择日期完毕的回调
-
-				console.log(datas);
-				var selecttime=$('#yearOfBirthr').val();
-
-				console.log(selecttime);
-				var txttoarray=datas.split('/');
-
-				document.getElementById("Changetimeyear").value=txttoarray[2];
-				document.getElementById("Changetimemonth").value=txttoarray[0];
-				document.getElementById("yearOfBirth").value=txttoarray[1];
-//				$("#yearOfBirth").find("option:selected").text('123');
-
+			laydate({elem: '#yearOfBirth',format: 'MM/DD/YYYY',choose: function(datas){ //选择日期完毕的回调
 			}});//绑定元素
 
 		}();

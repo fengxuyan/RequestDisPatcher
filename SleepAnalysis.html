@@ -40,11 +40,11 @@
             <a href="login.html"><li onclick="quit()"  >Logout</li></a>
             <a href="real.html"><li>Real-time Data</li></a>
             <a href="healthy.html"><li class="on">Health Archives</li></a>
-            <a href="addProduct.html"><li>Add or Change device</li></a>
+            <a href="addProduct.html"><li>Add device</li></a>
             <a href="deleteProduct.html"><li>Delete device</li></a>
         </ul>
     </div>
-    <div class="right_show analysis" >
+    <div class="right_show analysis">
         <h4 class="titl">isleep</h4>
         <a href="homepage.html"><span class="home"></span></a>
         <div class="show_detail">
@@ -140,6 +140,7 @@
         return null;
     }
     function quit() {
+        var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
         $.ajax({
             type:"post",
             url:"/RequestDisPatcher/request/dispatcher.do",
@@ -148,9 +149,13 @@
                 params:"token="+token
             },
             success: function (data) {
+                userInfo='';
+
+//
             },
             error: function (data) {
-
+                var txt=data.Message;
+                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
             }
         });
     }
@@ -196,9 +201,6 @@
     var Info = info['userInfo'];
     var token = info.token;
 
-    var startTimetoarray=startTime.split('/');
-
-    var endTimetoarray=endTime.split('/');
 
 
     var tes1=new Array();
@@ -216,6 +218,40 @@
         }
         return -1;
     }
+
+    var remember_one_chooselists = document.cookie.match(new RegExp("(^| )remember_one_chooselists=([^;]*)(;|$)"));
+
+    if(remember_one_chooselists!=null){
+        var one_chooselists = remember_one_chooselists[2].split(',');
+        var datestart = new Date(parseInt(one_chooselists[0]));
+        var dateend = new Date(parseInt(one_chooselists[one_chooselists.length-2]));
+        var date_fmtstart=datestart.format("MM/dd/yyyy");
+        var date_fmtend=dateend.format("MM/dd/yyyy");
+        var startTimetoarray=date_fmtstart.split('/');
+        var endTimetoarray=date_fmtend.split('/');
+        var times=one_chooselists.length-1;
+    }
+
+
+
+
+
+    var remember_other_chooselists = document.cookie.match(new RegExp("(^| )remember_other_chooselists=([^;]*)(;|$)"));
+    console.log(remember_other_chooselists);
+    if(remember_other_chooselists!=null){
+        var other_chooselists = remember_other_chooselists[2].split(',');
+        var datestartother = new Date(parseInt(other_chooselists[0]));
+        var dateendother = new Date(parseInt(other_chooselists[other_chooselists.length-2]));
+        var date_fmtstartother=datestartother.format("MM/dd/yyyy");
+        var date_fmtendother=dateendother.format("MM/dd/yyyy");
+        var startTimetoarrayOther=date_fmtstartother.split('/');
+        var endTimetoarrayOther=date_fmtendother.split('/');
+        var timesOther=other_chooselists.length-1;
+    }
+
+
+
+
 if(otheremail!=null){
     $.ajax({
         type:"post",
@@ -223,29 +259,33 @@ if(otheremail!=null){
         url:"/RequestDisPatcher/request/dispatcher.do",
         data: {
             url:"http://101.37.100.209:9002/device/getOtherData",
-            params:"token="+token+"&startTime="+startTime+"&endTime="+endTime+"&email="+otheremail
+            params:"token="+token+"&startTime="+date_fmtstartother+"&endTime="+date_fmtendother+"&email="+otheremail
         },
         success: function (data) {
             var monthsInEng = ['Jan', 'Feb', 'Mar','Apr', 'May', 'June','July', 'Aug', 'Sept','Oct', 'Nov', 'Dec'];
 
-            var index=startTimetoarray[0];
-            var dayindex=startTimetoarray[1];
+            var index=startTimetoarrayOther[0];
+            var dayindex=startTimetoarrayOther[1];
 
             var a=dateeng(dayindex);
 
-            var index1=endTimetoarray[0];
-            var dayindex1=endTimetoarray[1];
+            var index1=endTimetoarrayOther[0];
+            var dayindex1=endTimetoarrayOther[1];
 
             var a1=dateeng(dayindex1);
 
 
-            $('.reports_detail').append('<p>Report date：'+monthsInEng[index-1]+' '+a+'-'+monthsInEng[index1-1]+' ' +a1+'</p> <p>Total Times：'+data.Data.length+'<span><i>Maximum Value</i><i>Average Value</i><i>Minimum Value</i></span></p>');
+            $('.reports_detail').append('<p>Report date：'+monthsInEng[index-1]+' '+a+'-'+monthsInEng[index1-1]+' ' +a1+'</p> <p>Total Times：'+timesOther+'<span><i>Maximum</i><i>Average</i><i>Minimum</i></span></p>');
+
+
             var map = new Array();//一维数组
             for (var i = 0; i < data.Data.length; i++) {
-                map.push(data.Data[i].avgHeart);//一维数组
+                for(var j=0;j<other_chooselists.length;j++){
+                    if( data.Data[i].creatTime==other_chooselists[j]){
+                        map.push(data.Data[i].avgHeart);//一维数组
+                    };
+                }
             }
-
-
 
             var hightest=Math.max.apply(null, map);//最大值
             var minest=Math.min.apply(null, map);//最小值
@@ -264,20 +304,42 @@ if(otheremail!=null){
             var y_min=minest;
 
 
+
             var map1 = new Array();//一维数组
             for (var i = 0; i < data.Data.length; i++) {
-                map1.push(data.Data[i].avgBreath);//一维数组
+                for(var j=0;j<other_chooselists.length;j++){
+                    if( data.Data[i].creatTime==other_chooselists[j]){
+                        map1.push(data.Data[i].avgBreath);//一维数组
+                    };
+                }
+
             }
+
+
+
+
             var hightest1=Math.max.apply(null, map1).toFixed(0);//最大值
             var minest1=Math.min.apply(null, map1).toFixed(0);//最小值
             var avg1=arrAverageNum2(map1).toFixed(0);
             var fields1 = {data:map1,color:'#000',name:'Respiration',width:2};
-            console.log(minest1);
-            console.log('minest1');
+
+
             var map2 = new Array();//一维数组
             for (var i = 0; i < data.Data.length; i++) {
-                map2.push(Math.round((data.Data[i].deepSleepTime)/(60*60)));//一维数组
+
+                for(var j=0;j<other_chooselists.length;j++){
+                    if( data.Data[i].creatTime==other_chooselists[j]){
+                        map2.push(Math.round((data.Data[i].deepSleepTime)/(60*60)));//一维数组
+                    };
+                }
+
+
+
+
+
             }
+
+
             var hightest2=Math.max.apply(null, map2).toFixed(0);//最大值
             var minest2=Math.min.apply(null, map2).toFixed(0);//最小值
             var avg2=arrAverageNum2(map2).toFixed(0);
@@ -286,8 +348,19 @@ if(otheremail!=null){
 
             var map3 = new Array();//一维数组
             for (var i = 0; i < data.Data.length; i++) {
-                map3.push(data.Data[i].score);//一维数组
+
+
+
+                for(var j=0;j<other_chooselists.length;j++){
+                    if( data.Data[i].creatTime==other_chooselists[j]){
+                        map3.push(data.Data[i].score);//一维数组
+                    };
+                }
             }
+
+
+
+
             var hightest3=Math.max.apply(null, map3).toFixed(0);//最大值
             var minest3=Math.min.apply(null, map3).toFixed(0);//最小值
             var avg3=arrAverageNum2(map3).toFixed(0);
@@ -296,15 +369,22 @@ if(otheremail!=null){
 
             var map4 = new Array();//一维数组
             for (var i = 0; i < data.Data.length; i++) {
-                map4.push((data.Data[i].lightSleepTime+data.Data[i].deepSleepTime)/(60*60));//一维数组
+                for(var j=0;j<other_chooselists.length;j++){
+                    if( data.Data[i].creatTime==other_chooselists[j]){
+                        map4.push((data.Data[i].lightSleepTime+data.Data[i].deepSleepTime)/(60*60));//一维数组
+                    };
+                }
+
             }
+
+
             var hightest4=Math.max.apply(null, map4).toFixed(0);//最大值
             var minest4=Math.min.apply(null, map4).toFixed(0);//最小值
             var avg4=arrAverageNum2(map4).toFixed(0);
 
             var fields4 = {data:map4,color:'#6d4e31',name:'Sleep time',width:2};
 
-            if(minest<20){
+            if(minest<15){
                 var chart = new Highcharts.Chart('chartdiv', {
                     chart:{
                         type:'spline',
@@ -642,7 +722,7 @@ if(otheremail!=null){
             }
 
 
-            if( Math.round(minest1)<20){
+            if( Math.round(minest1)<15){
 
                 var chart = new Highcharts.Chart('chartdiv1', {
                     chart:{
@@ -1223,7 +1303,7 @@ if(otheremail!=null){
 
             }
 
-            if(minest3<20){
+            if(minest3<15){
                 var chart = new Highcharts.Chart('chartdiv3', {
                     chart:{
                         type:'spline',
@@ -1340,7 +1420,7 @@ if(otheremail!=null){
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, Math.round(hightest3)+50).attr({
+                    renderer.text('', 510, Math.round(hightest3)+50).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -1364,7 +1444,7 @@ if(otheremail!=null){
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, 270-Math.round(minest3)).attr({
+                    renderer.text('', 510, 270-Math.round(minest3)).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -1390,7 +1470,7 @@ if(otheremail!=null){
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, ((260-y_min)+(Math.round(hightest3)))/2+30).attr({
+                    renderer.text('', 510, ((260-y_min)+(Math.round(hightest3)))/2+30).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -1518,7 +1598,7 @@ if(otheremail!=null){
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, Math.round(hightest3)+7).attr({
+                    renderer.text('', 510, Math.round(hightest3)+7).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -1542,7 +1622,7 @@ if(otheremail!=null){
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, 315-Math.round(minest3)).attr({
+                    renderer.text('', 510, 315-Math.round(minest3)).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -1568,7 +1648,7 @@ if(otheremail!=null){
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, ((260-y_min)+(Math.round(hightest3)))/2+30).attr({
+                    renderer.text('', 510, ((260-y_min)+(Math.round(hightest3)))/2+30).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -1601,33 +1681,33 @@ if(otheremail!=null){
         url:"/RequestDisPatcher/request/dispatcher.do",
         data: {
             url:"http://101.37.100.209:9002/device/getData",
-            params:"token="+token+"&startTime="+startTime+"&endTime="+endTime
+            params:"token="+token+"&startTime="+date_fmtstart+"&endTime="+date_fmtend
         },
         success: function (data) {
-            console.log(data.Data);
-
 
             var monthsInEng = ['Jan', 'Feb', 'Mar','Apr', 'May', 'June','July', 'Aug', 'Sept','Oct', 'Nov', 'Dec'];
-
             var index=startTimetoarray[0];
             var dayindex=startTimetoarray[1];
-
             var a=dateeng(dayindex);
 
             var index1=endTimetoarray[0];
             var dayindex1=endTimetoarray[1];
-
             var a1=dateeng(dayindex1);
 
+console.log(index);
+
+            $('.reports_detail').append('<p>Report date：'+monthsInEng[index-1]+' '+a+'-'+monthsInEng[index1-1]+' ' +a1+'</p> <p>Total Times：'+times+'<span><i>Maximum</i><i>Average</i><i>Minimum</i></span></p>');
 
 
-            $('.reports_detail').append('<p>Report date：'+monthsInEng[index-1]+' '+a+'-'+monthsInEng[index1-1]+' ' +a1+'</p> <p>Total Times：'+data.Data.length+'<span><i>Maximum Value</i><i>Average Value</i><i>Minimum Value</i></span></p>');
 
             var map = new Array();//一维数组
             for (var i = 0; i < data.Data.length; i++) {
-                map.push(data.Data[i].avgHeart);//一维数组
+                for(var j=0;j<one_chooselists.length;j++){
+                if( data.Data[i].creatTime==one_chooselists[j]){
+                    map.push(data.Data[i].avgHeart);//一维数组
+                };
+                }
             }
-
 
 
             var hightest=Math.max.apply(null, map);//最大值
@@ -1649,17 +1729,27 @@ if(otheremail!=null){
 
             var map1 = new Array();//一维数组
             for (var i = 0; i < data.Data.length; i++) {
-                map1.push(data.Data[i].avgBreath);//一维数组
+
+                for(var j=0;j<one_chooselists.length;j++){
+                    if( data.Data[i].creatTime==one_chooselists[j]){
+                        map1.push(data.Data[i].avgBreath);//一维数组
+                    };
+                }
             }
             var hightest1=Math.max.apply(null, map1).toFixed(0);//最大值
             var minest1=Math.min.apply(null, map1).toFixed(0);//最小值
             var avg1=arrAverageNum2(map1).toFixed(0);
             var fields1 = {data:map1,color:'#000',name:'Respiration',width:2};
-            console.log(minest1);
-            console.log('minest1');
+
             var map2 = new Array();//一维数组
             for (var i = 0; i < data.Data.length; i++) {
-                map2.push(Math.round((data.Data[i].deepSleepTime)/(60*60)));//一维数组
+                for(var j=0;j<one_chooselists.length;j++){
+                    if( data.Data[i].creatTime==one_chooselists[j]){
+                        map2.push(Math.round((data.Data[i].deepSleepTime)/(60*60)));//一维数组
+                    };
+                }
+
+
             }
             var hightest2=Math.max.apply(null, map2).toFixed(0);//最大值
             var minest2=Math.min.apply(null, map2).toFixed(0);//最小值
@@ -1669,7 +1759,13 @@ if(otheremail!=null){
 
             var map3 = new Array();//一维数组
             for (var i = 0; i < data.Data.length; i++) {
-                map3.push(data.Data[i].score);//一维数组
+
+
+                for(var j=0;j<one_chooselists.length;j++){
+                    if( data.Data[i].creatTime==one_chooselists[j]){
+                        map3.push(data.Data[i].score);//一维数组
+                    };
+                }
             }
             var hightest3=Math.max.apply(null, map3).toFixed(0);//最大值
             var minest3=Math.min.apply(null, map3).toFixed(0);//最小值
@@ -1679,7 +1775,13 @@ if(otheremail!=null){
 
             var map4 = new Array();//一维数组
             for (var i = 0; i < data.Data.length; i++) {
-                map4.push((data.Data[i].lightSleepTime+data.Data[i].deepSleepTime)/(60*60));//一维数组
+
+                for(var j=0;j<one_chooselists.length;j++){
+                    if( data.Data[i].creatTime==one_chooselists[j]){
+                        map4.push((data.Data[i].lightSleepTime+data.Data[i].deepSleepTime)/(60*60));//一维数组
+                    };
+                }
+
             }
             var hightest4=Math.max.apply(null, map4).toFixed(0);//最大值
             var minest4=Math.min.apply(null, map4).toFixed(0);//最小值
@@ -1694,7 +1796,7 @@ if(minest<20){
             tooltip: {
                 enabled : false
             },
-            marginRight: 50,
+            marginRight: 60,
             marginLeft: 40,
         },
         tooltip: {
@@ -1862,7 +1964,7 @@ if(minest<20){
             tooltip: {
                 enabled : false
             },
-            marginRight: 50,
+            marginRight: 60,
             marginLeft: 40,
         },
         tooltip: {
@@ -1951,15 +2053,15 @@ if(minest<20){
             zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
         });
 
-        chart.renderer.image('images/healthy_reports_highest.png', 525, hightest, 15, 15).add().
+        chart.renderer.image('images/healthy_reports_highest.png', 535, hightest, 15, 15).add().
 
-        renderer.text(Math.round(hightest), 545, y+12).attr({}).
+        renderer.text(Math.round(hightest), 555, y+12).attr({}).
         css({
             fontSize: '23px',
             color: '#000',
             fontFamily:'华文细黑',
         }).add().
-        renderer.text('Times/Min', 510, y+30).attr({
+        renderer.text('bpm', 555, y+30).attr({
         }).
         css({
             fontSize: '13px',
@@ -1975,15 +2077,15 @@ if(minest<20){
             id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
             zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
         });
-        chart.renderer.image('images/healthy_reports_lowest.png', 525, 260-y_min, 15, 15).add().
+        chart.renderer.image('images/healthy_reports_lowest.png', 535, 260-y_min, 15, 15).add().
 
-        renderer.text(Math.round(minest), 545, 260-y_min).attr({}).
+        renderer.text(Math.round(minest), 555, 260-y_min).attr({}).
         css({
             fontSize: '23px',
             color: '#000',
             fontFamily:'华文细黑',
         }).add().
-        renderer.text('Times/Min', 510, 280-y_min).attr({
+        renderer.text('bpm', 555, 280-y_min).attr({
         }).
         css({
             fontSize: '13px',
@@ -2001,15 +2103,15 @@ if(minest<20){
             zIndex:3,
         });
 
-        chart.renderer.image('images/healthy_reports_average.png', 525, ((260-y_min)+hightest)/2, 15, 15).add().
+        chart.renderer.image('images/healthy_reports_average.png', 535, ((260-y_min)+hightest)/2, 15, 15).add().
 
-        renderer.text(Math.round(avg), 545, ((260-y_min)+hightest)/2+10).attr({}).
+        renderer.text(Math.round(avg), 555, ((260-y_min)+hightest)/2+10).attr({}).
         css({
             fontSize: '23px',
             color: '#000',
             fontFamily:'华文细黑',
         }).add().
-        renderer.text('Times/Min', 510, 230-avg).attr({
+        renderer.text('bpm', 555, 230-avg).attr({
         }).
         css({
             fontSize: '13px',
@@ -2025,7 +2127,7 @@ if(minest<20){
 }
 
 
-if( Math.round(minest1)<20){
+if( Math.round(minest1)<15){
 
     var chart = new Highcharts.Chart('chartdiv1', {
         chart:{
@@ -2244,7 +2346,7 @@ if( Math.round(minest1)<20){
             color: '#000',
             fontFamily:'华文细黑',
         }).add().
-        renderer.text('Times/Min',510, Math.round(hightest1)+60).attr({
+        renderer.text('bpm',545, Math.round(hightest1)+60).attr({
         }).
         css({
             fontSize: '13px',
@@ -2269,7 +2371,7 @@ if( Math.round(minest1)<20){
             color: '#000',
             fontFamily:'华文细黑',
         }).add().
-        renderer.text('Times/Min', 510, Math.round(minest1)+240).attr({
+        renderer.text('bpm', 545, Math.round(minest1)+240).attr({
         }).
         css({
             fontSize: '13px',
@@ -2295,7 +2397,7 @@ if( Math.round(minest1)<20){
             color: '#000',
             fontFamily:'华文细黑',
         }).add().
-        renderer.text('Times/Min', 510, ((Math.round(minest1)+200)+(Math.round(hightest1)))/2+25).attr({
+        renderer.text('bpm', 545, ((Math.round(minest1)+200)+(Math.round(hightest1)))/2+25).attr({
         }).
         css({
             fontSize: '13px',
@@ -2306,7 +2408,6 @@ if( Math.round(minest1)<20){
 
 }
 if(minest2<2){
-    console.log('feng');
     var chart = new Highcharts.Chart('chartdiv2', {
         chart:{
             type:'spline',
@@ -2606,7 +2707,7 @@ if(minest2<2){
 
 }
 
-            if(minest3<20){
+            if(minest3<15){
                 var chart = new Highcharts.Chart('chartdiv3', {
                     chart:{
                         type:'spline',
@@ -2723,7 +2824,7 @@ if(minest2<2){
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, Math.round(hightest3)+50).attr({
+                    renderer.text(' ', 510, Math.round(hightest3)+50).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -2747,7 +2848,7 @@ if(minest2<2){
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, 270-Math.round(minest3)).attr({
+                    renderer.text(' ', 510, 270-Math.round(minest3)).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -2773,7 +2874,7 @@ if(minest2<2){
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, ((260-y_min)+(Math.round(hightest3)))/2+30).attr({
+                    renderer.text(' ', 510, ((260-y_min)+(Math.round(hightest3)))/2+30).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -2901,7 +3002,7 @@ else{
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, Math.round(hightest3)+7).attr({
+                    renderer.text('', 510, Math.round(hightest3)+7).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -2925,7 +3026,7 @@ else{
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, 315-Math.round(minest3)).attr({
+                    renderer.text('', 510, 315-Math.round(minest3)).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -2951,7 +3052,7 @@ else{
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, ((260-y_min)+(Math.round(hightest3)))/2+30).attr({
+                    renderer.text('', 510, ((260-y_min)+(Math.round(hightest3)))/2+30).attr({
                     }).
                     css({
                         fontSize: '13px',

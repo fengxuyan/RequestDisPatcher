@@ -722,7 +722,7 @@ input::-webkit-input-placeholder{
 }
 .left_nav .header_text .header_text_right{
     float: left;
-    margin-left: 37%;
+    margin-left: 38%;
 }
 .left_nav .header_text .header_text_right img{
     height:65px;
@@ -782,7 +782,7 @@ input::-webkit-input-placeholder{
     margin: 0 auto;
     width: 100%;
     letter-spacing: 1px;
-    word-spacing: 9px;
+    word-spacing: 6px;
 }
 .foot_btn{
     margin-top:100px;
@@ -918,7 +918,7 @@ input::-webkit-input-placeholder{
     background-position: center;
     display: inline-block;
     top: -46px;
-    left: 25px;
+    left: 30px;
     position: relative;
 }
 .times2{
@@ -1104,7 +1104,7 @@ input::-webkit-input-placeholder{
     line-height: 67px;
     border-bottom: 2px solid #ddd;
     margin: 0 auto;
-    line-height: 318px;
+    line-height: 330px;
     font-size: 17px;
     font-weight: normal;
 }
@@ -1311,7 +1311,7 @@ input[type=checkbox]:checked::after {
     /* padding-left: 12px; */
     height: 45px;
     border: 0;
-    background: url(../images/changedate.png) no-repeat right;
+    /*background: url(../images/changedate.png) no-repeat right;*/
     text-align: center;
     height: 49px;
     float: left;
@@ -1326,7 +1326,7 @@ input[type=checkbox]:checked::after {
     margin-left: 60px;
     text-align: center;
     border: 0;
-    background: url(../images/changedate.png) no-repeat right;
+    /*background: url(../images/changedate.png) no-repeat right;*/
     width: 31px;
     padding-right: 63px;
     padding-left: -2px;
@@ -1394,7 +1394,7 @@ input[type=checkbox]:checked::after {
     text-align: center;
     border-radius: 25px;
     float: left;
-    width: 208px;
+    width: 209px;
     /* margin: 0; */
     /* padding-right: 50px; */
     height: 36px;
@@ -2031,13 +2031,19 @@ article .title {
     background-position: bottom;
 }
 .itme1_rabish{
+    /*border: 1px solid;*/
     display: inline-block;
     height: 42px;
-    width: 34px;
+    width: 78px;
     background: url(../images/concern_rabish.png) no-repeat;
-    position:relative;
+    position: relative;
     top: -50px;
-    left: 480px;
+    left: 475px;
+    padding-left: 21px;
+    padding-right: -19px;
+    /* background-position: inherit; */
+    background-position-x: 33px;
+
 }
 .concern_item1{
     cursor:pointer !important;
@@ -2088,18 +2094,23 @@ article .title {
     height:118px;
 }
 .concern201{
-    background: url(../images/bottom.png) no-repeat;
-    background-position: bottom;
-    background-size: 590px 20px;
+    /*background: url(../images/bottom.png) no-repeat;*/
+    /*background-position: bottom;*/
+    /*background-size: 590px 20px;*/
     padding-bottom: 16px;
 }
 .concern201 h4,.concern202 h4{
-    /*border-bottom: 2px solid #8A847F;*/
+    border-bottom: 2px solid #8A847F;
     padding-bottom: 10px;
     margin-left: 73px;
+width:153px;
 
 
-
+}
+.concern201 h4{
+    height: 40px;
+    /*line-height: 40px;*/
+    line-height: 60px;
 }
 /*.concern202 h4{*/
     /*width: 75px;*/
@@ -2200,7 +2211,7 @@ article .title {
     background: url(../images/home.png) no-repeat !important;
     display: block;
     height: 30px;
-    width: 30px;
+    width: 33px;
     position: relative;
     top: -42px;
     float: right;

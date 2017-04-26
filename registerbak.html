@@ -4,9 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Register Account</title>
 	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
-	<!--<script src="/RequestDisPatcher/JS/jquery-ui.js"></script>-->
-	<!--<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">-->
-	<!--<link rel="stylesheet" href="/RequestDisPatcher/CSS/jquery-ui.css">-->
+
 	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
 	<script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
 	<script src="/RequestDisPatcher/JS/ajaxfileupload.js"></script>
@@ -16,6 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
 	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
 
+	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/laydate.css">
 	<script type="text/javascript" src="/RequestDisPatcher/JS/laydate.js"></script>
 
 	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
@@ -23,91 +22,51 @@
 	<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
 	<script type="text/javascript">
 
-
-		function PreviewImage(imgFile) {
-			var filextension = imgFile.value.substring(imgFile.value.lastIndexOf("."), imgFile.value.length);
-			filextension = filextension.toLowerCase();
-			if ((filextension != '.jpg') && (filextension != '.gif')  && (filextension != '.jpeg') && (filextension != '.png') && (filextension != '.bmp')) {
-				alert("对不起，系统仅支持标准格式的照片，请您调整格式后重新上传，谢谢 !");
-				imgFile.focus();
-			}
-			else {
-				var path;
-				if (document.all)//IE
-				{
-					imgFile.select();
-					path = document.selection.createRange().text;
-
-					$.cookie('head_pic', path, {expires: 1000*60*30, path: '/'});
-
-					document.getElementById("head").innerHTML = "";
-					document.getElementById("head").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='scale',src=\"" + path + "\")";//使用滤镜效果
-				}
-				else//FF
-				{
-					path = window.URL.createObjectURL(imgFile.files[0]);
-					$.cookie('head_pic', path, {expires: 1000*60*30, path: '/'});
-					$('#head').attr('src',path);
-				}
-			}
-		}
 		$(document).ready(function(){
-
-//          $('#yearOfBirth').val('01/01/1980');
-//
-//			var txttoarray1=$('#yearOfBirth').val().split('/');
-//
-//			document.getElementById("Changetimeyear").value=txttoarray1[2];
-//			document.getElementById("Changetimemonth").value=txttoarray1[0];
-//			document.getElementById("yearOfBirth").value=txttoarray1[1];
-//
-//			$('#yearOfBirth').val('01/01/1980');
 			$("#submit_submit").click(function(){
-				var birthday=$('#changetimemonth').val()+'/'+$('#yearOfBirth').val()+'/'+$('#changetimeyear').val();
 
-				console.log(birthday);
+				var choosebirth=$('#yearOfBirth').val();
+				var birthday=choosebirth.split('/');
+				var subbirthday=birthday[1]+'/'+birthday[2]+'/'+birthday[0];
+				console.log(subbirthday);
+
 				var flog = checkForm1();
 				if(flog!=false){
-//					var birthday=month+'/'+day+'/'+year;
 
-					$.ajaxFileUpload({
-						type:"POST",
-						url:"/RequestDisPatcher/request/upload.do",
-						async:false,
-						secureuri:false,
-						fileElementId:"upload",//file标签的id
+					$.ajax({
+						type: "post",
 						dataType: "json",//返回数据的类型
+						url: "/RequestDisPatcher/request/dispatcher.do",
 						data:{
 							url:"http://127.0.0.1:9001/login/register",
-							params:"firstName="+$('#firstName').val()+"&password="+$('#password').val()+"&middleName="+$('#middleName').val()+"&lastName="+$('#lastName').val()+"&birth="+birthday+"&gender="+$('#gender').val()+"&mphone="+$('#phone').val()+"&address="+$('#address').val()+"&email="+$('#email').val()+'&head='+$.cookie('head_pic'),
+							params:"firstName="+$('#firstName').val()+"&password="+$('#password').val()+"&middleName="+$('#middleName').val()+"&lastName="+$('#lastName').val()+"&birth="+subbirthday+"&gender="+$('#gender').val()+"&mphone="+$('#phone').val()+"&address="+$('#address').val()+"&email="+$('#email').val()
 						},//一同上传的数据
 						success: function (data) {
 							if(data.Code==1000){
-								var txt="邮箱或密码错误";
+								var txt="Email or Password Error";
 								window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 								return false;
 							}else if(data.Code==1001){
-								var txt="邮箱不存在";
+								var txt="The email address does not exist";
 								window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 								return false;
 
 							}else if(data.Code==1002){
-								var txt="邮箱已存在";
+								var txt="The email address has been  registered";
 								window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 								return false;
-
+							}else{
+								var txt='Registration successfully';
+								window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success ,{
+									onOk:function() {
+										document.cookie="dluEmail="+$('#email').val();
+										document.cookie="dlumima="+$('#password').val();
+										window.location.href="/RequestDisPatcher/login.html";
+									}})
 							}
-
-
-							document.cookie="dluEmail="+$('#email').val();
-							document.cookie="dlumima="+$('#password').val();
-//							window.location.href="/RequestDisPatcher/login.html";
-						},
-						error: function (data, status, e) {
-
+							}
 						}
-					});
-
+					)
 				}
 			});
 		});
@@ -140,6 +99,14 @@
 				return false;
 
 			};
+
+			if($("#Changetimeyear").val()==''){
+				var txt="Please input birthday";
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+				return false;
+
+			}
+
 			var x3= $('#gender').val();
 			if(x3=='')
 			{
@@ -176,7 +143,7 @@
 
 
 				if( !checkpwd(x7)){
-					var txt="密码只能是数字或字母组合且不能少于6位或多余16位";
+					var txt="Password can only be the combination of numbers and letters. It may not be less than 6 or more than 16 bits";
 					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 					return false;
 
@@ -198,26 +165,16 @@
 
 
 			}else{
-				var txt="邮箱格式错误";
+				var txt="Email format error";
 				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 				return false;
 			}
 
 
 		}
-function showthis() {
-
-	var selecttime=$('#yearOfBirth').val();
-
-
-	var txttoarray=selecttime.split('/');
-
-
-	document.getElementById("Changetimeyear").value=txttoarray[2];
-	document.getElementById("Changetimemonth").value=txttoarray[0];
-	document.getElementById("yearOfBirth").value=txttoarray[1];
-
-}
+		function goback() {
+			location.href='login.html';
+		}
 
 	</script>
 </head>
@@ -249,12 +206,12 @@ function showthis() {
 		</ul>
 	</div>
 	<div class="right_show">
-		<h3>Register An Account</h3>
-		<span onclick="javascript:history.back(-1);" class="glyphicon icon-caret-right"></span>
+		<h3 style="font-size: 20px;">Register</h3>
+		<span onclick="goback()" style="cursor:pointer" class="glyphicon icon-caret-right"></span>
 		<div class="show_detail register">
 			<form name="re_form">
 				<div class="form_txt">
-					<p>Attention:The message with * must be filled out!</p>
+					<p>Attention: The message with * must be filled out!</p>
 				</div>
 				<div class="panel_input reg_input res check">
 					<input type="text" placeholder="First Name *" id="firstName" value="" />
@@ -266,13 +223,16 @@ function showthis() {
 					<input type="text" placeholder="Last Name *" id="lastName" value="" />
 				</div>
 				<span class="bir_txt btext">Birthday *</span>
-				<div class="reg_input  res reg_select ymd check search_timeres"  id="">
-					<input id="Changetimeyear" readonly="readonly"  /><span>年</span>
-					<input id="Changetimemonth" readonly="readonly" /><span>月</span>
-					<input  id="yearOfBirth"   class="laydate-icon"  type="text" value="1980-01-01" >
+				<div class="reg_input  res reg_select ymd check "  style="margin-bottom: 77px" id="">
+					<!--<input id="Changetimeyear" readonly="readonly"  /><span> </span>-->
+					<!--<input id="Changetimemonth" readonly="readonly" /><span> </span>-->
+					<input id="yearOfBirth"  type="text"  value="1980/01/01" style="width: 100% !important;cursor: pointer"/>
+					<!--<input id="yearOfBirth"  style="    text-align: center;-->
+					<!--<span class="day123"> </span>-->
 				</div>
-				<div class="reg_input  res reg_select sex ">
-					<select style="outline:none !important;"  id="gender" name ="gender" onchange="changepic()">
+				<div class="reg_input  res reg_select sex " style="    margin-top: -35px;
+">
+					<select style="outline:none !important; cursor: pointer;"  id="gender" name ="gender" onchange="changepic()">
 						<option value ="" selected>Gender *</option>
 						<option value="1" >Male</option>
 						<option value="0" >Female</option>
@@ -292,32 +252,24 @@ function showthis() {
 				</div>
 
 				<div class="panel_input reg_input res check">
-					<input type="text" placeholder="Password *" id="password" value="" />
+					<input type="password" placeholder="Password *" id="password" value="" />
 				</div>
 
 				<div class="panel_input reg_input  res check">
-					<input type="text" placeholder="Confirm Password *" id="repassword" value="" />
+					<input type="password" placeholder="Confirm Password *" id="repassword" value="" />
 				</div>
 
 				<label class="checkService">
-					<input type="checkbox" id="checkService" checked="checked">I agree to the <a href="UserService.jsp" target="_blank">Terms of Service</a>
+					<input type="checkbox" id="checkService" checked="checked">I agree to the Terms of Service
 				</label>
 				<div class="foot_btn">
 					<input type="button" name="Submit" onclick="javascript:history.back(-1);" value="Back" class="submit_back">
 					<input type="button" value="Submit" id="submit_submit" onclick="return checkForm();" class="submit_submit">
 				</div>
 
-
-
-</form>
-			</div>
+			</form>
 		</div>
-
-
-
-
-
-
+	</div>
 
 	<script type="text/javascript">
 
@@ -325,106 +277,15 @@ function showthis() {
 
 			laydate.skin('yahui');//切换皮肤，请查看skins下面皮肤库
 
-			laydate({elem: '#yearOfBirth'});//绑定元素
+			laydate({elem: '#yearOfBirth',format: 'MM/DD/YYYY',choose: function(datas){ //选择日期完毕的回调
+			}});//绑定元素
 
 		}();
 
 
 
-		//日期范围限制
-
-		var start = {
-
-			elem: '#start',
-
-			format: 'YYYY-MM-DD',
-
-			min: laydate.now(), //设定最小日期为当前日期
-
-			max: '2099-06-16', //最大日期
-
-			istime: true,
-
-			istoday: false,
-
-			choose: function(datas){
-
-				end.min = datas; //开始日选好后，重置结束日的最小日期
-
-				end.start = datas //将结束日的初始值设定为开始日
-
-			}
-
-		};
-
-
-
-		var end = {
-
-			elem: '#end',
-
-			format: 'YYYY-MM-DD',
-
-			min: laydate.now(),
-
-			max: '2099-06-16',
-
-			istime: true,
-
-			istoday: false,
-
-			choose: function(datas){
-
-				start.max = datas; //结束日选好后，充值开始日的最大日期
-
-			}
-
-		};
-
-		laydate(start);
-
-		laydate(end);
-
-
-
-		//自定义日期格式
-
-		laydate({
-
-			elem: '#test1',
-
-			format: 'YYYY年MM月DD日',
-
-			festival: true, //显示节日
-
-			choose: function(datas){ //选择日期完毕的回调
-
-				alert('得到：'+datas);
-
-			}
-
-		});
-
-
-
-		//日期范围限定在昨天到明天
-
-		laydate({
-
-			elem: '#hello3',
-
-			min: laydate.now(-1), //-1代表昨天，-2代表前天，以此类推
-
-			max: laydate.now(+1) //+1代表明天，+2代表后天，以此类推
-
-		});
-
 	</script>
 	<script>
-//		$("#yearOfBirth").birthday();
-//		$("#year").val("1988");
-//		$("#month").val("01");
-//		$("#day").val("01");
 	</script>
 </div>
 </body>

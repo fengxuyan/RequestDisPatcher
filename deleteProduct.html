@@ -17,6 +17,7 @@
 		</style>
 <script type="text/javascript">
 	function quit() {
+		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 		$.ajax({
 			type:"post",
 			url:"/RequestDisPatcher/request/dispatcher.do",
@@ -25,8 +26,13 @@
 				params:"token="+token
 			},
 			success: function (data) {
+				userInfo='';
+
+//
 			},
 			error: function (data) {
+				var txt=data.Message;
+				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
 			}
 		});
 	}
@@ -65,7 +71,6 @@ $(document).ready(function(){
 
 
 	$("#delete_product").click(function(){
-
 		$.ajax({
 			type:"post",
 			dataType:"json",
@@ -76,11 +81,15 @@ $(document).ready(function(){
 			},
 			success: function (data) {
 				console.log(data);
-				var txt=data.Message;
-				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+				if(data.Code==1){
+					var txt='Unbundled success';
+					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+				}else if(data.Code==0){
+					var txt='Unbundled failed';
+					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+				}
 			},
 			error: function (data) {
-				console.log(data);
 				var txt=data.Message;
 				window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
 			}
@@ -178,7 +187,7 @@ $(document).ready(function(){
 			<a href="login.html"><li onclick="quit()"  >Logout</li></a>
 			<a onclick="js_method_real()"><li>Real-time Data</li></a>
 			<a onclick="js_method_healthy()"><li>Health Archives</li></a>
-			<a href="addProduct.html"><li >Add or Change device</li></a>
+			<a href="addProduct.html"><li >Add device</li></a>
 			<a onclick="js_method_delete()"><li class="on">Delete device</li></a>
 		</ul>
 	</div>
