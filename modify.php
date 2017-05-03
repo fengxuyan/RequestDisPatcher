@@ -3,28 +3,28 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Modify Information</title>
-	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
-	<script src="/RequestDisPatcher/JS/jquery-ui.js"></script>
-	<!--<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">-->
-	<link rel="stylesheet" href="/RequestDisPatcher/CSS/jquery-ui.css">
-	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
-	<script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
-	<script src="/RequestDisPatcher/JS/ajaxfileupload.js"></script>
+	<script src="  /RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+	<script src="  /RequestDisPatcher/JS/jquery-ui.js"></script>
+	<!--<link rel="stylesheet" href="  CSS/bootstrap.min.css">-->
+	<link rel="stylesheet" href="  /RequestDisPatcher/CSS/jquery-ui.css">
+	<script src="  /RequestDisPatcher/JS/DateFormat.js"></script>
+	<script src="  /RequestDisPatcher/JS/xcConfirm.js"></script>
+	<script src="  /RequestDisPatcher/JS/ajaxfileupload.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
-
-
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/laydate.css">
-	<script type="text/javascript" src="/RequestDisPatcher/JS/laydate.js"></script>
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/xcConfirm.css"/>
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/layout.css">
+	<link rel="stylesheet" type="text/css" href=" /RequestDisPatcher/ CSS/global.css">
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/font-awesome.min.css">
 
 
-	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
-	<script src="/RequestDisPatcher/JS/checkForm.js" type="text/javascript"></script>
-	<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
-	<!--<script src="/RequestDisPatcher/JS/birthday.js"></script>-->
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/laydate.css">
+	<script type="text/javascript" src="  /RequestDisPatcher/JS/laydate.js"></script>
+
+
+	<script src="  /RequestDisPatcher/JS/DateFormat.js"></script>
+	<script src="  /RequestDisPatcher/JS/checkForm.js" type="text/javascript"></script>
+	<script src="  /RequestDisPatcher/JS/jquery.cookie.js"></script>
+	<!--<script src="  JS/birthday.js"></script>-->
 	<style>
 		.bir_txt {
 			display: block;
@@ -38,10 +38,10 @@
 	<script type="text/javascript">
 		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 		if(userInfo==null){
-			window.location.href = "login.html";//location.href实现客户端页面的跳转
+			window.location.href = "login.php";//location.href实现客户端页面的跳转
 		};
 		function goback() {
-			location.href='homepage.html';
+			location.href='homepage.php';
 		}
 
 		$(document).ready(function() {
@@ -128,7 +128,7 @@
 						$.ajax({
 									type: "post",
 									dataType: "json",//返回数据的类型
-									url: "/RequestDisPatcher/request/dispatcher.do",
+									url: "  request/dispatcher.do",
 									data: {
 										url: "http://101.37.100.209:9001/login/modify",
 										params: "firstName=" + $('#firstName').val() + "&password=" + $('#password').val() + "&middleName=" + $('#middleName').val() + "&lastName=" + $('#lastName').val() + "&birth=" + subbirthday + "&gender=" + $('#gender').val() + "&mphone=" + $('#phone').val() + "&address=" + $('#address').val() + "&email=" + $('#email').val()+"&token="+token_t.substring(1,token_t.length-1)
@@ -137,7 +137,7 @@
 
 										$.ajax({
 											type:"POST",
-											url:"/RequestDisPatcher/request/dispatcher.do",
+											url:"  request/dispatcher.do",
 											data:{
 												url:"http://127.0.0.1:9001/login/login",
 												Email:$('#Email').val(),
@@ -154,7 +154,7 @@
 															document.cookie="dlumima="+$('#password').val();
 															document.cookie="token="+JSON.stringify(data.Data.token);
 //										document.cookie="image="+JSON.stringify(data.Data['userInfo'].image);
-															window.location.href="modify.html";
+															window.location.href="modify.php";
 														}})
 
 												}else{
@@ -174,9 +174,9 @@
 
 //						$.ajaxFileUpload({
 //							type:"POST",
-//							url:"/RequestDisPatcher/request/upload.do",
+//							url:"  request/upload.do",
 //							type:"POST",
-//							url:"/RequestDisPatcher/request/dispatcher.do",
+//							url:"  request/dispatcher.do",
 ////							dataType: "json",
 //							data: {
 //								url:"http://101.37.100.209:9001/login/modify",
@@ -189,7 +189,7 @@
 //
 //								$.ajax({
 //									type:"POST",
-//									url:"/RequestDisPatcher/request/dispatcher.do",
+//									url:"  request/dispatcher.do",
 //									data:{
 //										url:"http://127.0.0.1:9001/login/login",
 //										Email:$('#Email').val(),
@@ -238,7 +238,7 @@
 						console.log('!=0');
 						$.ajaxFileUpload({
 							type:"POST",
-							url:"/RequestDisPatcher/request/upload.do",
+							url:"  request/upload.do",
 							async:false,
 							secureuri:false,
 							fileElementId:"upload",//file标签的id
@@ -253,7 +253,7 @@
 								console.log(data);
 								$.ajax({
 									type:"POST",
-									url:"/RequestDisPatcher/request/dispatcher.do",
+									url:"  request/dispatcher.do",
 									data:{
 										url:"http://127.0.0.1:9001/login/login",
 										Email:$('#Email').val(),
@@ -270,7 +270,7 @@
 													document.cookie="dlumima="+$('#password').val();
 													document.cookie="token="+JSON.stringify(data.Data.token);
 //										document.cookie="image="+JSON.stringify(data.Data['userInfo'].image);
-													window.location.href="modify.html";
+													window.location.href="modify.php";
 												}})
 
 										}else{

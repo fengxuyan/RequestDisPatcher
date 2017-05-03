@@ -3,22 +3,22 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Product Upgrade</title>
-	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+	<script src="  /RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/layout.css">
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/global.css">
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/font-awesome.min.css">
 
 	<script>
 		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 
 		if(userInfo==null){
-			window.location.href = "login.html";//location.href实现客户端页面的跳转
+			window.location.href = "login.php";//location.href实现客户端页面的跳转
 		};
 		function quit() {
 			$.ajax({
 				type:"post",
-				url:"/RequestDisPatcher/request/dispatcher.do",
+				url:"  request/dispatcher.do",
 				data: {
 					url:"http://127.0.0.1:9001/login/logout",
 					params:"token="+token
@@ -76,19 +76,19 @@
 	<div class="left_nav">
 		<div class="header_text">
 			<div class="header_text_right">
-				<span class="header_pic"><a href="modify.html" ><img src="Heads/default.jpg" id="head"></a></span>
+				<span class="header_pic"><a href="modify.php" ><img src="Heads/default.jpg" id="head"></a></span>
 			</div>
 		</div>
 		<ul>
-			<a href="login.html"><li onclick="quit()"  >Logout</li></a>
-			<a href="concern.html"><li>Family care</li></a>
-			<a href="productupgrade.html"><li  class="on">Value-Added Services</li></a>
+			<a href="login.php"><li onclick="quit()"  >Logout</li></a>
+			<a href="concern.php"><li>Family care</li></a>
+			<a href="productupgrade.php"><li  class="on">Value-Added Services</li></a>
 			<a href="javascript:void(0)" ><span title="Yet open, please wait patiently"><li>Doctors' Hall</li></span></a>
 		</ul>
 	</div>
 	<div class="right_show">
 		<h4 class="titl">isleep</h4>
-		<a href="homepage.html"><span class="home"></span></a>
+		<a href="homepage.php"><span class="home"></span></a>
 		<div class="show_detail">
 			<div class="show_detail_data  proupdate">
 				<h3 style="font-weight: bold;
@@ -148,7 +148,7 @@
 		$(".right_show").css("padding-bottom",30);
 		$(".right_show").css("border-bottom",'1px solid #ddd');
 	</script>
-	<script src="/RequestDisPatcher/JS/mine.js"></script>
+	<script src="  JS/mine.js"></script>
 </div>
 </body>
 </html>

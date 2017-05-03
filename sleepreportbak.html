@@ -153,6 +153,9 @@
     var otheremail=getQueryString('otheremail');
 
 
+
+	var otheremail=getQueryString('email');
+
 	var sn=getQueryString('sn');
 
 	function otherrealdata() {
@@ -370,9 +373,8 @@ function falser() {
         var timetoshow=one_check_fmt.split('-');
 
         var timetoshow1=other_check_fmt.split('-');
-		console.log(otheremail);
 		if(otheremail==null){
-			console.log(otheremail);
+
             $('#noemail').show();
             $('#hasemail').hide();
 
@@ -507,8 +509,6 @@ if(data.Data[0].score!=0){
 }else{
             $('#noemail').hide();
             $('#hasemail').show();
-
-			console.log(otheremail);
 
 			$('.header_pic a').attr('href',"javascript:void(0)");
 

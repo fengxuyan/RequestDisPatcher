@@ -3,13 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Add Product</title>
-	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+	<script src="  /RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
 
-	<script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
+	<script src="  /RequestDisPatcher/JS/xcConfirm.js"></script>
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/xcConfirm.css"/>
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/layout.css">
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/global.css">
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/font-awesome.min.css">
 	<style>
 		.foot_btn{
 			margin-top: 40px !important;
@@ -20,7 +20,7 @@
 		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 		$.ajax({
 			type:"post",
-			url:"/RequestDisPatcher/request/dispatcher.do",
+			url:"  request/dispatcher.do",
 			data: {
 				url:"http://127.0.0.1:9001/login/logout",
 				params:"token="+token
@@ -39,7 +39,7 @@
 	var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 
 	if(userInfo==null){
-		window.location.href = "login.html";//location.href实现客户端页面的跳转
+		window.location.href = "login.php";//location.href实现客户端页面的跳转
 	};
 $(document).ready(function(){
 	var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
@@ -79,7 +79,7 @@ $(document).ready(function(){
 		$.ajax({
 			type:"post",
 			dataType:"json",
-			url:"/RequestDisPatcher/request/dispatcher.do",
+			url:"  request/dispatcher.do",
 			data: {
 				url:"http://101.37.100.209:9002/device/delete",
 				params:"token="+token+"&sn="+$('#SN').val()
@@ -122,7 +122,7 @@ $(document).ready(function(){
 
 
 		} else {
-			location.href = "healthy.html";
+			location.href = "healthy.php";
 
 		}
 	}
@@ -146,7 +146,7 @@ $(document).ready(function(){
 
 
 		}else{
-			location.href = "real.html";
+			location.href = "real.php";
 
 		}
 
@@ -172,7 +172,7 @@ $(document).ready(function(){
 
 
 		}else{
-			location.href = "deleteProduct.html";
+			location.href = "deleteProduct.php";
 
 		}
 
@@ -185,21 +185,21 @@ $(document).ready(function(){
 	<div class="left_nav" >
 		<div class="header_text">
 			<div class="header_text_right">
-				<span class="header_pic"><a href="modify.html" ><img src="Heads/default.jpg" id="head"></a></span>
+				<span class="header_pic"><a href="modify.php" ><img src="Heads/default.jpg" id="head"></a></span>
 			</div>
 		</div>
 		<ul>
-			<a href="login.html"><li onclick="quit()"  >Logout</li></a>
+			<a href="login.php"><li onclick="quit()"  >Logout</li></a>
 			<a onclick="js_method_real()"><li>Real-time Data</li></a>
 			<a onclick="js_method_healthy()"><li>Health Archives</li></a>
-			<a href="addProduct.html"><li >Add device</li></a>
+			<a href="addProduct.php"><li >Add device</li></a>
 			<a onclick="js_method_delete()"><li class="on">Delete device</li></a>
 		</ul>
 	</div>
 
 	<div class="right_show" style="overflow: hidden">
 		<h4 class="titl">isleep</h4>
-		<a href="homepage.html"><span class="home"></span></a>
+		<a href="homepage.php"><span class="home"></span></a>
 		<div class="show_detail">
 			<div class="show_detail_data">
 				<div class="addpro">
@@ -220,7 +220,7 @@ $(document).ready(function(){
 		</div>
 	</div>
 	</div>
-	<!--<script src="/RequestDisPatcher/JS/mine.js"></script>-->
+	<!--<script src="  JS/mine.js"></script>-->
 <script>
 	$('.right_show').css("height",$(window).height());
 	$('.left_nav').css("height",$(window).height());

@@ -3,22 +3,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>HomePage</title>
-	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
-	<!--<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">-->
-	<script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
+	<script src=" /RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+	<!--<link rel="stylesheet" href=" CSS/bootstrap.min.css">-->
+	<script src=" /RequestDisPatcher/JS/xcConfirm.js"></script>
 
 
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
-	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
-	<script src="/RequestDisPatcher/JS/mine.js"></script>
+	<link rel="stylesheet" type="text/css" href=" /RequestDisPatcher/CSS/xcConfirm.css"/>
+	<link rel="stylesheet" type="text/css" href=" /RequestDisPatcher/CSS/layout.css">
+	<link rel="stylesheet" type="text/css" href=" /RequestDisPatcher/CSS/global.css">
+	<link rel="stylesheet" type="text/css" href=" /RequestDisPatcher/CSS/font-awesome.min.css">
+	<script src=" /RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+	<script src=" /RequestDisPatcher/JS/mine.js"></script>
 <script type="text/javascript">
 	function quit() {
 		$.ajax({
 			type:"post",
-			url:"/RequestDisPatcher/request/dispatcher.do",
+			url:" request/dispatcher.do",
 			data: {
 				url:"http://127.0.0.1:9001/login/logout",
 				params:"token="+token
@@ -36,7 +36,7 @@
 //		var token = info.token;
 //			$.ajax({
 //				type:"post",
-//				url:"/RequestDisPatcher/request/dispatcher.do",
+//				url:" request/dispatcher.do",
 //				data: {
 //					url:"http://127.0.0.1:9001/login/checkToken",
 //					params:"token="+token
@@ -56,14 +56,14 @@
 //	}
 //	if(!checktoken()){
 //
-////		window.location.href = "login.html";//location.href实现客户端页面的跳转
+////		window.location.href = "login.php";//location.href实现客户端页面的跳转
 //
 //
 //	};
 	var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 
 	if(userInfo==null){
-		window.location.href = "login.html";//location.href实现客户端页面的跳转
+		window.location.href = "login.php";//location.href实现客户端页面的跳转
 	};
 
 
@@ -81,7 +81,7 @@ $(document).ready(function(){
 	var  image=Info.image;
 
 if(token==''){
-	location.href='login.html';
+	location.href='login.php';
 
 	};
 if(image==null){
@@ -132,8 +132,8 @@ if(image==null){
 		</div>
 		<div class="header_text">
 			<div class="header_text_right">
-				<span class="header_pic"><a href="modify.html" ><img src="Heads/default.jpg" id="head"></a></span>
-				<a href="modify.html"><span>Personal Information</span></a><a href="login.html"><span onclick="quit()" >Logout</span></a>
+				<span class="header_pic"><a href="modify.php" ><img src="Heads/default.jpg" id="head"></a></span>
+				<a href="modify.php"><span>Personal Information</span></a><a href="login.php"><span onclick="quit()" >Logout</span></a>
 			</div>
 		</div>
 	</div>
@@ -142,11 +142,11 @@ if(image==null){
 
 	<div class="content_icon">
 		<ul class="content_icon_list">
-			<li><a href="chuangdian.html"><span>Smart mattress pad</span></a></li>
+			<li><a href="chuangdian.php"><span>Smart mattress pad</span></a></li>
 			<li><a href="javascript:void(0)" title="Yet open, please wait patiently" ><span>Smart Pillow</span></a></li>
 			<li><a href="javascript:void(0)" title="Yet open, please wait patiently" ><span>Smart Bracelet</span></a></li>
-			<li><a href="concern.html" ><span>Family care</span></a></li>
-			<li><a href="productupgrade.html" ><span>Value-Added Services</span></a></li>
+			<li><a href="concern.php" ><span>Family care</span></a></li>
+			<li><a href="productupgrade.php" ><span>Value-Added Services</span></a></li>
 			<li><a href="javascript:void(0)" ><span title="Yet open, please wait patiently" >Doctors' Hall</span></a></li>
 		</ul>
 	</div>

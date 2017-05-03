@@ -7,20 +7,17 @@
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes" />
 
-    <script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
-    <script src="/RequestDisPatcher/amcharts/amcharts.js"></script>
-    <script src="/RequestDisPatcher/amcharts/serial.js"></script>
-    <script src="/RequestDisPatcher/amcharts/themes/light.js"></script>
-    <script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
-    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
-    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
-    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
-    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
+    <script src="  /RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+    <script src="  /RequestDisPatcher/JS/xcConfirm.js"></script>
+    <link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/xcConfirm.css"/>
+    <link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/layout.css">
+    <link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/global.css">
+    <link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/font-awesome.min.css">
     <script type="text/javascript">
         var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 
         if(userInfo==null){
-            window.location.href = "login.html";//location.href实现客户端页面的跳转
+            window.location.href = "login.php";//location.href实现客户端页面的跳转
         };
         $(document).ready(function(){
             var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
@@ -62,7 +59,7 @@
 
                                         $.ajax({
                                             type:"POST",
-                                            url:"/RequestDisPatcher/request/dispatcher.do",
+                                            url:"  request/dispatcher.do",
                                             data:{
                                                 url:"http://127.0.0.1:9001/login/cancel",
                                                 params:"email="+email+"&type="+'concernMe'+"&token="+token
@@ -118,7 +115,7 @@
                                     $(item).parents('.concern_item1').remove();
                                     $.ajax({
                                         type:"POST",
-                                        url:"/RequestDisPatcher/request/dispatcher.do",
+                                        url:"  request/dispatcher.do",
                                         data:{
                                             url:"http://127.0.0.1:9001/login/cancel",
                                             params:"email="+email+"&type="+'myConcern'+"&token="+token
@@ -171,7 +168,7 @@
                         $(this).parents('.concern_item2').remove();
                         $.ajax({
                             type:"post",
-                            url:"/RequestDisPatcher/request/dispatcher.do",
+                            url:"  request/dispatcher.do",
                             data: {
                                 url:"http://101.37.100.209:9001/login/handle",
                                 params:"token="+token+"&email="+email+"&handle=agree"
@@ -220,7 +217,7 @@
 
                         $.ajax({
                             type:"post",
-                            url:"/RequestDisPatcher/request/dispatcher.do",
+                            url:"  request/dispatcher.do",
                             data: {
                                 url:"http://101.37.100.209:9001/login/handle",
                                 params:"token="+token+"&email="+email+"&handle=disagree"
@@ -265,7 +262,7 @@
             }
             $.ajax({
                 type:"post",
-                url:"/RequestDisPatcher/request/dispatcher.do",
+                url:"  request/dispatcher.do",
                 data: {
                     url:"http://127.0.0.1:9001/login/getWait",
                     params:"token="+token
@@ -281,9 +278,9 @@
                     $.each(data.Data, function(i, item) {
                         if(item.image==null){
                             if(item.gender==1){
-                                item.image='/RequestDisPatcher/Heads/header_man.png';
+                                item.image='  Heads/header_man.png';
                             }else if(item.gender==0){
-                                item.image='/RequestDisPatcher/Heads/header_woman.png';
+                                item.image='  Heads/header_woman.png';
                             }
                         }else{
                             item.image=item.image;
@@ -310,7 +307,7 @@
 
             $.ajax({
                 type:"post",
-                url:"/RequestDisPatcher/request/dispatcher.do",
+                url:"  request/dispatcher.do",
                 data: {
                     url:"http://127.0.0.1:9001/login/getConcernMe",
                     params:"token="+token
@@ -321,9 +318,9 @@
                     $.each(data.Data, function(i, item) {
                         if(item.image==null){
                             if(item.gender==1){
-                                item.image='/RequestDisPatcher/Heads/header_man.png';
+                                item.image='  Heads/header_man.png';
                             }else if(item.gender==0){
-                                item.image='/RequestDisPatcher/Heads/header_woman.png';
+                                item.image='  Heads/header_woman.png';
                             }
                         };
                         $(".concern2 .concern202").append('<ul class="concern_item2"> <div class="detail_pic"> <div class="header_pic"> <i class="itme1_arrow"></i>  <img src="'+item.image+'" id="head"> <span class="name">'+item.name+'</span> <span class="email">'+item.email+'</span> </div><i class="itme1_rabish"></i> </div> </ul>');
@@ -346,7 +343,7 @@
             });
             $.ajax({
                 type:"post",
-                url:"/RequestDisPatcher/request/dispatcher.do",
+                url:"  request/dispatcher.do",
                 data: {
                     url:"http://127.0.0.1:9001/login/getMyConcern",
                     params:"token="+token
@@ -358,9 +355,9 @@
 
                         if(item.image==null){
                                 if(item.gender==1){
-                                   item.image='/RequestDisPatcher/Heads/header_man.png';
+                                   item.image='  Heads/header_man.png';
                                 }else if(item.gender==0){
-                                    item.image='/RequestDisPatcher/Heads/header_woman.png';
+                                    item.image='  Heads/header_woman.png';
                                 }
                         };
 
@@ -377,7 +374,7 @@
                                 $('.holder').css('min-height',$(".right_show").height());
                             }
                         }else{
-                            $(".concern1").append('<ul class="concern_item1"> <div class="detail_pic"> <li class="clickLi"> <div class="header_pic"> <i class="itme1_arrow" ></i>  <img src="' + item.image + '" id="head">  <span class="name">' + item.name + '</span> <span class="email">' + item.email + '</span> </div> <i class="itme1_rabish"></i> </li> <li> <div class="item1_product_list"> <ul> <li><span>Smart mattress pad</span> <a href="real.html?&email='+item.email+'&sn='+sn+'">Real-time Data</a> <a href="healthy.html?&email='+item.email+'&sn='+sn+'">Health Archives</a> </li> <li><span>Smart Pillow</span> <a href="#" style="background:#cdc8c3"title="No Device.Can not View!">Real-time Data</a> <a href="#"  style="background:#cdc8c3" title="No Device.Can not View!">Health Archives</a> </li> <li><span >Smart Bracele</span> <a href="#" style="background:#cdc8c3" title="No Device.Can not View!">Real-time Data</a> <a href="#" style="background:#cdc8c3" title="No Device.Can not View!">Health Archives</a> </li> </ul> </div> </li> </div> </ul>');
+                            $(".concern1").append('<ul class="concern_item1"> <div class="detail_pic"> <li class="clickLi"> <div class="header_pic"> <i class="itme1_arrow" ></i>  <img src="' + item.image + '" id="head">  <span class="name">' + item.name + '</span> <span class="email">' + item.email + '</span> </div> <i class="itme1_rabish"></i> </li> <li> <div class="item1_product_list"> <ul> <li><span>Smart mattress pad</span> <a href="real.php?&email='+item.email+'&sn='+sn+'">Real-time Data</a> <a href="healthy.php?&email='+item.email+'&sn='+sn+'">Health Archives</a> </li> <li><span>Smart Pillow</span> <a href="#" style="background:#cdc8c3"title="No Device.Can not View!">Real-time Data</a> <a href="#"  style="background:#cdc8c3" title="No Device.Can not View!">Health Archives</a> </li> <li><span >Smart Bracele</span> <a href="#" style="background:#cdc8c3" title="No Device.Can not View!">Real-time Data</a> <a href="#" style="background:#cdc8c3" title="No Device.Can not View!">Health Archives</a> </li> </ul> </div> </li> </div> </ul>');
                             if($(".left_nav").height() > $(".right_show").height()){
                                 $(".right_show").height($(".left_nav").height()+30);
                                 $('.holder').css('min-height',$(".left_nav").height());
@@ -439,7 +436,7 @@
                 var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
                 $.ajax({
                     type:"post",
-                    url:"/RequestDisPatcher/request/dispatcher.do",
+                    url:"  request/dispatcher.do",
                     data: {
                         url:"http://127.0.0.1:9001/login/logout",
                         params:"token="+token
@@ -465,19 +462,19 @@
         <div class="header_text" style="    position: relative;
     top: -46px;">
             <div class="header_text_right">
-                <span class="header_pic"><a href="modify.html" ><img src="Heads/default.jpg" id="head"></a></span>
+                <span class="header_pic"><a href="modify.php" ><img src="Heads/default.jpg" id="head"></a></span>
             </div>
         </div>
         <ul style="  ">
-            <a href="login.html"><li onclick="quit()"  >Logout</li></a>
-            <a href="concern.html"><li class="on">Family care</li></a>
-            <a href="productupgrade.html"><li>Value-Added Services</li></a>
+            <a href="login.php"><li onclick="quit()"  >Logout</li></a>
+            <a href="concern.php"><li class="on">Family care</li></a>
+            <a href="productupgrade.php"><li>Value-Added Services</li></a>
             <a href="" ><span title="Yet open, please wait patiently"><li>Doctors' Hall</li></span></a>
         </ul>
     </div>
     <div class="right_show" >
         <h4 class="titl">isleep</h4>
-        <a href="homepage.html"><span class="home"></span></a>
+        <a href="homepage.php"><span class="home"></span></a>
         <div class="show_detail">
             <div class="show_detail_data">
                 <ul class="concern_list">
@@ -521,7 +518,7 @@
         else{
             $.ajax({
                         type:"POST",
-                        url:"/RequestDisPatcher/request/dispatcher.do",
+                        url:"  request/dispatcher.do",
                         data:{
                             url:"http://127.0.0.1:9001/login/query",
                             params:"email="+approval_box0_email
@@ -534,9 +531,9 @@
                                 $(".concern_item0").remove();
                                 if(data.Data.image==null){
                                     if( data.Data.gender==1){
-                                        data.Data.image='/RequestDisPatcher/Heads/header_man.png';
+                                        data.Data.image='  Heads/header_man.png';
                                     }else if( data.Data.gender==0){
-                                        data.Data.image='/RequestDisPatcher/Heads/header_woman.png';
+                                        data.Data.image='  Heads/header_woman.png';
                                     }
                                 };
                                 $(".concern0").append(' <ul class="concern_item0"> <div  class="concern_someone_detail"> <div class="detail_pic"> <span class="header_pic"><img src="' + data.Data.image + '" id="head">  <p class="appl_name">' + data.Data.name + '</p> <p class="appl_email">' + data.Data.email + '</p> </span> <div class="detail_btn"> <input type="button" name="Submit" onclick="remove()" value="Cancel" class="submit_back"> <input type="button" value="Submit" id="submit_submit" class="submit_submit"> </div> </div> </div> </ul> ');
@@ -554,7 +551,7 @@
                                 $("#submit_submit").click(function () {
                                     $.ajax({
                                         type:"POST",
-                                        url:"/RequestDisPatcher/request/dispatcher.do",
+                                        url:"  request/dispatcher.do",
                                         data:{
                                             url:"http://127.0.0.1:9001/login/apply",
                                             params:"token="+token+"&email="+approval_box0_email
@@ -623,6 +620,6 @@
 </script>
 
 <!--<script src="/SleepMonitor/JS/mine.js"></script>-->
-<script src="/RequestDisPatcher/JS/mine.js"></script>
+<script src="  JS/mine.js"></script>
 </body>
 </html>

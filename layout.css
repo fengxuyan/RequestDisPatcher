@@ -20,13 +20,13 @@ input:-webkit-autofill {
 
 }
 .login{
-    background-image: url("../images/background.png") ;
+    background: url("../images/background.png") no-repeat;
     margin: 0 auto;
     /*width: 1024px;*/
     /*position: relative;*/
     height: 100%;
     background-size: cover;
-    background-repeat: no-repeat;
+    /*background-repeat: no-repeat;*/
 }
 .header{
     width: 100%;

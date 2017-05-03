@@ -28,74 +28,13 @@
         }
     </style>
 </head>
-<body>
-<div class="holder rep " >
-    <div class="left_nav">
-        <div class="header_text">
-            <div class="header_text_right">
-                <span class="header_pic"><a href="modify.html" ><img src="Heads/default.jpg" id="head"></a></span>
-            </div>
-        </div>
-        <ul>
-            <a href="login.html"><li onclick="quit()"  >Logout</li></a>
-            <a href="real.html"><li>Real-time Data</li></a>
-            <a href="healthy.html"><li class="on">Health Archives</li></a>
-            <a href="addProduct.html"><li>Add device</li></a>
-            <a href="deleteProduct.html"><li>Delete device</li></a>
-        </ul>
-    </div>
-    <div class="right_show analysis">
-        <h4 class="titl">isleep</h4>
-        <a href="homepage.html"><span class="home"></span></a>
-        <div class="show_detail">
-            <div class="show_detail_data">
-                <div class="data_table search">
-                    <!--<ul class="search_list reportslist">-->
-                        <!--<li>One report</li>-->
-                        <!--<li >Multiple reports</li>-->
-                    <!--</ul>-->
-                    <div class="reports" style="margin-top: -30px;">
-                        <div class="reports_detail">
-                            <h4 class="" style=" font-size: 23px;padding-top: 0px;">Data analysis </h4>
-
-                        </div>
-                        <div class="statistics_table">
-                            <p>Heart rate</p>
-                            <div class="statistics-table0">
-                                <div id="chartdiv"></div>
-                            </div>
-                            <p>Respiration</p>
-                            <div class="statistics-table1">
-                                <div id="chartdiv1"></div>
-                            </div>
-                            <p>Deep Sleep amount</p>
-                            <div class="statistics-table2">
-                                <div id="chartdiv2"></div>
-                            </div>
-                            <p>Sleep quality curve</p>
-                            <div class="statistics-table3">
-                                <div id="chartdiv3"></div>
-                            </div>
-                        </div>
-                        <input type="button" onclick="javascript:history.back(-1);" value="Back" class="submit_submit back">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-</div>
-<script>
-    $(".right_show").css("border-bottom",'1px solid #ddd');
-    $(".right_show").css("padding-bottom",30);
-
-</script>
 <script type="text/javascript">
     var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+
     if(userInfo==null){
         window.location.href = "login.html";//location.href实现客户端页面的跳转
     };
+
     $(document).ready(function(){
         var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
         var info = JSON.parse(userInfo[2]);
@@ -182,8 +121,133 @@
         return (dn+dns);
     }
 </script>
-<script type="text/javascript">
+<script>
 
+
+var otheremail=getQueryString('email');
+console.log(otheremail);
+
+    function otherrealdata() {
+        window.location.href='real.html?&email='+otheremail+'&sn='+getQueryString('sn');
+    }
+
+
+function searchKeys(needle, haystack)
+{
+    var result = [];
+    for (i in haystack)
+    {
+        if (haystack[i] == needle)
+        {
+            result.push(i);
+        }
+    }
+    return result;
+}
+
+
+
+</script>
+<body>
+<div class="holder rep " >
+    <div class="left_nav">
+        <div class="header_text">
+            <div class="header_text_right">
+                <span class="header_pic"><a href="modify.html" ><img src="Heads/default.jpg" id="head"></a></span>
+            </div>
+        </div>
+        <ul  id="noemail">
+            <a href="login.html"><li onclick="quit()"  >Logout</li></a>
+            <a href="real.html"><li onclick="otherrealdata()">Real-time Data</li></a>
+            <a href="healthy.html"><li class="on">Health Archives</li></a>
+            <a href="addProduct.html"><li>Add device</li></a>
+            <a href="deleteProduct.html"><li>Delete device</li></a>
+        </ul>
+        <ul  id="hasemail">
+            <a href="login.html"><li onclick="quit()"  >Logout</li></a>
+            <a><li  onclick="otherrealdata()">Real-time Data</li></a>
+           <a><li class="on">Health Archives</li></a>
+           <li></li>
+           <li></li>
+        </ul>
+    </div>
+    <div class="right_show analysis">
+        <h4 class="titl">isleep</h4>
+        <a href="homepage.html"><span class="home"></span></a>
+        <div class="show_detail">
+            <div class="show_detail_data">
+                <div class="data_table search">
+                    <!--<ul class="search_list reportslist">-->
+                        <!--<li>One report</li>-->
+                        <!--<li >Multiple reports</li>-->
+                    <!--</ul>-->
+                    <div class="reports" style="margin-top: -30px;">
+                        <div class="reports_detail">
+                            <h4 class="" style=" font-size: 23px;padding-top: 0px;">Data analysis </h4>
+
+                        </div>
+                        <div class="statistics_table">
+                            <p>Heart rate</p>
+                            <div class="statistics-table0">
+                                <div id="chartdiv"></div>
+                            </div>
+                            <p>Respiration</p>
+                            <div class="statistics-table1">
+                                <div id="chartdiv1"></div>
+                            </div>
+                            <p>Deep Sleep amount</p>
+                            <div class="statistics-table2">
+                                <div id="chartdiv2"></div>
+                            </div>
+                            <p>Sleep quality curve</p>
+                            <div class="statistics-table3">
+                                <div id="chartdiv3"></div>
+                            </div>
+                        </div>
+                        <input type="button" onclick="javascript:history.back(-1);" value="Back" class="submit_submit back">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(".right_show").css("border-bottom",'1px solid #ddd');
+    $(".right_show").css("padding-bottom",30);
+
+</script>
+
+<script type="text/javascript">
+//    function checktoken() {
+//        var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
+//        var info = JSON.parse(userInfo[2]);
+//        var token = info.token;
+//        $.ajax({
+//            type:"post",
+//            url:"/RequestDisPatcher/request/dispatcher.do",
+//            data: {
+//                url:"http://127.0.0.1:9001/login/checkToken",
+//                params:"token="+token
+//            },
+//            success: function (data) {
+////					1、未失效，1006、已失效
+//                if(data.Code==1) {
+//                    return true;
+//                }
+//                else if(data.Code==1006){
+//                    return false;
+//                }
+//            },
+//            error: function (data) {
+//            }
+//        });
+//    }
+//    if(!checktoken()){
+//
+//        window.location.href = "login.html";//location.href实现客户端页面的跳转
+//
+//
+//    };
 
 
     var otheremail=getQueryString('email');
@@ -253,6 +317,32 @@
 
 
 if(otheremail!=null){
+
+    $('#noemail').hide();
+    $('#hasemail').show();
+
+
+
+    $.ajax({
+        type:"POST",
+        url:"/RequestDisPatcher/request/dispatcher.do",
+        data:{
+            url:"http://127.0.0.1:9001/login/query",
+            params:"email="+otheremail
+        },
+        dataType:"json",
+        success:function(data) {
+            $('#head').attr('src',data.Data.image);
+        },
+        error: function (jqXHR, textStatus, errorThrown,Code) {
+            var txt="Unkonw Error.Please Try Again!";
+            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+        }
+    })
+
+
+
+
     $.ajax({
         type:"post",
         dataType:"json",
@@ -306,15 +396,37 @@ if(otheremail!=null){
 
 
             var map1 = new Array();//一维数组
+            var map1 = new Array();//一维数组
+            var avgBreath_list = new Array(data.Data.length);
+            var count_count1 = 0;
             for (var i = 0; i < data.Data.length; i++) {
-                for(var j=0;j<other_chooselists.length;j++){
-                    if( data.Data[i].creatTime==other_chooselists[j]){
-                        map1.push(data.Data[i].avgBreath);//一维数组
+                for(var j=0;j<one_chooselists.length;j++){
+                    if( data.Data[i].creatTime==one_chooselists[j]){
+                        if(count_count1==0){
+                            avgBreath_list[count_count1] = data.Data[i].avgBreath;
+                            map1.push(data.Data[i].avgBreath);//一维数组
+                            count_count1++;
+                        }else{
+                            avgBreath_list[count_count1] = data.Data[i].avgBreath;
+                            if(avgBreath_list[count_count1-1]==data.Data[i].avgBreath){
+                                if(count_count1==1){
+                                    map1.push(data.Data[i].avgBreath+0.3);//一维数组
+                                    map1.push(data.Data[i].avgBreath);//一维数组
+                                }else if(avgBreath_list[count_count1-2]>data.Data[i].avgBreath){
+                                    map1.push(data.Data[i].avgBreath-0.3);//一维数组
+                                    map1.push(data.Data[i].avgBreath);//一维数组
+                                }else if(avgBreath_list[count_count1-2]<data.Data[i].avgBreath){
+                                    map1.push(data.Data[i].avgBreath+0.3);//一维数组
+                                    map1.push(data.Data[i].avgBreath);//一维数组
+                                }
+                            }else{
+                                map1.push(data.Data[i].avgBreath);//一维数组
+                            }
+                            count_count1++;
+                        }
                     };
                 }
-
             }
-
 
 
 
@@ -329,7 +441,7 @@ if(otheremail!=null){
 
                 for(var j=0;j<other_chooselists.length;j++){
                     if( data.Data[i].creatTime==other_chooselists[j]){
-                        map2.push(Math.round((data.Data[i].deepSleepTime)/(60*60)));//一维数组
+                        map2.push(((data.Data[i].deepSleepTime)/(60*60)));//一维数组
                     };
                 }
 
@@ -340,16 +452,16 @@ if(otheremail!=null){
             }
 
 
-            var hightest2=Math.max.apply(null, map2).toFixed(0);//最大值
-            var minest2=Math.min.apply(null, map2).toFixed(0);//最小值
-            var avg2=arrAverageNum2(map2).toFixed(0);
+            var hightest2=Math.max.apply(null, map2).toFixed(1);//最大值
+            var minest2=Math.min.apply(null, map2).toFixed(1);//最小值
+            var avg2=arrAverageNum2(map2).toFixed(1);
             var fields2 = {data:map2,color:'#000',name:'Deep Sleep amount',width:2};
+
+            console.log(hightest2);
 
 
             var map3 = new Array();//一维数组
             for (var i = 0; i < data.Data.length; i++) {
-
-
 
                 for(var j=0;j<other_chooselists.length;j++){
                     if( data.Data[i].creatTime==other_chooselists[j]){
@@ -384,7 +496,7 @@ if(otheremail!=null){
 
             var fields4 = {data:map4,color:'#6d4e31',name:'Sleep time',width:2};
 
-            if(minest<15){
+
                 var chart = new Highcharts.Chart('chartdiv', {
                     chart:{
                         type:'spline',
@@ -414,21 +526,8 @@ if(otheremail!=null){
                         }
                     },
                     yAxis: {
+                        tickPixelInterval: 50,
                         gridLineWidth:'0px',
-                        plotLines:[
-                            {
-                                label:{
-                                    text:avg+'(Average Value)',
-//                                text:'Average Value',  //标签的内容
-                                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                },
-                                color:'#ddd',
-                                dashStyle:'Dot',
-                                value:avg,
-                                width:2
-                            }
-                        ],
                         visible: false,
                         enabled: false,
                     },
@@ -462,179 +561,20 @@ if(otheremail!=null){
                         y: 45,
 //                    labelFormat: '<span style="color:#a37c59">{name}</span>'
                     },
-                    series:
-                            [
-                                fields
-                            ]
-                    ,
-                    credits:{
-                        enabled:false // 禁用版权信息
-                    }
-                }, function (chart) {
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:hightest,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-
-                    chart.renderer.image('images/healthy_reports_highest.png', 525, Math.round(hightest)+20, 15, 15).add().
-
-                    renderer.text(Math.round(hightest), 545, Math.round(hightest)+30).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('Times/Min', 510, Math.round(hightest)+50).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:minest,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-                    chart.renderer.image('images/healthy_reports_lowest.png', 525,Math.round(minest)+250, 15, 15).add().
-
-                    renderer.text(Math.round(minest), 545, Math.round(minest)+250+10).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('Times/Min', 510, Math.round(minest)+250+40).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:avg,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,
-                    });
-
-                    chart.renderer.image('images/healthy_reports_average.png', 525, (Math.round(hightest)+20+ Math.round(minest)+250)/2, 15, 15).add().
-
-                    renderer.text(Math.round(avg), 545,(Math.round(hightest)+20+ Math.round(minest)+250)/2+10).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('Times/Min', 510,(Math.round(hightest)+20+ Math.round(minest)+250)/2+30).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-
-
-                });
-
-
-            }else{
-
-                var chart = new Highcharts.Chart('chartdiv', {
-                    chart:{
-                        type:'spline',
-                        tooltip: {
-                            enabled : false
-                        },
-                        marginRight: 50,
-                        marginLeft: 40,
-                    },
-                    tooltip: {
-                        enabled : false
-                    },
-                    title: {
-                        text: 'Heart rate',
-//                    text: 'Respiration',
-                        x: -30,
-                        y: 40
-                    },
-                    subtitle: {
-                    },
-                    xAxis: {
-                        visible: false,
-                        enabled: false,
-                        gridLineWidth:'0px',
-                        labels: {
-                            enabled: false
-                        }
-                    },
-                    yAxis: {
-                        gridLineWidth:'0px',
-                        plotLines:[
-                            {
-                                label:{
-                                    text:avg+'(Average Value)',
-//                                text:'Average Value',  //标签的内容
-                                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                },
-                                color:'#ddd',
-                                dashStyle:'Dot',
-                                value:avg,
-                                width:2
+                    plotOptions: {
+                        series: {
+                            lineWidth: 1,
+                            marker: {
+                                enabled: false
                             }
-                        ],
-                        visible: false,
-                        enabled: false,
-                    },
-                    plotLines:[
-                        {
-                            label:{
-                                text:avg+'(Average Value)',
-//                                text:'Average Value',  //标签的内容
-                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                            },
-                            color:'#ddd',
-                            dashStyle:'Dot',
-                            value:avg,
-                            width:2
                         }
-                    ],
-                    legend: {
-                        itemStyle: {
-
-                            color: '#000000',
-                            fontWeight: 'bold'
-                        },
-                        enabled: false,
-                        layout: 'vertical',
-                        backgroundColor: '#fff',
-                        floating: true,
-//                    align: 'right',
-                        verticalAlign: 'top',
-                        x: 170,
-                        y: 45,
-//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
                     },
                     series:
                             [
                                 fields
                             ]
                     ,
+
                     credits:{
                         enabled:false // 禁用版权信息
                     }
@@ -646,17 +586,18 @@ if(otheremail!=null){
                         color: '#000',                  //标示线的颜色
                         id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
                         zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
+                    })
+                    ;
 
-                    chart.renderer.image('images/healthy_reports_highest.png', 525, hightest, 15, 15).add().
+                    chart.renderer.image('images/healthy_reports_highest.png',535, (Math.round(hightest)), 15, 15).add().
 
-                    renderer.text(Math.round(hightest), 545, y+12).attr({}).
+                    renderer.text(Math.round(hightest), 555, (Math.round(hightest))+15).attr({}).
                     css({
                         fontSize: '23px',
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, y+30).attr({
+                    renderer.text('bpm', 555,(Math.round(hightest))+30).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -672,15 +613,15 @@ if(otheremail!=null){
                         id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
                         zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
                     });
-                    chart.renderer.image('images/healthy_reports_lowest.png', 525, 260-y_min, 15, 15).add().
+                    chart.renderer.image('images/healthy_reports_lowest.png', 535, Math.round(minest)+180, 15, 15).add().
 
-                    renderer.text(Math.round(minest), 545, 260-y_min).attr({}).
+                    renderer.text(Math.round(minest), 555, Math.round(minest)+195).attr({}).
                     css({
                         fontSize: '23px',
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, 280-y_min).attr({
+                    renderer.text('bpm', 555, Math.round(minest)+210).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -698,15 +639,15 @@ if(otheremail!=null){
                         zIndex:3,
                     });
 
-                    chart.renderer.image('images/healthy_reports_average.png', 525, ((260-y_min)+hightest)/2, 15, 15).add().
+                    chart.renderer.image('images/healthy_reports_average.png', 535, ((Math.round(minest)+180)+hightest)/2, 15, 15).add().
 
-                    renderer.text(Math.round(avg), 545, ((260-y_min)+hightest)/2+10).attr({}).
+                    renderer.text(Math.round(avg), 555, ((Math.round(minest)+180)+hightest)/2+15).attr({}).
                     css({
                         fontSize: '23px',
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, 230-avg).attr({
+                    renderer.text('bpm', 555, ((Math.round(minest)+180)+hightest)/2+20+10).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -714,15 +655,8 @@ if(otheremail!=null){
                         fontFamily:'华文细黑',
                     }).add();
 
-
-
                 });
 
-
-            }
-
-
-            if( Math.round(minest1)<15){
 
                 var chart = new Highcharts.Chart('chartdiv1', {
                     chart:{
@@ -743,6 +677,7 @@ if(otheremail!=null){
                     },
                     subtitle: {
                     },
+
                     xAxis: {
                         visible: false,
                         enabled: false,
@@ -771,148 +706,24 @@ if(otheremail!=null){
                         y: 45,
 //                    labelFormat: '<span style="color:#a37c59">{name}</span>'
                     },
-                    series:
-                            [
-                                fields1
-                            ]
-                    ,
-                    credits:{
-                        enabled:false // 禁用版权信息
-                    }
-                }, function (chart) {
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:hightest1,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-
-                    chart.renderer.image('images/healthy_reports_highest.png', 530, Math.round(hightest1)+50, 15, 15).add().
-
-                    renderer.text(Math.round(hightest1), 545,Math.round(hightest1)+10+50).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('Times/Min',510, Math.round(hightest1)+30+50).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:minest1,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-
-
-
-
-                    chart.renderer.image('images/healthy_reports_lowest.png', 525, Math.round(minest1)+250, 15, 15).add().
-
-                    renderer.text(Math.round(minest1), 545,Math.round(minest1)+250+10).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('Times/Min', 510, Math.round(minest1)+250+40).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:avg1,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,
-                    });
-
-                    chart.renderer.image('images/healthy_reports_average.png', 525,((Math.round(minest1)+250)+( Math.round(hightest1)+50))/2, 15, 15).add().
-                    renderer.text(Math.round(avg1), 545, ((Math.round(minest1)+250)+( Math.round(hightest1)+50))/2+10).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('Times/Min', 510, ((Math.round(minest1)+250)+(Math.round(hightest1)+50))/2+30).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-                });
-
-            }else{
-                var chart = new Highcharts.Chart('chartdiv1', {
-                    chart:{
-                        type:'spline',
-                        tooltip: {
-                            enabled : false
-                        },
-                        marginRight: 50,
-                        marginLeft: 40,
-                    },
-                    tooltip: {
-                        enabled : false
-                    },
-                    title: {
-                        text: 'Respiration',
-                        x: -30,
-                        y: 40
-                    },
-                    subtitle: {
-                    },
-                    xAxis: {
-                        visible: false,
-                        enabled: false,
-                        gridLineWidth:'0px',
-                        labels: {
-                            enabled: false
+                    plotOptions: {
+                        series: {
+                            lineWidth: 1
                         }
                     },
-                    yAxis: {
-                        visible: false,
-                        enabled: false,
-                    },
-                    legend: {
-                        itemStyle: {
-
-                            color: '#000000',
-                            fontWeight: 'bold'
-                        },
-                        enabled: false,
-                        layout: 'vertical',
-                        backgroundColor: '#fff',
-                        floating: true,
-//                    align: 'right',
-                        verticalAlign: 'top',
-                        x: 170,
-                        y: 45,
-//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
-                    },
                     series:
                             [
                                 fields1
                             ]
                     ,
+                    plotOptions: {
+                        series: {
+                            lineWidth: 1,
+                            marker: {
+                                enabled: false
+                            }
+                        }
+                    },
                     credits:{
                         enabled:false // 禁用版权信息
                     }
@@ -933,15 +744,15 @@ if(otheremail!=null){
 //
                     console.log(Math.round(hightest1)+50);
 
-                    chart.renderer.image('images/healthy_reports_highest.png', 530, Math.round(hightest1)+30, 15, 15).add().
+                    chart.renderer.image('images/healthy_reports_highest.png', 535, Math.round(hightest1)+60, 15, 15).add().
 
-                    renderer.text(Math.round(hightest1), 545,Math.round(hightest1)+45).attr({}).
+                    renderer.text(Math.round(hightest1), 555,Math.round(hightest1)+75).attr({}).
                     css({
                         fontSize: '23px',
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min',510, Math.round(hightest1)+60).attr({
+                    renderer.text('bpm',555, Math.round(hightest1)+90).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -958,15 +769,15 @@ if(otheremail!=null){
                         zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
                     });
 
-                    chart.renderer.image('images/healthy_reports_lowest.png', 525, Math.round(minest1)+200, 15, 15).add().
+                    chart.renderer.image('images/healthy_reports_lowest.png', 535, Math.round(minest1)+210, 15, 15).add().
 
-                    renderer.text(Math.round(minest1), 545,Math.round(minest1)+220).attr({}).
+                    renderer.text(Math.round(minest1), 555,Math.round(minest1)+225).attr({}).
                     css({
                         fontSize: '23px',
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, Math.round(minest1)+240).attr({
+                    renderer.text('bpm', 555, Math.round(minest1)+240).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -985,14 +796,14 @@ if(otheremail!=null){
                         zIndex:3,
                     });
 
-                    chart.renderer.image('images/healthy_reports_average.png', 525,((Math.round(minest1)+200)+(Math.round(hightest1)))/2, 15, 15).add().
-                    renderer.text(Math.round(avg1), 545, ((Math.round(minest1)+200)+(Math.round(hightest1)))/2+7).attr({}).
+                    chart.renderer.image('images/healthy_reports_average.png', 535,((Math.round(minest1)+210)+(Math.round(hightest1)+60))/2, 15, 15).add().
+                    renderer.text(Math.round(avg1), 555, ((Math.round(minest1)+210)+(Math.round(hightest1)+60))/2+15).attr({}).
                     css({
                         fontSize: '23px',
                         color: '#000',
                         fontFamily:'华文细黑',
                     }).add().
-                    renderer.text('Times/Min', 510, ((Math.round(minest1)+200)+(Math.round(hightest1)))/2+25).attr({
+                    renderer.text('bpm', 555, ((Math.round(minest1)+210)+(Math.round(hightest1)+60))/2+30).attr({
                     }).
                     css({
                         fontSize: '13px',
@@ -1001,665 +812,362 @@ if(otheremail!=null){
                     }).add();
                 });
 
-            }
-            if(minest2<2){
-                console.log('feng');
-                var chart = new Highcharts.Chart('chartdiv2', {
-                    chart:{
-                        type:'spline',
-                        tooltip: {
-                            enabled : false
-                        },
-                        marginRight: 50,
-                        marginLeft: 60,
-                    },
+            var chart = new Highcharts.Chart('chartdiv2', {
+                chart:{
+                    type:'spline',
                     tooltip: {
                         enabled : false
                     },
-                    title: {
-                        text: 'Deep Sleep amount',
-                        x: -30,
-                        y: 40
-                    },
-                    subtitle: {
-                    },
-                    xAxis: {
-                        visible: false,
-                        enabled: false,
-                        labels: {
-                            enabled: false
-                        }
-                    },
+                    marginRight: 50,
+                    marginLeft: 80,
+                },
+                tooltip: {
+                    enabled : false
+                },
+                title: {
+                    text: 'Deep Sleep amount',
+                    x: -30,
+                    y: 40
+                },
+                subtitle: {
+                },
+                xAxis: {
+                    visible: false,
+                    enabled: false,
+                    labels: {
+                        enabled: false
+                    }
+                },
 
-                    yAxis: {
+                yAxis: {
 //                    visible: false,
 //                    enabled: false,
-                        labels: {
-                            style: {
-                                dashStyle:'Dot',     //
-                                fontSize:'15px',
-                                fontFamily:'华文细黑,STHeiti,MingLiu'
-                            },
-                            formatter:function(){
-                                return ""+this.value+"h";
-                            }
-                        },
-
-                        gridLineWidth:'0px',
-                        title: {
-                            text: ''
-                        },
-                    },
-                    legend: {
-                        layout: 'vertical',
-                        backgroundColor: '#fff',
-                        floating: true,
-                        align: 'right',
-                        verticalAlign: 'top',
-                        x: 10,
-                        y: 45,
-                        itemStyle: {
-                            color: '#000000',
-                            fontWeight: 'bold',
-
-                        }
-//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
-                    },
-                    series:
-                            [
-                                fields2,fields4
-                            ]
-                    ,
-                    credits:{
-                        enabled:false // 禁用版权信息
-                    }
-                }, function (chart) {
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:hightest2,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-                    chart.renderer.image('images/smile.png', 2,100 , 25, 25).add().renderer.image('images/ok.png', 2, 160, 25, 25).add().renderer.image('images/bad.png', 2, 220, 25, 25).add();
-
-                    console.log(Math.round(hightest2));
-                    chart.renderer.image('images/healthy_reports_highest.png', 525, Math.round(hightest2)+200, 15, 15).add().
-                    renderer.text(Math.round(hightest2), 545, Math.round(hightest2)+200+10).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('hour', 540, Math.round(hightest2)+200+20).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:minest2,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-                    chart.renderer.image('images/healthy_reports_lowest.png', 525, 270-Math.round(minest2), 15, 15).add().
-
-                    renderer.text(Math.round(minest2), 545,270-Math.round(minest2)).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('hour', 540, 270-Math.round(minest2)+10).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:avg2,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,
-                    });
-
-                    chart.renderer.image('images/healthy_reports_average.png', 525,((270-Math.round(minest2))+Math.round(hightest2)+200)/2, 15, 15).add().
-
-                    renderer.text(Math.round(avg2), 545, ((270-Math.round(minest2))+Math.round(hightest2)+200)/2).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('hour', 540, ((270-Math.round(minest2))+Math.round(hightest2)+200)/2+10).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-                });
-
-
-            }else{
-                var chart = new Highcharts.Chart('chartdiv2', {
-                    chart:{
-                        type:'spline',
-                        tooltip: {
-                            enabled : false
-                        },
-                        marginRight: 50,
-                        marginLeft: 60,
-                    },
-                    tooltip: {
-                        enabled : false
-                    },
-                    title: {
-                        text: 'Deep Sleep amount',
-                        x: -30,
-                        y: 40
-                    },
-                    subtitle: {
-                    },
-                    xAxis: {
-                        visible: false,
-                        enabled: false,
-                        labels: {
-                            enabled: false
-                        }
-                    },
-
-                    yAxis: {
-//                    visible: false,
-//                    enabled: false,
-                        labels: {
-                            style: {
-                                dashStyle:'Dot',     //
-                                fontSize:'15px',
-                                fontFamily:'华文细黑,STHeiti,MingLiu'
-                            },
-                            formatter:function(){
-                                return ""+this.value+"h";
-                            }
-                        },
-
-                        gridLineWidth:'0px',
-                        title: {
-                            text: ''
-                        },
-                    },
-                    legend: {
-                        layout: 'vertical',
-                        backgroundColor: '#fff',
-                        floating: true,
-                        align: 'right',
-                        verticalAlign: 'top',
-                        x: 10,
-                        y: 45,
-                        itemStyle: {
-                            color: '#000000',
-                            fontWeight: 'bold',
-
-                        }
-//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
-                    },
-                    series:
-                            [
-                                fields2,fields4
-                            ]
-                    ,
-                    credits:{
-                        enabled:false // 禁用版权信息
-                    }
-                }, function (chart) {
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:hightest2,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-                    chart.renderer.image('images/smile.png', 2,100 , 25, 25).add().renderer.image('images/ok.png', 2, 160, 25, 25).add().renderer.image('images/bad.png', 2, 220, 25, 25).add();
-
-                    console.log(Math.round(hightest2));
-                    chart.renderer.image('images/healthy_reports_highest.png', 525, Math.round(hightest2)+120, 15, 15).add().
-                    renderer.text(Math.round(hightest2), 545, Math.round(hightest2)+120).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('hour', 540, Math.round(hightest2)+120+17).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:minest2,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-                    chart.renderer.image('images/healthy_reports_lowest.png', 525, 220-Math.round(minest2), 15, 15).add().
-
-                    renderer.text(Math.round(minest2), 545, 220-Math.round(minest2)).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('hour', 540, 220-Math.round(minest2)+15).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:avg2,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,
-                    });
-
-                    chart.renderer.image('images/healthy_reports_average.png', 525,((220-Math.round(minest2))+Math.round(hightest2)+120)/2, 15, 15).add().
-
-                    renderer.text(Math.round(avg2), 545, ((220-Math.round(minest2))+Math.round(hightest2)+120)/2).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('hour', 540, ((220-Math.round(minest2))+Math.round(hightest2)+120)/2+15).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-                });
-
-
-            }
-
-            if(minest3<15){
-                var chart = new Highcharts.Chart('chartdiv3', {
-                    chart:{
-                        type:'spline',
-                        tooltip: {
-                            enabled : false
-                        },
-                        marginRight: 50,
-                        marginLeft: 40,
-                    },
-                    tooltip: {
-                        enabled : false
-                    },
-                    title: {
-                        text: 'Sleep quality curve',
-                        x: -30,
-                        y: 40
-                    },
-                    subtitle: {
-                    },
-                    xAxis: {
-                        visible: false,
-                        enabled: false,
-                        labels: {
-                            enabled: false
-                        }
-                    },
-                    yAxis: {
-                        visible: false,
-                        enabled: false,
+                    labels: {
                         style: {
                             dashStyle:'Dot',     //
                             fontSize:'15px',
                             fontFamily:'华文细黑,STHeiti,MingLiu'
                         },
-                        gridLineWidth:'0px',
-                        title: {
-                            text: ''
-                        },
-                        plotLines:[
-                            {
-                                label:{
-                                    text:hightest3+'(Maximum Value)',    //标签的内容
-                                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                },
-                                zIndex:26,
-                                color:'#ddd',           //线的颜色，定义为红色
-                                dashStyle:'Dot',     //默认值，这里定义为实线
-                                value:hightest3,         //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
-                                width:2                //标示线的宽度，2px
-                            },
-                            {
-                                label:{
-                                    text:minest3+'(Minimum Value)',   //标签的内容
-                                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                },
-                                color:'#ddd',
-                                dashStyle:'Dot',
-                                value:minest3,
-                                width:2,
-                                zIndex:23
-                            },
-                            {
-
-                                label:{
-                                    text:avg3+'(Average Value)',  //标签的内容
-                                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                },
-
-                                color:'#ddd',
-                                dashStyle:'Dot',
-                                value:avg3,
-                                width:2
-                            }
-                        ]
+                        formatter:function(){
+                            return ""+this.value+"h";
+                        }
                     },
 
-                    legend: {
-                        enabled: false,
-                        layout: 'vertical',
-                        backgroundColor: '#fff',
-                        floating: true,
-                        align: 'left',
-                        verticalAlign: 'top',
-                        x: 170,
-                        y: 45,
-//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
+                    gridLineWidth:'0px',
+                    title: {
+                        text: ''
                     },
-                    series:
-                            [
-                                fields3
-                            ]
-                    ,
-                    credits:{
-                        enabled:false // 禁用版权信息
+                },
+                legend: {
+                    layout: 'vertical',
+                    backgroundColor: '#fff',
+                    floating: true,
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: 10,
+                    y: 15,
+                    itemStyle: {
+                        color: '#000000',
+                        fontWeight: 'bold',
+
                     }
-                }, function (chart) {
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:hightest3,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-
-                    chart.renderer.image('images/healthy_reports_highest.png', 525, Math.round(hightest3)+20, 15, 15).add().
-
-                    renderer.text(Math.round(hightest3), 545, Math.round(hightest3)+30).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('', 510, Math.round(hightest3)+50).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:minest3,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-                    chart.renderer.image('images/healthy_reports_lowest.png', 525, 250-Math.round(minest3), 15, 15).add().
-
-                    renderer.text(Math.round(minest3), 545, 250-Math.round(minest3)).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('', 510, 270-Math.round(minest3)).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:avg3,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,
-                    });
-
-                    chart.renderer.image('images/healthy_reports_average.png', 525,(260-y_min+(Math.round(hightest3)))/2 , 15, 15).add().
-
-                    renderer.text(Math.round(avg3), 545, ((260-y_min)+(Math.round(hightest3)))/2+15).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('', 510, ((260-y_min)+(Math.round(hightest3)))/2+30).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
+//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
+                },
+                plotOptions: {
+                    series: {
+                        lineWidth: 1
+                    }
+                },
+                plotOptions: {
+                    series: {
+                        lineWidth: 1,
+                        marker: {
+                            enabled: false
+                        }
+                    }
+                },
+                series:
+                        [
+                            fields2,fields4
+                        ]
+                ,
+                credits:{
+                    enabled:false // 禁用版权信息
+                }
+            }, function (chart) {
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:hightest2,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
                 });
-            }
-            else{
+                chart.renderer.image('images/smile.png', 0,120 , 25, 25).add().renderer.image('images/ok.png', 0, 180, 25, 25).add().renderer.image('images/bad.png', 0, 240, 25, 25).add();
 
-                var chart = new Highcharts.Chart('chartdiv3', {
-                    chart:{
-                        type:'spline',
-                        tooltip: {
-                            enabled : false
-                        },
-                        marginRight: 50,
-                        marginLeft: 40,
-                    },
+                console.log(Math.round(hightest2));
+                chart.renderer.image('images/healthy_reports_highest.png', 535, Math.round(hightest2)+190, 15, 15).add().
+                renderer.text(hightest2+'h', 555, Math.round(hightest2)+200).attr({}).
+                css({
+                    fontSize: '16px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('', 555, Math.round(hightest2)+220+17).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
+
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:minest2,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
+                });
+                chart.renderer.image('images/healthy_reports_lowest.png', 535, Math.round(minest2)+230, 15, 15).add().
+
+                renderer.text(minest2+'h', 555, Math.round(minest2)+240).attr({}).
+                css({
+                    fontSize: '16px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('', 555,Math.round(minest2)+220+15).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
+
+
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:avg2,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,
+                });
+
+                chart.renderer.image('images/healthy_reports_average.png', 535,((Math.round(minest2)+230)+Math.round(hightest2)+190)/2, 15, 15).add().
+
+                renderer.text(avg2+'h', 555, ((Math.round(minest2)+230)+Math.round(hightest2)+190)/2+10).attr({}).
+                css({
+                    fontSize: '16px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('', 555, ((Math.round(minest2)+250)+Math.round(hightest2)+200)/2+15).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
+                chart.renderer.path(['M', 75, 0, 'L', 75, 300])
+                        .attr({
+                            'stroke-width': 2,
+                            stroke: 'black',
+                            dashstyle: 'Dot'
+                        }).add()
+            });
+
+
+
+
+
+
+            var chart = new Highcharts.Chart('chartdiv3', {
+                chart:{
+                    type:'spline',
                     tooltip: {
                         enabled : false
                     },
+                    marginRight: 50,
+                    marginLeft: 40,
+                },
+                tooltip: {
+                    enabled : false
+                },
+                title: {
+                    text: 'Sleep quality curve',
+                    x: -30,
+                    y: 40
+                },
+                subtitle: {
+                },
+                xAxis: {
+                    visible: false,
+                    enabled: false,
+                    labels: {
+                        enabled: false
+                    }
+                },
+                yAxis: {
+                    visible: false,
+                    enabled: false,
+                    style: {
+                        dashStyle:'Dot',     //
+                        fontSize:'15px',
+                        fontFamily:'华文细黑,STHeiti,MingLiu'
+                    },
+                    gridLineWidth:'0px',
                     title: {
-                        text: 'Sleep quality curve',
-                        x: -30,
-                        y: 40
+                        text: ''
                     },
-                    subtitle: {
-                    },
-                    xAxis: {
-                        visible: false,
-                        enabled: false,
-                        labels: {
+                    plotLines:[
+                        {
+                            label:{
+                                text:hightest3+'(Maximum Value)',    //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+                            zIndex:26,
+                            color:'#ddd',           //线的颜色，定义为红色
+                            dashStyle:'Dot',     //默认值，这里定义为实线
+                            value:hightest3,         //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
+                            width:2                //标示线的宽度，2px
+                        },
+                        {
+                            label:{
+                                text:minest3+'(Minimum Value)',   //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+                            color:'#ddd',
+                            dashStyle:'Dot',
+                            value:minest3,
+                            width:2,
+                            zIndex:23
+                        },
+                        {
+
+                            label:{
+                                text:avg3+'(Average Value)',  //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+
+                            color:'#ddd',
+                            dashStyle:'Dot',
+                            value:avg3,
+                            width:2
+                        }
+                    ]
+                },
+
+                legend: {
+                    enabled: false,
+                    layout: 'vertical',
+                    backgroundColor: '#fff',
+                    floating: true,
+                    align: 'left',
+                    verticalAlign: 'top',
+                    x: 30,
+                    y: 45,
+//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
+                },
+                plotOptions: {
+                    series: {
+                        lineWidth: 1,
+                        marker: {
                             enabled: false
                         }
-                    },
-                    yAxis: {
-                        visible: false,
-                        enabled: false,
-                        style: {
-                            dashStyle:'Dot',     //
-                            fontSize:'15px',
-                            fontFamily:'华文细黑,STHeiti,MingLiu'
-                        },
-                        gridLineWidth:'0px',
-                        title: {
-                            text: ''
-                        },
-                        plotLines:[
-                            {
-                                label:{
-                                    text:hightest3+'(Maximum Value)',    //标签的内容
-                                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                },
-                                zIndex:26,
-                                color:'#ddd',           //线的颜色，定义为红色
-                                dashStyle:'Dot',     //默认值，这里定义为实线
-                                value:hightest3,         //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
-                                width:2                //标示线的宽度，2px
-                            },
-                            {
-                                label:{
-                                    text:minest3+'(Minimum Value)',   //标签的内容
-                                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                },
-                                color:'#ddd',
-                                dashStyle:'Dot',
-                                value:minest3,
-                                width:2,
-                                zIndex:23
-                            },
-                            {
-
-                                label:{
-                                    text:avg3+'(Average Value)',  //标签的内容
-                                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                },
-
-                                color:'#ddd',
-                                dashStyle:'Dot',
-                                value:avg3,
-                                width:2
-                            }
-                        ]
-                    },
-
-                    legend: {
-                        enabled: false,
-                        layout: 'vertical',
-                        backgroundColor: '#fff',
-                        floating: true,
-                        align: 'left',
-                        verticalAlign: 'top',
-                        x: 30,
-                        y: 45,
-//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
-                    },
-                    series:
-                            [
-                                fields3
-                            ]
-                    ,
-                    credits:{
-                        enabled:false // 禁用版权信息
                     }
-                }, function (chart) {
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:hightest3,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-
-                    chart.renderer.image('images/healthy_reports_highest.png', 525, Math.round(hightest3)-20, 15, 15).add().
-
-                    renderer.text(Math.round(hightest3), 545, Math.round(hightest3)-5).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('', 510, Math.round(hightest3)+7).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:minest3,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-                    chart.renderer.image('images/healthy_reports_lowest.png', 525, 300-Math.round(minest3)-13, 15, 15).add().
-
-                    renderer.text(Math.round(minest3), 545, 300-Math.round(minest3)).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('', 510, 315-Math.round(minest3)).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:avg3,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,
-                    });
-
-                    chart.renderer.image('images/healthy_reports_average.png', 525,(260-y_min+(Math.round(hightest3)))/2 , 15, 15).add().
-
-                    renderer.text(Math.round(avg3), 545, ((260-y_min)+(Math.round(hightest3)))/2+15).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('', 510, ((260-y_min)+(Math.round(hightest3)))/2+30).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
+                },
+                series:
+                        [
+                            fields3
+                        ]
+                ,
+                credits:{
+                    enabled:false // 禁用版权信息
+                }
+            }, function (chart) {
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:hightest3,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
                 });
-            }
+
+                chart.renderer.image('images/healthy_reports_highest.png', 535, Math.round(hightest3), 15, 15).add().
+
+                renderer.text(Math.round(hightest3), 550, Math.round(hightest3)+15).attr({}).
+                css({
+                    fontSize: '23px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('', 555, Math.round(hightest3)).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
+
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:minest3,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
+                });
+                chart.renderer.image('images/healthy_reports_lowest.png', 535, Math.round(minest3)+160, 15, 15).add().
+
+                renderer.text(Math.round(minest3), 545, Math.round(minest3)+175).attr({}).
+                css({
+                    fontSize: '23px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('', 555, Math.round(minest3)+190).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
 
 
+
+
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:avg3,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,
+                });
+
+                chart.renderer.image('images/healthy_reports_average.png', 535,(Math.round(minest3)+170+(Math.round(hightest3)-20))/2 , 15, 15).add().
+
+                renderer.text(Math.round(avg3), 555, (Math.round(minest3)+170+(Math.round(hightest3)-20))/2+15).attr({}).
+                css({
+                    fontSize: '23px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('', 555, ((260-y_min)+(Math.round(hightest3)))/2+30).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
+
+            });
 
 
 
@@ -1675,6 +1183,15 @@ if(otheremail!=null){
     });
 
 }else{
+
+
+    $('#noemail').show();
+    $('#hasemail').hide();
+
+
+
+
+
     $.ajax({
         type:"post",
         dataType:"json",
@@ -1727,12 +1244,36 @@ console.log(index);
             var y_min=minest;
 
 
-            var map1 = new Array();//一维数组
-            for (var i = 0; i < data.Data.length; i++) {
 
+            var map1 = new Array();//一维数组
+            var map1 = new Array();//一维数组
+            var avgBreath_list = new Array(data.Data.length);
+            var count_count1 = 0;
+            for (var i = 0; i < data.Data.length; i++) {
                 for(var j=0;j<one_chooselists.length;j++){
                     if( data.Data[i].creatTime==one_chooselists[j]){
-                        map1.push(data.Data[i].avgBreath);//一维数组
+                        if(count_count1==0){
+                            avgBreath_list[count_count1] = data.Data[i].avgBreath;
+                            map1.push(data.Data[i].avgBreath);//一维数组
+                            count_count1++;
+                        }else{
+                            avgBreath_list[count_count1] = data.Data[i].avgBreath;
+                            if(avgBreath_list[count_count1-1]==data.Data[i].avgBreath){
+                                if(count_count1==1){
+                                    map1.push(data.Data[i].avgBreath+0.3);//一维数组
+                                    map1.push(data.Data[i].avgBreath);//一维数组
+                                }else if(avgBreath_list[count_count1-2]>data.Data[i].avgBreath){
+                                    map1.push(data.Data[i].avgBreath-0.3);//一维数组
+                                    map1.push(data.Data[i].avgBreath);//一维数组
+                                }else if(avgBreath_list[count_count1-2]<data.Data[i].avgBreath){
+                                    map1.push(data.Data[i].avgBreath+0.3);//一维数组
+                                    map1.push(data.Data[i].avgBreath);//一维数组
+                                }
+                            }else{
+                                map1.push(data.Data[i].avgBreath);//一维数组
+                            }
+                            count_count1++;
+                        }
                     };
                 }
             }
@@ -1745,15 +1286,15 @@ console.log(index);
             for (var i = 0; i < data.Data.length; i++) {
                 for(var j=0;j<one_chooselists.length;j++){
                     if( data.Data[i].creatTime==one_chooselists[j]){
-                        map2.push(Math.round((data.Data[i].deepSleepTime)/(60*60)));//一维数组
+                        map2.push(((data.Data[i].deepSleepTime)/(60*60)));//一维数组
                     };
                 }
 
 
             }
-            var hightest2=Math.max.apply(null, map2).toFixed(0);//最大值
-            var minest2=Math.min.apply(null, map2).toFixed(0);//最小值
-            var avg2=arrAverageNum2(map2).toFixed(0);
+            var hightest2=Math.max.apply(null, map2).toFixed(1);//最大值
+            var minest2=Math.min.apply(null, map2).toFixed(1);//最小值
+            var avg2=arrAverageNum2(map2).toFixed(1);
             var fields2 = {data:map2,color:'#000',name:'Deep Sleep amount',width:2};
 
 
@@ -1789,1282 +1330,679 @@ console.log(index);
 
             var fields4 = {data:map4,color:'#6d4e31',name:'Sleep time',width:2};
 
-if(minest<20){
-    var chart = new Highcharts.Chart('chartdiv', {
-        chart:{
-            type:'spline',
-            tooltip: {
-                enabled : false
-            },
-            marginRight: 60,
-            marginLeft: 40,
-        },
-        tooltip: {
-            enabled : false
-        },
-        title: {
-            text: 'Heart rate',
-//                    text: 'Respiration',
-            x: -30,
-            y: 40
-        },
-        subtitle: {
-        },
-        xAxis: {
-            visible: false,
-            enabled: false,
-            gridLineWidth:'0px',
-            labels: {
-                enabled: false
-            }
-        },
-        yAxis: {
-            gridLineWidth:'0px',
-            plotLines:[
-                {
-                    label:{
-                        text:avg+'(Average Value)',
-//                                text:'Average Value',  //标签的内容
-                        align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                        x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+
+
+            var chart = new Highcharts.Chart('chartdiv', {
+                chart:{
+                    type:'spline',
+                    tooltip: {
+                        enabled : false
                     },
-                    color:'#ddd',
-                    dashStyle:'Dot',
-                    value:avg,
-                    width:2
-                }
-            ],
-            visible: false,
-            enabled: false,
-        },
-        plotLines:[
-            {
-                label:{
-                    text:avg+'(Average Value)',
-//                                text:'Average Value',  //标签的内容
-                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                    marginRight: 50,
+                    marginLeft: 40,
                 },
-                color:'#ddd',
-                dashStyle:'Dot',
-                value:avg,
-                width:2
-            }
-        ],
-        legend: {
-            itemStyle: {
-
-                color: '#000000',
-                fontWeight: 'bold'
-            },
-            enabled: false,
-            layout: 'vertical',
-            backgroundColor: '#fff',
-            floating: true,
-//                    align: 'right',
-            verticalAlign: 'top',
-            x: 170,
-            y: 45,
-//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
-        },
-        series:
-                [
-                    fields
-                ]
-        ,
-        credits:{
-            enabled:false // 禁用版权信息
-        }
-    }, function (chart) {
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:hightest,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-        });
-
-        chart.renderer.image('images/healthy_reports_highest.png', 525, Math.round(hightest)+20, 15, 15).add().
-
-        renderer.text(Math.round(hightest), 545, Math.round(hightest)+30).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('Times/Min', 510, Math.round(hightest)+50).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
-
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:minest,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-        });
-        chart.renderer.image('images/healthy_reports_lowest.png', 525,Math.round(minest)+250, 15, 15).add().
-
-        renderer.text(Math.round(minest), 545, Math.round(minest)+250+10).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('Times/Min', 510, Math.round(minest)+250+40).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
-
-
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:avg,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,
-        });
-
-        chart.renderer.image('images/healthy_reports_average.png', 525, (Math.round(hightest)+20+ Math.round(minest)+250)/2, 15, 15).add().
-
-        renderer.text(Math.round(avg), 545,(Math.round(hightest)+20+ Math.round(minest)+250)/2+10).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('Times/Min', 510,(Math.round(hightest)+20+ Math.round(minest)+250)/2+30).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
-
-
-
-    });
-
-
-}else{
-
-    var chart = new Highcharts.Chart('chartdiv', {
-        chart:{
-            type:'spline',
-            tooltip: {
-                enabled : false
-            },
-            marginRight: 60,
-            marginLeft: 40,
-        },
-        tooltip: {
-            enabled : false
-        },
-        title: {
-            text: 'Heart rate',
+                tooltip: {
+                    enabled : false
+                },
+                title: {
+                    text: 'Heart rate',
 //                    text: 'Respiration',
-            x: -30,
-            y: 40
-        },
-        subtitle: {
-        },
-        xAxis: {
-            visible: false,
-            enabled: false,
-            gridLineWidth:'0px',
-            labels: {
-                enabled: false
-            }
-        },
-        yAxis: {
-            gridLineWidth:'0px',
-            plotLines:[
-                {
-                    label:{
-                        text:avg+'(Average Value)',
-//                                text:'Average Value',  //标签的内容
-                        align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                        x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                    },
-                    color:'#ddd',
-                    dashStyle:'Dot',
-                    value:avg,
-                    width:2
-                }
-            ],
-            visible: false,
-            enabled: false,
-        },
-        plotLines:[
-            {
-                label:{
-                    text:avg+'(Average Value)',
-//                                text:'Average Value',  //标签的内容
-                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                    x: -30,
+                    y: 40
                 },
-                color:'#ddd',
-                dashStyle:'Dot',
-                value:avg,
-                width:2
-            }
-        ],
-        legend: {
-            itemStyle: {
+                subtitle: {
+                },
+                xAxis: {
+                    visible: false,
+                    enabled: false,
+                    gridLineWidth:'0px',
+                    labels: {
+                        enabled: false
+                    }
+                },
+                yAxis: {
+                    tickPixelInterval: 50,
+                    gridLineWidth:'0px',
+                    visible: false,
+                    enabled: false,
+                },
+                plotLines:[
+                    {
+                        label:{
+                            text:avg+'(Average Value)',
+//                                text:'Average Value',  //标签的内容
+                            align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                            x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                        },
+                        color:'#ddd',
+                        dashStyle:'Dot',
+                        value:avg,
+                        width:2
+                    }
+                ],
+                legend: {
+                    itemStyle: {
 
-                color: '#000000',
-                fontWeight: 'bold'
-            },
-            enabled: false,
-            layout: 'vertical',
-            backgroundColor: '#fff',
-            floating: true,
+                        color: '#000000',
+                        fontWeight: 'bold'
+                    },
+                    enabled: false,
+                    layout: 'vertical',
+                    backgroundColor: '#fff',
+                    floating: true,
 //                    align: 'right',
-            verticalAlign: 'top',
-            x: 170,
-            y: 45,
+                    verticalAlign: 'top',
+                    x: 170,
+                    y: 45,
 //                    labelFormat: '<span style="color:#a37c59">{name}</span>'
-        },
-        series:
-                [
-                    fields
-                ]
-        ,
-        credits:{
-            enabled:false // 禁用版权信息
-        }
-    }, function (chart) {
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:hightest,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-        });
+                },
+                plotOptions: {
+                    series: {
+                        lineWidth: 1,
+                        marker: {
+                            enabled: false
+                        }
+                    }
+                },
+                series:
+                        [
+                            fields
+                        ]
+                ,
 
-        chart.renderer.image('images/healthy_reports_highest.png', 535, hightest, 15, 15).add().
+                credits:{
+                    enabled:false // 禁用版权信息
+                }
+            }, function (chart) {
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:hightest,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
+                })
+                ;
 
-        renderer.text(Math.round(hightest), 555, y+12).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('bpm', 555, y+30).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
+                chart.renderer.image('images/healthy_reports_highest.png',535, (Math.round(hightest)), 15, 15).add().
 
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:minest,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-        });
-        chart.renderer.image('images/healthy_reports_lowest.png', 535, 260-y_min, 15, 15).add().
+                renderer.text(Math.round(hightest), 555, (Math.round(hightest))+15).attr({}).
+                css({
+                    fontSize: '23px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('bpm', 555,(Math.round(hightest))+30).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
 
-        renderer.text(Math.round(minest), 555, 260-y_min).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('bpm', 555, 280-y_min).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:minest,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
+                });
+                chart.renderer.image('images/healthy_reports_lowest.png', 535, Math.round(minest)+180, 15, 15).add().
 
-
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:avg,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,
-        });
-
-        chart.renderer.image('images/healthy_reports_average.png', 535, ((260-y_min)+hightest)/2, 15, 15).add().
-
-        renderer.text(Math.round(avg), 555, ((260-y_min)+hightest)/2+10).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('bpm', 555, 230-avg).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
+                renderer.text(Math.round(minest), 555, Math.round(minest)+195).attr({}).
+                css({
+                    fontSize: '23px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('bpm', 555, Math.round(minest)+210).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
 
 
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:avg,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,
+                });
 
-    });
+                chart.renderer.image('images/healthy_reports_average.png', 535, ((Math.round(minest)+180)+hightest)/2, 15, 15).add().
+
+                renderer.text(Math.round(avg), 555, ((Math.round(minest)+180)+hightest)/2+15).attr({}).
+                css({
+                    fontSize: '23px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('bpm', 555, ((Math.round(minest)+180)+hightest)/2+20+10).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
+
+            });
 
 
-}
+            var chart = new Highcharts.Chart('chartdiv1', {
+                chart:{
+                    type:'spline',
+                    tooltip: {
+                        enabled : false
+                    },
+                    marginRight: 50,
+                    marginLeft: 40,
+                },
+                tooltip: {
+                    enabled : false
+                },
+                title: {
+                    text: 'Respiration',
+                    x: -30,
+                    y: 40
+                },
+                subtitle: {
+                },
 
+                xAxis: {
+                    visible: false,
+                    enabled: false,
+                    gridLineWidth:'0px',
+                    labels: {
+                        enabled: false
+                    }
+                },
+                yAxis: {
+                    visible: false,
+                    enabled: false,
+                },
+                legend: {
+                    itemStyle: {
 
-if( Math.round(minest1)<15){
-
-    var chart = new Highcharts.Chart('chartdiv1', {
-        chart:{
-            type:'spline',
-            tooltip: {
-                enabled : false
-            },
-            marginRight: 50,
-            marginLeft: 40,
-        },
-        tooltip: {
-            enabled : false
-        },
-        title: {
-            text: 'Respiration',
-            x: -30,
-            y: 40
-        },
-        subtitle: {
-        },
-        xAxis: {
-            visible: false,
-            enabled: false,
-            gridLineWidth:'0px',
-            labels: {
-                enabled: false
-            }
-        },
-        yAxis: {
-            visible: false,
-            enabled: false,
-        },
-        legend: {
-            itemStyle: {
-
-                color: '#000000',
-                fontWeight: 'bold'
-            },
-            enabled: false,
-            layout: 'vertical',
-            backgroundColor: '#fff',
-            floating: true,
+                        color: '#000000',
+                        fontWeight: 'bold'
+                    },
+                    enabled: false,
+                    layout: 'vertical',
+                    backgroundColor: '#fff',
+                    floating: true,
 //                    align: 'right',
-            verticalAlign: 'top',
-            x: 170,
-            y: 45,
+                    verticalAlign: 'top',
+                    x: 170,
+                    y: 45,
 //                    labelFormat: '<span style="color:#a37c59">{name}</span>'
-        },
-        series:
-                [
-                    fields1
-                ]
-        ,
-        credits:{
-            enabled:false // 禁用版权信息
-        }
-    }, function (chart) {
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:hightest1,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-        });
-
-        chart.renderer.image('images/healthy_reports_highest.png', 530, Math.round(hightest1)+50, 15, 15).add().
-
-        renderer.text(Math.round(hightest1), 545,Math.round(hightest1)+10+50).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('Times/Min',510, Math.round(hightest1)+30+50).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
-
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:minest1,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-        });
-
-
-
-
-        chart.renderer.image('images/healthy_reports_lowest.png', 525, Math.round(minest1)+250, 15, 15).add().
-
-        renderer.text(Math.round(minest1), 545,Math.round(minest1)+250+10).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('Times/Min', 510, Math.round(minest1)+250+40).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
-
-
-
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:avg1,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,
-        });
-
-        chart.renderer.image('images/healthy_reports_average.png', 525,((Math.round(minest1)+250)+( Math.round(hightest1)+50))/2, 15, 15).add().
-        renderer.text(Math.round(avg1), 545, ((Math.round(minest1)+250)+( Math.round(hightest1)+50))/2+10).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('Times/Min', 510, ((Math.round(minest1)+250)+(Math.round(hightest1)+50))/2+30).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
-    });
-
-}else{
-    var chart = new Highcharts.Chart('chartdiv1', {
-        chart:{
-            type:'spline',
-            tooltip: {
-                enabled : false
-            },
-            marginRight: 50,
-            marginLeft: 40,
-        },
-        tooltip: {
-            enabled : false
-        },
-        title: {
-            text: 'Respiration',
-            x: -30,
-            y: 40
-        },
-        subtitle: {
-        },
-        xAxis: {
-            visible: false,
-            enabled: false,
-            gridLineWidth:'0px',
-            labels: {
-                enabled: false
-            }
-        },
-        yAxis: {
-            visible: false,
-            enabled: false,
-        },
-        legend: {
-            itemStyle: {
-
-                color: '#000000',
-                fontWeight: 'bold'
-            },
-            enabled: false,
-            layout: 'vertical',
-            backgroundColor: '#fff',
-            floating: true,
-//                    align: 'right',
-            verticalAlign: 'top',
-            x: 170,
-            y: 45,
-//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
-        },
-        series:
-                [
-                    fields1
-                ]
-        ,
-        credits:{
-            enabled:false // 禁用版权信息
-        }
-    }, function (chart) {
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:hightest1,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-        });
+                },
+                plotOptions: {
+                    series: {
+                        lineWidth: 1
+                    }
+                },
+                series:
+                        [
+                            fields1
+                        ]
+                ,
+                plotOptions: {
+                    series: {
+                        lineWidth: 1,
+                        marker: {
+                            enabled: false
+                        }
+                    }
+                },
+                credits:{
+                    enabled:false // 禁用版权信息
+                }
+            }, function (chart) {
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:hightest1,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
+                });
 
 
 //                var hightest1=Math.max.apply(null, map1).toFixed(0);//最大值
 //                var minest1=Math.min.apply(null, map1).toFixed(0);//最小值
 //                var avg1=arrAverageNum2(map1).toFixed(0);
 //
-        console.log(Math.round(hightest1)+50);
+                console.log(Math.round(hightest1)+50);
 
-        chart.renderer.image('images/healthy_reports_highest.png', 530, Math.round(hightest1)+30, 15, 15).add().
+                chart.renderer.image('images/healthy_reports_highest.png', 535, Math.round(hightest1)+60, 15, 15).add().
 
-        renderer.text(Math.round(hightest1), 545,Math.round(hightest1)+45).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('bpm',545, Math.round(hightest1)+60).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
+                renderer.text(Math.round(hightest1), 555,Math.round(hightest1)+75).attr({}).
+                css({
+                    fontSize: '23px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('bpm',555, Math.round(hightest1)+90).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
 
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:minest1,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-        });
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:minest1,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
+                });
 
-        chart.renderer.image('images/healthy_reports_lowest.png', 525, Math.round(minest1)+200, 15, 15).add().
+                chart.renderer.image('images/healthy_reports_lowest.png', 535, Math.round(minest1)+210, 15, 15).add().
 
-        renderer.text(Math.round(minest1), 545,Math.round(minest1)+220).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('bpm', 545, Math.round(minest1)+240).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
-
-
-
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:avg1,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,
-        });
-
-        chart.renderer.image('images/healthy_reports_average.png', 525,((Math.round(minest1)+200)+(Math.round(hightest1)))/2, 15, 15).add().
-        renderer.text(Math.round(avg1), 545, ((Math.round(minest1)+200)+(Math.round(hightest1)))/2+7).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('bpm', 545, ((Math.round(minest1)+200)+(Math.round(hightest1)))/2+25).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
-    });
-
-}
-if(minest2<2){
-    var chart = new Highcharts.Chart('chartdiv2', {
-        chart:{
-            type:'spline',
-            tooltip: {
-                enabled : false
-            },
-            marginRight: 50,
-            marginLeft: 60,
-        },
-        tooltip: {
-            enabled : false
-        },
-        title: {
-            text: 'Deep Sleep amount',
-            x: -30,
-            y: 40
-        },
-        subtitle: {
-        },
-        xAxis: {
-            visible: false,
-            enabled: false,
-            labels: {
-                enabled: false
-            }
-        },
-
-        yAxis: {
-//                    visible: false,
-//                    enabled: false,
-            labels: {
-                style: {
-                    dashStyle:'Dot',     //
-                    fontSize:'15px',
-                    fontFamily:'华文细黑,STHeiti,MingLiu'
-                },
-                formatter:function(){
-                    return ""+this.value+"h";
-                }
-            },
-
-            gridLineWidth:'0px',
-            title: {
-                text: ''
-            },
-        },
-        legend: {
-            layout: 'vertical',
-            backgroundColor: '#fff',
-            floating: true,
-            align: 'right',
-            verticalAlign: 'top',
-            x: 10,
-            y: 45,
-            itemStyle: {
-                color: '#000000',
-                fontWeight: 'bold',
-
-            }
-//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
-        },
-        series:
-                [
-                    fields2,fields4
-                ]
-        ,
-        credits:{
-            enabled:false // 禁用版权信息
-        }
-    }, function (chart) {
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:hightest2,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-        });
-        chart.renderer.image('images/smile.png', 2,100 , 25, 25).add().renderer.image('images/ok.png', 2, 160, 25, 25).add().renderer.image('images/bad.png', 2, 220, 25, 25).add();
-
-        console.log(Math.round(hightest2));
-        chart.renderer.image('images/healthy_reports_highest.png', 525, Math.round(hightest2)+200, 15, 15).add().
-        renderer.text(Math.round(hightest2), 545, Math.round(hightest2)+200+10).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('hour', 540, Math.round(hightest2)+200+20).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
-
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:minest2,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-        });
-        chart.renderer.image('images/healthy_reports_lowest.png', 525, 270-Math.round(minest2), 15, 15).add().
-
-        renderer.text(Math.round(minest2), 545,270-Math.round(minest2)).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('hour', 540, 270-Math.round(minest2)+10).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
+                renderer.text(Math.round(minest1), 555,Math.round(minest1)+225).attr({}).
+                css({
+                    fontSize: '23px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('bpm', 555, Math.round(minest1)+240).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
 
 
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:avg2,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,
-        });
 
-        chart.renderer.image('images/healthy_reports_average.png', 525,((270-Math.round(minest2))+Math.round(hightest2)+200)/2, 15, 15).add().
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:avg1,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,
+                });
 
-        renderer.text(Math.round(avg2), 545, ((270-Math.round(minest2))+Math.round(hightest2)+200)/2).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('hour', 540, ((270-Math.round(minest2))+Math.round(hightest2)+200)/2+10).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
-    });
+                chart.renderer.image('images/healthy_reports_average.png', 535,((Math.round(minest1)+210)+(Math.round(hightest1)+60))/2, 15, 15).add().
+                renderer.text(Math.round(avg1), 555, ((Math.round(minest1)+210)+(Math.round(hightest1)+60))/2+15).attr({}).
+                css({
+                    fontSize: '23px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('bpm', 555, ((Math.round(minest1)+210)+(Math.round(hightest1)+60))/2+30).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
+            });
 
-
-}else{
-    var chart = new Highcharts.Chart('chartdiv2', {
-        chart:{
-            type:'spline',
-            tooltip: {
-                enabled : false
-            },
-            marginRight: 50,
-            marginLeft: 60,
-        },
-        tooltip: {
-            enabled : false
-        },
-        title: {
-            text: 'Deep Sleep amount',
-            x: -30,
-            y: 40
-        },
-        subtitle: {
-        },
-        xAxis: {
-            visible: false,
-            enabled: false,
-            labels: {
-                enabled: false
-            }
-        },
-
-        yAxis: {
-//                    visible: false,
-//                    enabled: false,
-            labels: {
-                style: {
-                    dashStyle:'Dot',     //
-                    fontSize:'15px',
-                    fontFamily:'华文细黑,STHeiti,MingLiu'
-                },
-                formatter:function(){
-                    return ""+this.value+"h";
-                }
-            },
-
-            gridLineWidth:'0px',
-            title: {
-                text: ''
-            },
-        },
-        legend: {
-            layout: 'vertical',
-            backgroundColor: '#fff',
-            floating: true,
-            align: 'right',
-            verticalAlign: 'top',
-            x: 10,
-            y: 45,
-            itemStyle: {
-                color: '#000000',
-                fontWeight: 'bold',
-
-            }
-//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
-        },
-        series:
-                [
-                    fields2,fields4
-                ]
-        ,
-        credits:{
-            enabled:false // 禁用版权信息
-        }
-    }, function (chart) {
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:hightest2,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-        });
-        chart.renderer.image('images/smile.png', 2,100 , 25, 25).add().renderer.image('images/ok.png', 2, 160, 25, 25).add().renderer.image('images/bad.png', 2, 220, 25, 25).add();
-
-        console.log(Math.round(hightest2));
-        chart.renderer.image('images/healthy_reports_highest.png', 525, Math.round(hightest2)+120, 15, 15).add().
-        renderer.text(Math.round(hightest2), 545, Math.round(hightest2)+120).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('hour', 540, Math.round(hightest2)+120+17).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
-
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:minest2,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-        });
-        chart.renderer.image('images/healthy_reports_lowest.png', 525, 220-Math.round(minest2), 15, 15).add().
-
-        renderer.text(Math.round(minest2), 545, 220-Math.round(minest2)).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('hour', 540, 220-Math.round(minest2)+15).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
-
-
-        chart.yAxis[0].addPlotLine({           //在x轴上增加
-            value:avg2,                           //在值为2的地方
-            width:1,                           //标示线的宽度为2px
-            dashStyle:'Dot',
-            color: '#000',                  //标示线的颜色
-            id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-            zIndex:3,
-        });
-
-        chart.renderer.image('images/healthy_reports_average.png', 525,((220-Math.round(minest2))+Math.round(hightest2)+120)/2, 15, 15).add().
-
-        renderer.text(Math.round(avg2), 545, ((220-Math.round(minest2))+Math.round(hightest2)+120)/2).attr({}).
-        css({
-            fontSize: '23px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add().
-        renderer.text('hour', 540, ((220-Math.round(minest2))+Math.round(hightest2)+120)/2+15).attr({
-        }).
-        css({
-            fontSize: '13px',
-            color: '#000',
-            fontFamily:'华文细黑',
-        }).add();
-    });
-
-
-}
-
-            if(minest3<15){
-                var chart = new Highcharts.Chart('chartdiv3', {
-                    chart:{
-                        type:'spline',
-                        tooltip: {
-                            enabled : false
-                        },
-                        marginRight: 50,
-                        marginLeft: 40,
-                    },
+            var chart = new Highcharts.Chart('chartdiv2', {
+                chart:{
+                    type:'spline',
                     tooltip: {
                         enabled : false
                     },
-                    title: {
-                        text: 'Sleep quality curve',
-                        x: -30,
-                        y: 40
-                    },
-                    subtitle: {
-                    },
-                    xAxis: {
-                        visible: false,
-                        enabled: false,
-                        labels: {
-                            enabled: false
-                        }
-                    },
-                    yAxis: {
-                        visible: false,
-                        enabled: false,
+                    marginRight: 50,
+                    marginLeft: 80,
+                },
+                tooltip: {
+                    enabled : false
+                },
+                title: {
+                    text: 'Deep Sleep amount',
+                    x: -30,
+                    y: 40
+                },
+                subtitle: {
+                },
+                xAxis: {
+                    visible: false,
+                    enabled: false,
+                    labels: {
+                        enabled: false
+                    }
+                },
+
+                yAxis: {
+//                    visible: false,
+//                    enabled: false,
+                    labels: {
                         style: {
                             dashStyle:'Dot',     //
                             fontSize:'15px',
                             fontFamily:'华文细黑,STHeiti,MingLiu'
                         },
-                        gridLineWidth:'0px',
-                        title: {
-                            text: ''
-                        },
-                        plotLines:[
-                            {
-                                label:{
-                                    text:hightest3+'(Maximum Value)',    //标签的内容
-                                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                },
-                                zIndex:26,
-                                color:'#ddd',           //线的颜色，定义为红色
-                                dashStyle:'Dot',     //默认值，这里定义为实线
-                                value:hightest3,         //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
-                                width:2                //标示线的宽度，2px
-                            },
-                            {
-                                label:{
-                                    text:minest3+'(Minimum Value)',   //标签的内容
-                                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                },
-                                color:'#ddd',
-                                dashStyle:'Dot',
-                                value:minest3,
-                                width:2,
-                                zIndex:23
-                            },
-                            {
-
-                                label:{
-                                    text:avg3+'(Average Value)',  //标签的内容
-                                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                },
-
-                                color:'#ddd',
-                                dashStyle:'Dot',
-                                value:avg3,
-                                width:2
-                            }
-                        ]
+                        formatter:function(){
+                            return ""+this.value+"h";
+                        }
                     },
 
-                    legend: {
-                        enabled: false,
-                        layout: 'vertical',
-                        backgroundColor: '#fff',
-                        floating: true,
-                        align: 'left',
-                        verticalAlign: 'top',
-                        x: 170,
-                        y: 45,
-//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
+                    gridLineWidth:'0px',
+                    title: {
+                        text: ''
                     },
-                    series:
-                            [
-                                fields3
-                            ]
-                    ,
-                    credits:{
-                        enabled:false // 禁用版权信息
+                },
+                legend: {
+                    layout: 'vertical',
+                    backgroundColor: '#fff',
+                    floating: true,
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: 10,
+                    y: 15,
+                    itemStyle: {
+                        color: '#000000',
+                        fontWeight: 'bold',
+
                     }
-                }, function (chart) {
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:hightest3,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-
-                    chart.renderer.image('images/healthy_reports_highest.png', 525, Math.round(hightest3)+20, 15, 15).add().
-
-                    renderer.text(Math.round(hightest3), 545, Math.round(hightest3)+30).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text(' ', 510, Math.round(hightest3)+50).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:minest3,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-                    chart.renderer.image('images/healthy_reports_lowest.png', 525, 250-Math.round(minest3), 15, 15).add().
-
-                    renderer.text(Math.round(minest3), 545, 250-Math.round(minest3)).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text(' ', 510, 270-Math.round(minest3)).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:avg3,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,
-                    });
-
-                    chart.renderer.image('images/healthy_reports_average.png', 525,(260-y_min+(Math.round(hightest3)))/2 , 15, 15).add().
-
-                    renderer.text(Math.round(avg3), 545, ((260-y_min)+(Math.round(hightest3)))/2+15).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text(' ', 510, ((260-y_min)+(Math.round(hightest3)))/2+30).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
+//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
+                },
+                plotOptions: {
+                    series: {
+                        lineWidth: 1
+                    }
+                },
+                plotOptions: {
+                    series: {
+                        lineWidth: 1,
+                        marker: {
+                            enabled: false
+                        }
+                    }
+                },
+                series:
+                        [
+                            fields2,fields4
+                        ]
+                ,
+                credits:{
+                    enabled:false // 禁用版权信息
+                }
+            }, function (chart) {
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:hightest2,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
                 });
-            }
-else{
+                chart.renderer.image('images/smile.png', 0,120 , 25, 25).add().renderer.image('images/ok.png', 0, 180, 25, 25).add().renderer.image('images/bad.png', 0, 240, 25, 25).add();
 
-                var chart = new Highcharts.Chart('chartdiv3', {
-                    chart:{
-                        type:'spline',
-                        tooltip: {
-                            enabled : false
-                        },
-                        marginRight: 50,
-                        marginLeft: 40,
-                    },
+                console.log(Math.round(hightest2));
+                chart.renderer.image('images/healthy_reports_highest.png', 535, Math.round(hightest2)+190, 15, 15).add().
+                renderer.text(hightest2+'h', 555, Math.round(hightest2)+200).attr({}).
+                css({
+                    fontSize: '16px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('', 555, Math.round(hightest2)+220+17).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
+
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:minest2,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
+                });
+                chart.renderer.image('images/healthy_reports_lowest.png', 535, Math.round(minest2)+230, 15, 15).add().
+
+                renderer.text(minest2+'h', 555, Math.round(minest2)+240).attr({}).
+                css({
+                    fontSize: '16px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('', 555,Math.round(minest2)+220+15).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
+
+
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:avg2,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,
+                });
+
+                chart.renderer.image('images/healthy_reports_average.png', 535,((Math.round(minest2)+230)+Math.round(hightest2)+190)/2, 15, 15).add().
+
+                renderer.text(avg2+'h', 555, ((Math.round(minest2)+230)+Math.round(hightest2)+190)/2+10).attr({}).
+                css({
+                    fontSize: '16px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('', 555, ((Math.round(minest2)+250)+Math.round(hightest2)+200)/2+15).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
+                chart.renderer.path(['M', 75, 0, 'L',75, 300])
+                        .attr({
+                            'stroke-width': 2,
+                            stroke: 'black',
+                            dashstyle: 'Dot'
+                        }).add()
+            });
+
+
+
+
+
+
+            var chart = new Highcharts.Chart('chartdiv3', {
+                chart:{
+                    type:'spline',
                     tooltip: {
                         enabled : false
                     },
+                    marginRight: 50,
+                    marginLeft: 40,
+                },
+                tooltip: {
+                    enabled : false
+                },
+                title: {
+                    text: 'Sleep quality curve',
+                    x: -30,
+                    y: 40
+                },
+                subtitle: {
+                },
+                xAxis: {
+                    visible: false,
+                    enabled: false,
+                    labels: {
+                        enabled: false
+                    }
+                },
+                yAxis: {
+                    visible: false,
+                    enabled: false,
+                    style: {
+                        dashStyle:'Dot',     //
+                        fontSize:'15px',
+                        fontFamily:'华文细黑,STHeiti,MingLiu'
+                    },
+                    gridLineWidth:'0px',
                     title: {
-                        text: 'Sleep quality curve',
-                        x: -30,
-                        y: 40
+                        text: ''
                     },
-                    subtitle: {
-                    },
-                    xAxis: {
-                        visible: false,
-                        enabled: false,
-                        labels: {
+                    plotLines:[
+                        {
+                            label:{
+                                text:hightest3+'(Maximum Value)',    //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+                            zIndex:26,
+                            color:'#ddd',           //线的颜色，定义为红色
+                            dashStyle:'Dot',     //默认值，这里定义为实线
+                            value:hightest3,         //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
+                            width:2                //标示线的宽度，2px
+                        },
+                        {
+                            label:{
+                                text:minest3+'(Minimum Value)',   //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+                            color:'#ddd',
+                            dashStyle:'Dot',
+                            value:minest3,
+                            width:2,
+                            zIndex:23
+                        },
+                        {
+
+                            label:{
+                                text:avg3+'(Average Value)',  //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            },
+
+                            color:'#ddd',
+                            dashStyle:'Dot',
+                            value:avg3,
+                            width:2
+                        }
+                    ]
+                },
+
+                legend: {
+                    enabled: false,
+                    layout: 'vertical',
+                    backgroundColor: '#fff',
+                    floating: true,
+                    align: 'left',
+                    verticalAlign: 'top',
+                    x: 30,
+                    y: 45,
+//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
+                },
+                plotOptions: {
+                    series: {
+                        lineWidth: 1,
+                        marker: {
                             enabled: false
                         }
-                    },
-                    yAxis: {
-                        visible: false,
-                        enabled: false,
-                        style: {
-                            dashStyle:'Dot',     //
-                            fontSize:'15px',
-                            fontFamily:'华文细黑,STHeiti,MingLiu'
-                        },
-                        gridLineWidth:'0px',
-                        title: {
-                            text: ''
-                        },
-                        plotLines:[
-                            {
-                                label:{
-                                    text:hightest3+'(Maximum Value)',    //标签的内容
-                                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                },
-                                zIndex:26,
-                                color:'#ddd',           //线的颜色，定义为红色
-                                dashStyle:'Dot',     //默认值，这里定义为实线
-                                value:hightest3,         //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
-                                width:2                //标示线的宽度，2px
-                            },
-                            {
-                                label:{
-                                    text:minest3+'(Minimum Value)',   //标签的内容
-                                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                },
-                                color:'#ddd',
-                                dashStyle:'Dot',
-                                value:minest3,
-                                width:2,
-                                zIndex:23
-                            },
-                            {
-
-                                label:{
-                                    text:avg3+'(Average Value)',  //标签的内容
-                                    align:'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                    x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                },
-
-                                color:'#ddd',
-                                dashStyle:'Dot',
-                                value:avg3,
-                                width:2
-                            }
-                        ]
-                    },
-
-                    legend: {
-                        enabled: false,
-                        layout: 'vertical',
-                        backgroundColor: '#fff',
-                        floating: true,
-                        align: 'left',
-                        verticalAlign: 'top',
-                        x: 30,
-                        y: 45,
-//                    labelFormat: '<span style="color:#a37c59">{name}</span>'
-                    },
-                    series:
-                            [
-                                fields3
-                            ]
-                    ,
-                    credits:{
-                        enabled:false // 禁用版权信息
                     }
-                }, function (chart) {
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:hightest3,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-
-                    chart.renderer.image('images/healthy_reports_highest.png', 525, Math.round(hightest3)-20, 15, 15).add().
-
-                    renderer.text(Math.round(hightest3), 545, Math.round(hightest3)-5).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('', 510, Math.round(hightest3)+7).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:minest3,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
-                    });
-                    chart.renderer.image('images/healthy_reports_lowest.png', 525, 300-Math.round(minest3)-13, 15, 15).add().
-
-                    renderer.text(Math.round(minest3), 545, 300-Math.round(minest3)).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('', 510, 315-Math.round(minest3)).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
-
-                    chart.yAxis[0].addPlotLine({           //在x轴上增加
-                        value:avg3,                           //在值为2的地方
-                        width:1,                           //标示线的宽度为2px
-                        dashStyle:'Dot',
-                        color: '#000',                  //标示线的颜色
-                        id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
-                        zIndex:3,
-                    });
-
-                    chart.renderer.image('images/healthy_reports_average.png', 525,(260-y_min+(Math.round(hightest3)))/2 , 15, 15).add().
-
-                    renderer.text(Math.round(avg3), 545, ((260-y_min)+(Math.round(hightest3)))/2+15).attr({}).
-                    css({
-                        fontSize: '23px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add().
-                    renderer.text('', 510, ((260-y_min)+(Math.round(hightest3)))/2+30).attr({
-                    }).
-                    css({
-                        fontSize: '13px',
-                        color: '#000',
-                        fontFamily:'华文细黑',
-                    }).add();
-
+                },
+                series:
+                        [
+                            fields3
+                        ]
+                ,
+                credits:{
+                    enabled:false // 禁用版权信息
+                }
+            }, function (chart) {
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:hightest3,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
                 });
-            }
+
+                chart.renderer.image('images/healthy_reports_highest.png', 535, Math.round(hightest3)-20, 15, 15).add().
+
+                renderer.text(Math.round(hightest3), 550, Math.round(hightest3)-5).attr({}).
+                css({
+                    fontSize: '23px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('', 555, Math.round(hightest3)).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
+
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:minest3,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,               //标示线的id，在删除该标示线的时候需要该id标示
+                });
+                chart.renderer.image('images/healthy_reports_lowest.png', 535, Math.round(minest3)+170, 15, 15).add().
+
+                renderer.text(Math.round(minest3), 545, Math.round(minest3)+185).attr({}).
+                css({
+                    fontSize: '23px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('', 555, Math.round(minest3)+190).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
 
 
 
+
+                chart.yAxis[0].addPlotLine({           //在x轴上增加
+                    value:avg3,                           //在值为2的地方
+                    width:1,                           //标示线的宽度为2px
+                    dashStyle:'Dot',
+                    color: '#000',                  //标示线的颜色
+                    id: 'plot-line-1', //标示线的id，在删除该标示线的时候需要该id标示
+                    zIndex:3,
+                });
+
+                chart.renderer.image('images/healthy_reports_average.png', 535,(Math.round(minest3)+170+(Math.round(hightest3)-20))/2 , 15, 15).add().
+
+                renderer.text(Math.round(avg3), 555, (Math.round(minest3)+170+(Math.round(hightest3)-20))/2+15).attr({}).
+                css({
+                    fontSize: '23px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add().
+                renderer.text('', 555, ((260-y_min)+(Math.round(hightest3)))/2+30).attr({
+                }).
+                css({
+                    fontSize: '13px',
+                    color: '#000',
+                    fontFamily:'华文细黑',
+                }).add();
+
+            });
 
 
 

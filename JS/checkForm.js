@@ -71,7 +71,8 @@ function checkForm1(){
 		return false;
 
 
-	};
+	}
+	return true;
 }
 
 function checkFormmodify() {
@@ -168,6 +169,14 @@ function checkFormmodify1() {
 		return false;
 
 	};
+	var x15= $('#appDate').val();
+	if(x15=='')
+	{
+
+		return false;
+
+	};
+
 	var x7 = $('#password').val();
 	if(x7=='')
 	{
@@ -181,7 +190,7 @@ function checkFormmodify1() {
 
 		return false;
 	}
-
+	return true;
 }
 
 

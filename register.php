@@ -3,23 +3,23 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Register Account</title>
-	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+	<script src="  /RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
 
-	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
-	<script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
-	<script src="/RequestDisPatcher/JS/ajaxfileupload.js"></script>
+	<script src="  /RequestDisPatcher/JS/DateFormat.js"></script>
+	<script src="  /RequestDisPatcher/JS/xcConfirm.js"></script>
+	<script src="  /RequestDisPatcher/JS/ajaxfileupload.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/xcConfirm.css"/>
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/layout.css">
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/global.css">
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/font-awesome.min.css">
 
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/laydate.css">
-	<script type="text/javascript" src="/RequestDisPatcher/JS/laydate.js"></script>
+	<link rel="stylesheet" type="text/css" href=" /RequestDisPatcher/ CSS/laydate.css">
+	<script type="text/javascript" src="  /RequestDisPatcher/JS/laydate.js"></script>
 
-	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
-	<script src="/RequestDisPatcher/JS/checkForm.js" type="text/javascript"></script>
-	<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
+	<script src="  /RequestDisPatcher/JS/DateFormat.js"></script>
+	<script src="  /RequestDisPatcher/JS/checkForm.js" type="text/javascript"></script>
+	<script src="  /RequestDisPatcher/JS/jquery.cookie.js"></script>
 	<script type="text/javascript">
 
 		$(document).ready(function(){
@@ -36,7 +36,7 @@
 					$.ajax({
 								type: "post",
 								dataType: "json",//返回数据的类型
-								url: "/RequestDisPatcher/request/dispatcher.do",
+								url: "  request/dispatcher.do",
 								data:{
 									url:"http://127.0.0.1:9001/login/register",
 									params:"firstName="+$('#firstName').val()+"&password="+$('#password').val()+"&middleName="+$('#middleName').val()+"&lastName="+$('#lastName').val()+"&birth="+subbirthday+"&gender="+$('#gender').val()+"&mphone="+$('#phone').val()+"&address="+$('#address').val()+"&email="+$('#email').val()
@@ -65,7 +65,7 @@
 											onOk:function() {
 												document.cookie="dluEmail="+$('#email').val();
 												document.cookie="dlumima="+$('#password').val();
-												window.location.href="/RequestDisPatcher/login.html";
+												window.location.href="  login.php";
 											}})
 									}
 								}
@@ -178,7 +178,7 @@
 
 		}
 		function goback() {
-			location.href='login.html';
+			location.href='login.php';
 		}
 
 	</script>

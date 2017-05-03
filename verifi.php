@@ -4,15 +4,15 @@
     <base href="<%=basePath%>">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Forget Password</title>
-    <!--<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">-->
-    <script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
-    <script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
+    <!--<link rel="stylesheet" href="  CSS/bootstrap.min.css">-->
+    <script src=" /RequestDisPatcher/ JS/jquery-3.2.0.min.js"></script>
+    <script src=" /RequestDisPatcher/ JS/xcConfirm.js"></script>
 
 
-    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
-    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
-    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
-    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href=" /RequestDisPatcher/ CSS/xcConfirm.css"/>
+    <link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/layout.css">
+    <link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/global.css">
+    <link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/font-awesome.min.css">
     <script type="text/javascript">
         function getQueryString(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -25,7 +25,7 @@
             $("#submit").click(function(){
                 $.ajax({
                     type:"post",
-                    url:"/RequestDisPatcher/request/dispatcher.do",
+                    url:"  request/dispatcher.do",
                     data:{
                         url:"http://127.0.0.1:9001/login/verifi",
 //                        url:"http://101.37.100.209:9001/login/verifi",
@@ -34,12 +34,12 @@
                     dataType:"json",
                     success:function(data){
 
-//                        window.location.href="/RequestDisPatcher/modifyPwd.html?email="+email;
+//                        window.location.href="  modifyPwd.html?email="+email;
 
                         if(data.Code==1){
 
-						window.location.href="/RequestDisPatcher/modifyPwd.html?email="+email;
-//                            window.location.href="/RequestDisPatcher/verifi.html";
+						window.location.href="  modifyPwd.php?email="+email;
+//                            window.location.href="  verifi.html";
                         }else if(data.Code==1006){
                             var txt='Verification failed';
                             window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);

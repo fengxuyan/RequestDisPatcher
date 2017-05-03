@@ -3,25 +3,25 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Healthy Consultation</title>
-	<!--<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">-->
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/number-pb.css">
+	<!--<link rel="stylesheet" href="  CSS/bootstrap.min.css">-->
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/layout.css">
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/global.css">
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/number-pb.css">
 
-	<script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
-	<script src="/RequestDisPatcher/JS/birthday.js"></script>
-	<script src="/RequestDisPatcher/JS/radialIndicator.js"></script>
-	<script src="/RequestDisPatcher/JS/jquery.velocity.min.js"></script>
-	<script src="/RequestDisPatcher/JS/number-pb.js"></script>
-	<script src="/RequestDisPatcher/JS/DateFormat.js"></script>
-	<script src="/RequestDisPatcher/JS/jquery.cookie.js"></script>
+	<script src="  /RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+	<script src="  /RequestDisPatcher/JS/birthday.js"></script>
+	<script src="  /RequestDisPatcher/JS/radialIndicator.js"></script>
+	<script src="  /RequestDisPatcher/JS/jquery.velocity.min.js"></script>
+	<script src="  /RequestDisPatcher/JS/number-pb.js"></script>
+	<script src="  /RequestDisPatcher/JS/DateFormat.js"></script>
+	<script src="  /RequestDisPatcher/JS/jquery.cookie.js"></script>
 
 
-	<script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
-	<link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
-    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/laydate.css">
-    <script type="text/javascript" src="/RequestDisPatcher/JS/laydate.js"></script>
+	<script src="  /RequestDisPatcher/JS/xcConfirm.js"></script>
+	<link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/xcConfirm.css"/>
+    <link rel="stylesheet" type="text/css" href=" /RequestDisPatcher/ CSS/laydate.css">
+    <script type="text/javascript" src="  /RequestDisPatcher/JS/laydate.js"></script>
     <style>
         #chartdiv ,#chartdiv1,#chartdiv2,#chartdiv3{
             width: 590px;
@@ -41,7 +41,7 @@
 	<script>
 		var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 		if(userInfo==null){
-			window.location.href = "login.html";//location.href实现客户端页面的跳转
+			window.location.href = "login.php";//location.href实现客户端页面的跳转
 		};
 		function getQueryString(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -91,7 +91,7 @@
                 document.cookie="remember_one_selectime="+$('#changetimer').val();
 				$.ajax({
 					type: "post",
-					url: "/RequestDisPatcher/request/dispatcher.do",
+					url: "  request/dispatcher.do",
 					data: {
 						url: "http://101.37.100.209:9002/device/getInfo",
 						params: "token=" + token + "&time=" + $('#changetimer').val()
@@ -129,7 +129,7 @@
                 document.cookie="remember_one_other_selectime="+$('#changetimer').val();
 				$.ajax({
 					type: "post",
-					url: "/RequestDisPatcher/request/dispatcher.do",
+					url: "  request/dispatcher.do",
 					data: {
 						url: "http://101.37.100.209:9002/device/getOtherInfo",
 						params: "token=" + token + "&time=" + $('#changetimer').val()+ "&email=" + otheremail
@@ -184,7 +184,7 @@
 
 				$.ajax({
 					type: "post",
-					url: "/RequestDisPatcher/request/dispatcher.do",
+					url: "  request/dispatcher.do",
 					data: {
 						url: "http://101.37.100.209:9002/device/getData",
 						params: "token=" + token+"&endTime="+endTime+"&startTime="+startTime
@@ -233,7 +233,7 @@
 
 				$.ajax({
 					type: "post",
-					url: "/RequestDisPatcher/request/dispatcher.do",
+					url: "  request/dispatcher.do",
 					data: {
 						url: "http://101.37.100.209:9002/device/getOtherData",
 						params: "token=" + token+"&endTime="+endTime+"&startTime="+startTime+"&email="+otheremail
@@ -425,7 +425,7 @@
 			var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 			$.ajax({
 				type:"post",
-				url:"/RequestDisPatcher/request/dispatcher.do",
+				url:"  request/dispatcher.do",
 				data: {
 					url:"http://127.0.0.1:9001/login/logout",
 					params:"token="+token
@@ -472,7 +472,7 @@
             }
 			var userInfo = document.cookie.match(new RegExp("(^| )userData=([^;]*)(;|$)"));
 			if(userInfo=='null'){
-				window.location.href = "login.html";//location.href实现客户端页面的跳转
+				window.location.href = "login.php";//location.href实现客户端页面的跳转
 			};
 			var info = JSON.parse(userInfo[2]);
 			var Info = info['userInfo'];
@@ -544,7 +544,7 @@
 
                     $.ajax({
                         type: "post",
-                        url: "/RequestDisPatcher/request/dispatcher.do",
+                        url: "  request/dispatcher.do",
                         data: {
                             url: "http://101.37.100.209:9002/device/getInfo",
                             params: "token=" + token+"&time="+remember_one_selectime[2]
@@ -587,7 +587,7 @@
 
                     $.ajax({
                         type: "post",
-                        url: "/RequestDisPatcher/request/dispatcher.do",
+                        url: "  request/dispatcher.do",
                         data: {
                             url: "http://101.37.100.209:9002/device/getInfo",
                             params: "token=" + token+"&time="+time
@@ -642,7 +642,7 @@
 
 					$.ajax({
 						type: "post",
-						url: "/RequestDisPatcher/request/dispatcher.do",
+						url: "  request/dispatcher.do",
 						data: {
 							url: "http://101.37.100.209:9002/device/getData",
 							params: "token=" + token+"&endTime="+laydatefomcatright+"&startTime="+laydatefomcatleft
@@ -695,7 +695,7 @@
 
 					$.ajax({
 						type: "post",
-						url: "/RequestDisPatcher/request/dispatcher.do",
+						url: "  request/dispatcher.do",
 						data: {
 							url: "http://101.37.100.209:9002/device/getData",
 							params: "token=" + token+"&endTime="+laydatefomcatright+"&startTime="+laydatefomcatleft
@@ -751,7 +751,7 @@
 						var selecttime=$('#changetimemonth').val()+'/'+$('#changetime').val()+'/'+$('#changetimeyear').val();
                     }
 
-                    window.location.href='sleepreport.html?time='+selecttime;
+                    window.location.href='sleepreport.php?time='+selecttime;
                 });
                 $('#confirms').click(function () {
 					var choosetimesstirng='';
@@ -768,7 +768,7 @@ if($(".chooseTime").length<2){
 	window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 
 }else{
-	window.location.href='SleepAnalysis.html';
+	window.location.href='SleepAnalysis.php';
 }
 					//从cookie里面取出选择的时间
 
@@ -783,7 +783,7 @@ if($(".chooseTime").length<2){
 				$('#hasemail').show();
 				$.ajax({
 					type:"POST",
-					url:"/RequestDisPatcher/request/dispatcher.do",
+					url:"  request/dispatcher.do",
 					data:{
 						url:"http://127.0.0.1:9001/login/query",
 						params:"email="+otheremail
@@ -813,7 +813,7 @@ if($(".chooseTime").length<2){
 
                     $.ajax({
                         type: "post",
-                        url: "/RequestDisPatcher/request/dispatcher.do",
+                        url: "  request/dispatcher.do",
                         data: {
                             url: "http://101.37.100.209:9002/device/getOtherInfo",
                             params: "token=" + token+"&time="+remember_one_other_selectime[2]+"&email="+otheremail
@@ -859,7 +859,7 @@ if($(".chooseTime").length<2){
 
                     $.ajax({
                         type: "post",
-                        url: "/RequestDisPatcher/request/dispatcher.do",
+                        url: "  request/dispatcher.do",
                         data: {
                             url: "http://101.37.100.209:9002/device/getOtherInfo",
                             params: "token=" + token+"&time="+time+"&email="+otheremail
@@ -915,7 +915,7 @@ if($(".chooseTime").length<2){
 
 					$.ajax({
 						type: "post",
-						url: "/RequestDisPatcher/request/dispatcher.do",
+						url: "  request/dispatcher.do",
 						data: {
 							url: "http://101.37.100.209:9002/device/getOtherData",
 							params: "token=" + token+"&endTime="+remember_other_changetimesrightfomcat+"&startTime="+remember_other_changetimesleftfomcat+"&email="+otheremail
@@ -982,7 +982,7 @@ if($(".chooseTime").length<2){
 
 					$.ajax({
 						type: "post",
-						url: "/RequestDisPatcher/request/dispatcher.do",
+						url: "  request/dispatcher.do",
 						data: {
 							url: "http://101.37.100.209:9002/device/getOtherData",
 							params: "token=" + token+"&endTime="+remember_other_changetimesrightfomcat+"&startTime="+remember_other_changetimesleftfomcat+"&email="+otheremail
@@ -1036,7 +1036,7 @@ if($(".chooseTime").length<2){
 						var selecttime=$('#changetimemonth').val()+'/'+$('#changetime').val()+'/'+$('#changetimeyear').val();
 					}
 
-					window.location.href='sleepreport.html?time='+selecttime+'&otheremail='+otheremail+'&sn='+getQueryString('sn');
+					window.location.href='sleepreport.php?time='+selecttime+'&otheremail='+otheremail+'&sn='+getQueryString('sn');
 				})
 
 
@@ -1055,7 +1055,7 @@ if($(".chooseTime").length<2){
 						window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 
 					}else{
-						window.location.href='SleepAnalysis.html?&email='+otheremail+'&sn='+getQueryString('sn');;
+						window.location.href='SleepAnalysis.php?&email='+otheremail+'&sn='+getQueryString('sn');;
 					}
 
 
@@ -1076,7 +1076,7 @@ if($(".chooseTime").length<2){
 		var sn=getQueryString('sn');
 
 		function otherrealdata() {
-			window.location.href='real.html?&email='+otheremail+'&sn='+sn;
+			window.location.href='real.php?&email='+otheremail+'&sn='+sn;
 		}
 	</script>
 
@@ -1086,18 +1086,18 @@ if($(".chooseTime").length<2){
 	<div class="left_nav">
 		<div class="header_text" style="    position: relative;top: -47px;">
 			<div class="header_text_right">
-				<span class="header_pic"><a href="modify.html" ><img src="" id="head"></a></span>
+				<span class="header_pic"><a href="modify.php" ><img src="" id="head"></a></span>
 			</div>
 		</div>
 		<ul  id="noemail" style="display: none;">
-			<a href="login.html"><li onclick="quit()"  >Logout</li></a>
-			<a href="real.html"><li>Real-time Data</li></a>
-			<a href="healthy.html"><li class="on">Health Archives</li></a>
-			<a href="addProduct.html"><li>Add device</li></a>
-			<a href="deleteProduct.html"><li>Delete device</li></a>
+			<a href="login.php"><li onclick="quit()"  >Logout</li></a>
+			<a href="real.php"><li>Real-time Data</li></a>
+			<a href="healthy.php"><li class="on">Health Archives</li></a>
+			<a href="addProduct.php"><li>Add device</li></a>
+			<a href="deleteProduct.php"><li>Delete device</li></a>
 		</ul>
 		<ul  id="hasemail" style="display: none;">
-			<a href="login.html"><li onclick="quit()"  >Logout</li></a>
+			<a href="login.php"><li onclick="quit()"  >Logout</li></a>
 			<a><li  onclick="otherrealdata()">Real-time Data</li></a>
 			<a><li class="on">Health Archives</li></a>
 			<li></li>
@@ -1106,7 +1106,7 @@ if($(".chooseTime").length<2){
 	</div>
 	<div class="right_show">
 		<h4 class="titl">isleep</h4>
-		<a href="homepage.html"><span class="home"></span></a>
+		<a href="homepage.php"><span class="home"></span></a>
 		<div class="show_detail">
 			<div class="show_detail_data">
 				<div class="data_table search">
@@ -1175,7 +1175,7 @@ if($(".chooseTime").length<2){
 		</div>
 	</div>
 </div>
-<script src="/RequestDisPatcher/JS/mine.js"></script>
+<script src="  JS/mine.js"></script>
 <script>
 	$('.right_show').css("padding-bottom",60);
 
@@ -1230,7 +1230,7 @@ if($(".chooseTime").length<2){
                 document.cookie="remember_one_selectime="+laydatetimefomcat;
                 $.ajax({
                     type: "post",
-                    url: "/RequestDisPatcher/request/dispatcher.do",
+                    url: "  request/dispatcher.do",
                     data: {
                         url: "http://101.37.100.209:9002/device/getInfo",
                         params: "token=" + token + "&time=" + laydatetimefomcat
@@ -1272,7 +1272,7 @@ if($(".chooseTime").length<2){
 
 				$.ajax({
 					type:"POST",
-					url:"/RequestDisPatcher/request/dispatcher.do",
+					url:"  request/dispatcher.do",
 					data:{
 						url:"http://127.0.0.1:9001/login/query",
 						params:"email="+otheremail
@@ -1289,7 +1289,7 @@ if($(".chooseTime").length<2){
                 document.cookie="remember_one_other_selectime="+laydatetimefomcat;
                 $.ajax({
                     type: "post",
-                    url: "/RequestDisPatcher/request/dispatcher.do",
+                    url: "  request/dispatcher.do",
                     data: {
                         url: "http://101.37.100.209:9002/device/getOtherInfo",
                         params: "token=" + token + "&time=" + laydatetimefomcat+ "&email=" + otheremail
@@ -1403,7 +1403,7 @@ if($(".chooseTime").length<2){
 
 							$.ajax({
 								type: "post",
-								url: "/RequestDisPatcher/request/dispatcher.do",
+								url: "  request/dispatcher.do",
 								data: {
 									url: "http://101.37.100.209:9002/device/getData",
 									params: "token=" + token+"&endTime="+laydatefomcatright+"&startTime="+laydatefomcatleft
@@ -1443,7 +1443,7 @@ if($(".chooseTime").length<2){
 							document.cookie="remember_other_changetimesright="+$('#changetimesright').val();
 							$.ajax({
 								type: "post",
-								url: "/RequestDisPatcher/request/dispatcher.do",
+								url: "  request/dispatcher.do",
 								data: {
 									url: "http://101.37.100.209:9002/device/getOtherData",
 									params: "token=" + token+"&endTime="+laydatefomcatright+"&startTime="+laydatefomcatleft+"&email="+otheremail
@@ -1564,7 +1564,7 @@ if($(".chooseTime").length<2){
 
 					$.ajax({
 						type: "post",
-						url: "/RequestDisPatcher/request/dispatcher.do",
+						url: "  request/dispatcher.do",
 						data: {
 							url: "http://101.37.100.209:9002/device/getData",
 							params: "token=" + token+"&endTime="+laydatefomcatright+"&startTime="+laydatefomcatleft
@@ -1603,7 +1603,7 @@ if($(".chooseTime").length<2){
 					document.cookie="remember_other_changetimesright="+$('#changetimesright').val();
 					$.ajax({
 						type: "post",
-						url: "/RequestDisPatcher/request/dispatcher.do",
+						url: "  request/dispatcher.do",
 						data: {
 							url: "http://101.37.100.209:9002/device/getOtherData",
 							params: "token=" + token+"&endTime="+laydatefomcatright+"&startTime="+laydatefomcatleft+"&email="+otheremail

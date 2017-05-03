@@ -4,14 +4,14 @@
     <base href="<%=basePath%>">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Forget Password</title>
-    <!--<link rel="stylesheet" href="/RequestDisPatcher/CSS/bootstrap.min.css">-->
-    <script src="/RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
-    <script src="/RequestDisPatcher/JS/xcConfirm.js"></script>
+    <!--<link rel="stylesheet" href="  CSS/bootstrap.min.css">-->
+    <script src="  /RequestDisPatcher/JS/jquery-3.2.0.min.js"></script>
+    <script src="  /RequestDisPatcher/JS/xcConfirm.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/xcConfirm.css"/>
-    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/layout.css">
-    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/global.css">
-    <link rel="stylesheet" type="text/css" href="/RequestDisPatcher/CSS/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/xcConfirm.css"/>
+    <link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/layout.css">
+    <link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/global.css">
+    <link rel="stylesheet" type="text/css" href="  /RequestDisPatcher/CSS/font-awesome.min.css">
     <script type="text/javascript">
         function getQueryString(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -41,7 +41,7 @@
                 }else{
                     $.ajax({
                         type:"post",
-                        url:"/RequestDisPatcher/request/dispatcher.do",
+                        url:"  request/dispatcher.do",
                         data:{
                             url:"http://127.0.0.1:9001/login/modifyPwd",
                             params:"email="+email+'&password='+$('#password').val()
@@ -54,7 +54,7 @@
                                     onOk:function() {
                                         document.cookie="dluEmail="+email;
                                         document.cookie="dlumima="+$('#password').val();
-                                        window.location.href="/RequestDisPatcher/login.html";
+                                        window.location.href="  login.php";
                                     }}
                                 );
                             }else if(data.Code==3005) {
